@@ -23,6 +23,12 @@ let readValuesBtn;
 
 let outputDiv;
 let getSetUpRowsBtn;
+let algorithmBtn;
+let middleSection1 = '';
+let SetUpRow1 = '';
+let beg = ' beginning of pattern '
+let stitchCount = 0 //later it will be 85 sts to begin with I think. Have to check this!
+let DE;
 
 window.onload = init();
 
@@ -38,7 +44,7 @@ function getDOMelements () {
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
     readValuesBtn = document.querySelector('#readValues');
     windowWidth = document.querySelector('#window-width');
-    // windowScreen = document.querySelector('window');
+    algorithmBtn = document.querySelector('#algorithm');
     addEventListeners ();
 }
 
@@ -51,6 +57,7 @@ function addEventListeners () {
     getUserSelectionBtn.addEventListener('click', getUserSelection);
     readValuesBtn.addEventListener('click', readValues);
     window.addEventListener('resize', displayWindowWidth);
+    algorithmBtn.addEventListener('click', WovenPlacematSetUpRow1);
 }
 
 function displayWindowWidth () {
@@ -134,8 +141,8 @@ function readValues () {
     let cableCombination = document.createElement('p');
     cableCombination.innerHTML = (pairNumberText + ': ' + cableDirectionText + ' -> ' + cableYarnColorText);
     outputDiv.appendChild(cableCombination);
-
     }
+    console.log(userSelectionArray);
 }
 
 
@@ -143,16 +150,87 @@ function print () {
     window.print()
 }
 
+let kfb = ' kfb ';
+let ktbl1 = ' ktbl ';
+let purlStitchCount = 0 // might have to initialize it at another value depending on pattern. Check this!
+// let purl = purlStitchCount
 
 function WovenPlacematSetUpRow1 () {
+    console.log('WovenplacematSetUpRow1 function executed');
+    // console.log(userSelectionArray);
 
-// Function char Setup1CableTypeA(i=CurrentCablePairNum)
-// If (CableColours[i, 1] = "MC" and CableColours[i, 2] = "MC"); StitchCount = StitchCount + 1; return "kfb"
-// If (CableColours[i, 1] = "CC" and CableColours[i, 2] = "CC"); return "p1"
-// Return "ktbl1"
 
-for (let i = 0; ) {
-    if ()
+
+    
+        ifMiddleSectionSetUpRow1("middleSection1");
+        console.log('changing section');
+        ifMiddleSectionSetUpRow1("middleSection2");
+        console.log('changing section');
+        ifMiddleSectionSetUpRow1("middleSection3");
+        // if (userSelectionArray[i].section == "middleSection1") {
+        //     if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
+        //         if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+        //             stitchCount++;
+        //             console.log('stitch count = ' + stitchCount + ' ; ' + kfb);
+        //             DE = kfb;
+        //             middleSection1 = middleSection1 + DE
+        //         } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+        //             console.log('stitch count = ' + stitchCount + ' ; ' + ktbl1);
+        //             DE = ktbl1;                   
+        //             middleSection1 = middleSection1 + DE
+        //         }
+        //     } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
+        //         if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+        //             purlStitchCount++;
+        //             console.log('stitch count = ' + stitchCount + ' ; ' + 'p1' + ' / purlStitchCount = ' + purlStitchCount);
+        //             // return purlStitchCount;
+        //             middleSection1 = middleSection1 + 'p' + purlStitchCount
+        //         } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+        //             console.log('stitch count = ' + stitchCount + ' ; ' + ktbl1);
+        //             DE = ktbl1;
+        //             middleSection1 = middleSection1 + DE
+        //         }
+        //     }
+        // }
+    
+    writeSetUpRow1();
 }
 
+function ifMiddleSectionSetUpRow1 (section) {
+    for (let i = 0; i < userSelectionArray.length; i = i+2 ) {
+        if (userSelectionArray[i].section == section) {
+            if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
+                if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                    stitchCount++;
+                    console.log('stitch count = ' + stitchCount + ' ; ' + kfb);
+                    DE = kfb;
+                    middleSection1 = middleSection1 + DE
+                } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                    console.log('stitch count = ' + stitchCount + ' ; ' + ktbl1);
+                    DE = ktbl1;                   
+                    middleSection1 = middleSection1 + DE
+                }
+            } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
+                if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                    purlStitchCount++;
+                    console.log('stitch count = ' + stitchCount + ' ; ' + 'p1' + ' / purlStitchCount = ' + purlStitchCount);
+                    // return purlStitchCount;
+                    middleSection1 = middleSection1 + 'p' //+ purlStitchCount
+                } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                    console.log('stitch count = ' + stitchCount + ' ; ' + ktbl1);
+                    DE = ktbl1;
+                    middleSection1 = middleSection1 + DE
+                }
+            }
+        }
+    }
+}
+
+
+
+function writeSetUpRow1 () {
+    console.log('writeSetUpRow1 function executed');
+    SetUpRow1 = beg + middleSection1;
+    console.log('SetUpRow1: ');
+    console.log(SetUpRow1);
 }
