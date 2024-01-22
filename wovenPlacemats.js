@@ -2,6 +2,9 @@
 
 // declaring variables:
 
+let windowWidth;
+let screenDisplay;
+
 let YCselectionButtons = [];
 let YCparentDiv;
 let YCultimateParent;
@@ -34,6 +37,8 @@ function getDOMelements () {
     outputDiv = document.querySelector('#outputDiv')
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
     readValuesBtn = document.querySelector('#readValues');
+    windowWidth = document.querySelector('#window-width');
+    // windowScreen = document.querySelector('window');
     addEventListeners ();
 }
 
@@ -45,6 +50,21 @@ function addEventListeners () {
      }
     getUserSelectionBtn.addEventListener('click', getUserSelection);
     readValuesBtn.addEventListener('click', readValues);
+    window.addEventListener('resize', displayWindowWidth);
+}
+
+function displayWindowWidth () {
+    if (window.innerWidth > 1028) {
+        screenDisplay = "BIG screen";
+    } else if (window.innerWidth > 788) {
+        screenDisplay = 'Desktop';
+    } else if (window.innerWidth > 645) {
+        screenDisplay = 'Tablet'
+    } else {
+        screenDisplay = 'Smartphone'
+    }
+    windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
+
 }
 
 function writeYC (YCbutton) {
@@ -77,19 +97,15 @@ function getUserSelection () {
             thisObject['pairNumber'] = YCselectionButtons[i].classList[1];
             thisObject['direction'] = YCselectionButtons[i].classList[2];
             thisObject['yarnColor'] = YCselectionButtons[i].classList[3];
-            thisObject['selection'] = YCselectionButtons[i].classList[4];
+            thisObject['section'] = YCselectionButtons[i].classList[4];
+            thisObject['selection'] = YCselectionButtons[i].classList[5];
             userSelectionArray.push(thisObject);
             console.log('userSelectionArray =');
             console.log(userSelectionArray);
             y++
         }     
     }
-}
-
-function readValues () {
-    console.log('readValues function executed')
     for (let i = 0; i < userSelectionArray.length; i++) {
-        // console.log(userSelectionArray[i]);
         console.log('userSelectionArray[' + i +']:');
         console.log('pairNumber: ' + userSelectionArray[i].pairNumber);
         console.log('direction: ' + userSelectionArray[i].direction);
@@ -97,3 +113,46 @@ function readValues () {
     }
 }
 
+function readValues () {
+    console.log('readValues function executed')
+    let inputSelectionTitle = document.createElement('h2');
+    inputSelectionTitle.innerHTML = 'User Selection:';
+    outputDiv.appendChild(inputSelectionTitle);
+    for (let i = 0; i < userSelectionArray.length; i++) {    
+    // let pairNumberTitle = document.createElement('h3');
+    // pairNumberTitle.innerHTML = userSelectionArray[i].pairNumber;
+    let pairNumberText = userSelectionArray[i].pairNumber;
+    // outputDiv.appendChild(pairNumberTitle);
+    // let cableDirectionTitle = document.createElement('h4');
+    // cableDirectionTitle.innerHTML = userSelectionArray[i].direction;
+    let cableDirectionText = userSelectionArray[i].direction;
+    // outputDiv.appendChild(cableDirectionTitle);
+    // let cableYarnColorTitle = document.createElement('h4');
+    // cableYarnColorTitle.innerHTML = userSelectionArray[i].yarnColor;
+    let cableYarnColorText = userSelectionArray[i].yarnColor;
+    // outputDiv.appendChild(cableYarnColorTitle);
+    let cableCombination = document.createElement('p');
+    cableCombination.innerHTML = (pairNumberText + ': ' + cableDirectionText + ' -> ' + cableYarnColorText);
+    outputDiv.appendChild(cableCombination);
+
+    }
+}
+
+
+function print () {
+    window.print()
+}
+
+
+function WovenPlacematSetUpRow1 () {
+
+// Function char Setup1CableTypeA(i=CurrentCablePairNum)
+// If (CableColours[i, 1] = "MC" and CableColours[i, 2] = "MC"); StitchCount = StitchCount + 1; return "kfb"
+// If (CableColours[i, 1] = "CC" and CableColours[i, 2] = "CC"); return "p1"
+// Return "ktbl1"
+
+for (let i = 0; ) {
+    if ()
+}
+
+}
