@@ -14,112 +14,92 @@
 <body>
     <header></header>
     <main>
-        <!-- <div id="UserInputDiv">
-            <fieldset>
+              
+        <div id="UserInputDiv">
+            <fieldset class="one">
                 <div class="pairNumber">
                     <p> Pair 1 </p>
                 </div>
                 <div class="leftANDRight">
-                    <div class="pairLeft">
-                        <label for="pair1left">Left</label>
-                        <select name="pair1left" id="pair1left">
-                            <option value="MC" class="YC">MC</option>
-                            <option value="CC" class="YC">CC</option>
-                        </select>
+                    <div class="one pairLeft"> Left 
+                        <div class="dropdown-menu">
+                        <button class="dropdown-button" id="pair1Left">Choose YC</button>
+                        <div class="dropdown-content"> 
+                            <button id="pair1LeftMC" class="YCselection pair1 left MC">MC</button>
+                            <button id="pair1LeftCC" class="YCselection pair1 left CC">CC</button>
+                        </div>
                     </div>
-                    <div class="pairRight">
-                        <label for="pair1right">Right</label>
-                        <select name="pair1right" id="pair1right">
-                            <option value="MC">MC</option>
-                            <option value="CC">CC</option>
-                        </select>
+                    </div>
+                    <div class="one pairRight"> Right
+                        <div class="dropdown-menu">
+                        <button class="dropdown-button" id="pair1Right">Choose YC</button>
+                        <div class="dropdown-content">
+                            <button id="pair1RightMC" class="YCselection pair1 right MC">MC</button>
+                            <button id="pair1RightCC" class="YCselection pair1 right CC">CC</button>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="two">
                 <div class="pairNumber">
                     <p> Pair 2 </p>
                 </div>
-                    <div class="pairLeft">
-                        <label for="pair2left">Left</label>
-                        <select name="pair2left" id="pair2left">
-                            <option value="MC" class="YC" selected>MC</option>
-                            <option value="CC" class="YC">CC</option>
-                        </select>
+                <div class="leftANDRight">
+                    <div class="two pairLeft"> Left 
+                        <div class="dropdown-menu">
+                        <button class="dropdown-button" id="pair2Left">Choose YC</button>
+                        <div class="dropdown-content"> 
+                            <button id="pair2LeftMC" class="YCselection pair2 left MC">MC</button>
+                            <button id="pair2LeftCC" class="YCselection pair2 left CC">CC</button>
+                        </div>
                     </div>
-                    <div class="pairRight">
-                        <label for="pair2right">Right</label>
-                        <select name="pair2right" id="pair2right">
-                            <option value="MC" selected>MC</option>
-                            <option value="CC">CC</option>
-                        </select>
                     </div>
+                    <div class="two pairRight"> Right
+                        <div class="dropdown-menu">
+                        <button class="dropdown-button" id="pair2Right">Choose YC</button>
+                        <div class="dropdown-content">
+                            <button id="pair2RightMC" class="YCselection pair2 right MC">MC</button>
+                            <button id="pair2RightCC" class="YCselection pair2 right CC">CC</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="three">
                 <div class="pairNumber">
                     <p> Pair 3 </p>
                 </div>
                 <div class="leftANDRight">
-                    <div class="pairLeft">
-                        <label for="pair13eft">Left</label>
-                        <select name="pair3left" id="pair3left">
-                            <option value="MC" class="YC">MC</option>
-                            <option value="CC" class="YC">CC</option>
-                        </select>
-                    </div>
-                    <div class="pairRight">
-                        <label for="pair3right">Right</label>
-                        <select name="pair3right" id="pair3right">
-                            <option value="MC">MC</option>
-                            <option value="CC">CC</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-        </div> -->
-        
-        <div id="UserInputDiv">
-            <fieldset>
-                <div class="pairNumber">
-                    <p> Pair 1 </p>
-                </div>
-                <div class="leftANDRight">
-                    <div class="pairLeft"> Left 
+                    <div class="three pairLeft"> Left 
                         <div class="dropdown-menu">
-                        <button class="dropdown-button" id="pair1Left">Choose YC</button>
+                        <button class="dropdown-button" id="pair3Left">Choose YC</button>
                         <div class="dropdown-content"> 
-                            <button id="pair1LeftMC" class="YCselection">MC</button>
-                            <button id="pair1LeftCC" class="YCselection">CC</button>
+                            <button id="pair3LeftMC" class="YCselection pair3 left MC">MC</button>
+                            <button id="pair3LeftCC" class="YCselection pair2 left CC">CC</button>
                         </div>
                     </div>
                     </div>
-                    <div class="pairRight"> Right
+                    <div class="three pairRight"> Right
                         <div class="dropdown-menu">
-                        <button class="dropdown-button" id="pair1Right">Choose YC</button>
+                        <button class="dropdown-button" id="pair3Right">Choose YC</button>
                         <div class="dropdown-content">
-                            <button id="pair1RightMC" class="YCselection">MC</button>
-                            <button id="pair1RightCC" class="YCselection">CC</button>
+                            <button id="pair3RightMC" class="YCselection pair3 right MC">MC</button>
+                            <button id="pair3RightCC" class="YCselection pair3 right MC">CC</button>
                         </div>
                     </div>
                     </div>
                 </div>
-            </fieldset>
-
-            <fieldset>
-                <div class="pairNumber">
-                    <p> Pair 2 </p>
-                </div>
-                    <div class="pairLeft">
-                        
-                    </div>
-                    <div class="pairRight">
-                        
-                    </div>
             </fieldset>
 
           
+        </div>
+        <button id="getSetUpRowsBtn"> Get Set Up Rows</button>
+        <button id="readValues"> Read values (console) </button>
+        <div class="output" id="outputDiv">
+
         </div>
         
 
