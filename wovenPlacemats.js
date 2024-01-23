@@ -233,4 +233,7 @@ function writeSetUpRow1 () {
     SetUpRow1 = beg + middleSection1;
     console.log('SetUpRow1: ');
     console.log(SetUpRow1);
+    let setUpRow1paragraph = document.createElement('p');
+    setUpRow1paragraph.innerHTML = SetUpRow1;
+    outputDiv.appendChild(setUpRow1paragraph);
 }
