@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="wovenPlacemats.css" type="text/css">
+    <link rel="stylesheet" href="wovenPlacematsSwtitchBtns.css" type="text/css">
     <!-- Google fonts: Raleway -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +12,9 @@
     <title>Woven Placemats</title>
 </head>
 <body>
-    <header>
-        <p id="window-width">window width: </p>
-        <h1><a href="indextoggle.html">Click here to see switch / toggle buttons</a></h1>
-    </header>
+    <header></header>
     <main>
-        
+        <p id="window-width">window width: </p>
         <div id="userInputDiv">
             <div class="section BetweenMarkers">
                 <fieldset class="one">
@@ -26,21 +23,16 @@
                     </div>
                     <div class="leftANDRight">
                         <div class="one pairRight"> Right
-                            <div class="dropdown-menu">
-                            <button class="dropdown-button" id="pair1Right">Choose YC</button>
-                            <div class="dropdown-content"> 
-                                <button id="pair1rightMC" class="YCselection pair1 right MC middleSection1">MC</button>
-                                <button id="pair1rightCC" class="YCselection pair1 right CC middleSection1" >CC</button>
-                            </div>
-                        </div>
+                            
                         </div>
                         <div class="one pairLeft"> Left
-                            <div class="dropdown-menu">
-                            <button class="dropdown-button" id="pair1left">Choose YC</button>
-                            <div class="dropdown-content">
-                                <button id="pair1leftMC" class="YCselection pair1 left MC middleSection1">MC</button>
-                                <button id="pair1leftCC" class="YCselection pair1 left CC middleSection1">CC</button>
-                            </div>
+                            <p id="pair1leftMC" class="MC-selected">MC</p>
+                            <label class="switch">
+                                <input type="checkbox" id="MC-CC-checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                            <p id="pari1leftCC" class="CC">CC</p>
+                        </div>
                         </div>
                         </div>
                     </div>
