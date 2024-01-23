@@ -65,6 +65,20 @@ footer {
     font-size: 1.2rem;
 }
 
+#userInputDiv {
+    display: flex;
+}
+
+.betweenMarkers {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.section {
+    display: flex
+}
+
 
 
 
@@ -72,7 +86,11 @@ footer {
 
 /* Smartphone */
 @media screen and (max-width: 645px) {
+    .betweenMarkers {
+        display: flex;
+        flex-direction: column;
     
+    }
 }
 
 
@@ -100,7 +118,8 @@ fieldset {
     border-color: var(--color6);
     border-style: dotted;
     margin: 0.1rem 0.2rem 0.1rem 0.2rem;
-    padding: 0.5rem
+    padding: 0.5rem;
+    background-color: lightslategray;
 }
 .pairNumber {
     display: flex;
