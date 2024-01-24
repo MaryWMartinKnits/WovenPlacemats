@@ -23,15 +23,17 @@ let firedButtonID;
 let firedButton;
 let selectedYarnColors;
 
-let readValuesBtn;
+let displayValuesBtn;
 
 let outputDiv;
 let getSetUpRowsBtn;
 let algorithmBtn;
-let middleSection1 = '';
+let middleSections = '';
 let SetUpRow1 = '';
 let beg = ' beginning of pattern '
-let DEstitchCount = 0 //later it will be 85 sts to begin with I think. Have to check this!
+let end = ' end of pattern.'
+let DEstitchCount = 0
+let originalStitchCount = 85 //number of sts to begin with, I think it's 85. Have to check this!
 // let DE;
 
 let DE = 1;
@@ -72,7 +74,9 @@ let pairNumber = 1;
     span.classList.add('slider', 'round');
 
 let kfb = ' kfb ';
+let cero_into_one = ' 0-into-1 '
 let ktbl1 = ' ktbl ';
+let m1L = ' m1L ';
 let purlStitchCount = 0 // might have to initialize it at another value depending on pattern. Check this!
 // let purl = purlStitchCount
 
@@ -87,7 +91,7 @@ function getDOMelements () {
     console.log('function getDOMelements executed');
     outputDiv = document.querySelector('#outputDiv')
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
-    readValuesBtn = document.querySelector('#readValues');
+    displayValuesBtn = document.querySelector('#displayValues');
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     createInputSection(); 
@@ -143,14 +147,14 @@ function addEventListeners () {
         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
     }
     getUserSelectionBtn.addEventListener('click', getUserSelection);
-    readValuesBtn.addEventListener('click', displaySelectedValues);
+    displayValuesBtn.addEventListener('click', displaySelectedValues);
     window.addEventListener('resize', displayWindowWidth);
     algorithmBtn.addEventListener('click', WovenPlacematSetUpRow1);
 }
 
 function changeColorSelection (checkedYC) {
     console.log('changeColorSelection function executed for: ');
-    console.log(checkedYC);
+    // console.log(checkedYC);
     firedCheckboxID = event.target.id;
     checkedYC = document.querySelector('#'+firedCheckboxID);
     // console.log(checkedYC);
@@ -200,30 +204,13 @@ function getUserSelection () {
         }
         userSelectionArray.push(thisObject);
     }
+    console.log('userSelectionArray: ')
     console.log(userSelectionArray);
     getUserSelectionBtn.disabled = true;
     getUserSelectionBtn.classList.add('disabledBtn');
 }
 
-function readValues () {
-    console.log('readValues function executed')
-    let inputSelectionTitle = document.createElement('h2');
-    inputSelectionTitle.innerHTML = 'User Selection:';
-    outputDiv.appendChild(inputSelectionTitle);
-    for (let i = 0; i < userSelectionArray.length; i++) {
-        let patternSectionText = userSelectionArray[i].section;
-        let pairNumberText = userSelectionArray[i].pairNumber;
-        let cableDirectionText = userSelectionArray[i].direction;
-        let cableYarnColorText = userSelectionArray[i].yarnColor;
-        // let sectionTitle = document.createElement('h3');
-        let cableCombination = document.createElement('p');
-        // sectionTitle.innerHTML = patternSectionText;
-        cableCombination.innerHTML = (pairNumberText + ': ' + cableDirectionText + ' -> ' + cableYarnColorText);
-        // outputDiv.appendChild(sectionTitle);
-        outputDiv.appendChild(cableCombination);
-    }
-    console.log(userSelectionArray);
-}
+
 
 function displaySelectedValues () {
     console.log('displaySelectedValues function executed');
@@ -266,7 +253,7 @@ function displaySelectedValues () {
                 let condition = userSelectionArray[stNumber].pairNumber;
                 while (condition == counter) {
                     // let cableDirectionANDColor = document.createElement('p')
-                    console.log('counter = ' + counter)
+                    // console.log('counter = ' + counter)
                     let pairStitchesDiv = document.createElement('div');
                     pairStitchesDiv.classList.add('pairStitchesDiv');
                     eachPairDiv.appendChild(pairStitchesDiv);
@@ -277,7 +264,7 @@ function displaySelectedValues () {
 
                         let cableDirectionANDColor = document.createElement('p')
 
-                        console.log(`right ${stNumber+1}`);
+                        // console.log(`right ${stNumber+1}`);
                         stDirection = rightText;
                         cableDirectionANDColor.innerHTML = 
                         `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
@@ -292,7 +279,7 @@ function displaySelectedValues () {
 
                         let cableDirectionANDColor = document.createElement('p')
 
-                        console.log(`left ${stNumber+1}`)
+                        // console.log(`left ${stNumber+1}`)
                         stDirection = leftText
                         cableDirectionANDColor.innerHTML = 
                         `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
@@ -318,50 +305,72 @@ function print () {
 
 function WovenPlacematSetUpRow1 () {
     console.log('WovenplacematSetUpRow1 function executed');
-    // console.log(userSelectionArray);
-        ifMiddleSectionSetUpRow1("middleSection1");
-        console.log('changing section');
-        ifMiddleSectionSetUpRow1("middleSection2");
-        console.log('changing section');
-        ifMiddleSectionSetUpRow1("middleSection3");
-    writeSetUpRow1();
-}
-
-function middleSectionSetUpRow1 (section) {
-    for (let i = 0; i < userSelectionArray.length; i = i+2 ) {
-        if (userSelectionArray[i].section == section) {
-            if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
-                if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
-                    DEstitchCount++;
-                    console.log('stitch count = ' + DEstitchCount + ' ; ' + kfb);
-                    DE = kfb;
-                    middleSection1 = middleSection1 + DE
-                } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
-                    console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
-                    DE = ktbl1;
-                    middleSection1 = middleSection1 + DE
+        for (let i = 0; i < userSelectionArray.length; i++) {
+            let thisSection = userSelectionArray[i].section;
+            let previousStitchSection;
+            if (i > 0) {
+                previousStitchSection = userSelectionArray[i-1].section;
+            } else {
+                previousStitchSection = userSelectionArray[i];
+            }
+            
+            if (previousStitchSection == thisSection) {
+                console.log(`Section: ${thisSection}`);
+                if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
+                    if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                        DEstitchCount++;
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + kfb);
+                        DE = kfb;
+                        middleSections = middleSections + DE
+                    } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
+                        DE = ktbl1;
+                        middleSections = middleSections + DE
+                    }
+                } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
+                    if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                        purlStitchCount++;
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + 'p1' + ' / purlStitchCount = ' + purlStitchCount);
+                        // return purlStitchCount;
+                        middleSections = middleSections + 'p' //+ purlStitchCount
+                    } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
+                        DE = ktbl1;
+                        middleSections = middleSections + DE
+                    }
                 }
-            } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
-                if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
-                    purlStitchCount++;
-                    console.log('stitch count = ' + DEstitchCount + ' ; ' + 'p1' + ' / purlStitchCount = ' + purlStitchCount);
-                    // return purlStitchCount;
-                    middleSection1 = middleSection1 + 'p' //+ purlStitchCount
-                } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
-                    console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
-                    DE = ktbl1;
-                    middleSection1 = middleSection1 + DE
+            } else if ( previousStitchSection !== thisSection) {
+                if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
+                    if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                        DEstitchCount = DEstitchCount + 2;
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + cero_into_one);
+                        DE = cero_into_one;
+                    } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                        DEstitchCount++;
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + m1L);
+                        DE = m1L;
+                        middleSections = middleSections + DE
+                    }
+                } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
+                    if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
+                        
+                    } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
+                        DEstitchCount++;
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + m1L);
+                        DE = m1L;
+                        middleSections = middleSections + DE
+                    }
                 }
             }
         }
-    }
+
+    writeSetUpRow1();
 }
 
-
-
 function writeSetUpRow1 () {
+    let writenStitchCount = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
     console.log('writeSetUpRow1 function executed');
-    SetUpRow1 = beg + middleSection1;
+    SetUpRow1 = beg + middleSections + end + writenStitchCount;
     console.log('SetUpRow1: ');
     console.log(SetUpRow1);
     let setUpRow1paragraph = document.createElement('p');
