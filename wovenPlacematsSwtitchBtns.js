@@ -116,67 +116,22 @@ function createBetweenMarkersDiv() {
         pairClass = `pair${pairNumber}`;
         sectionClass = `section${sectionNumber}`;
         let fieldset = document.createElement('fieldset');
-    fieldset.innerHTML = (`
+        fieldset.innerHTML = (`
             <div class="pairNumber"><h3> Pair ${pairNumber} </h3></div>
             <div class="leftANDright">
             <div class="pairRight"> <div class="pairTitle"> <h4> Right </h4>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
             <div class="pairLeft">  <div class="pairTitle"> <h4> Left   </h4> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
             </div> `)
-    betweenMarkersDiv.appendChild(fieldset);
-            console.log('pair number: ' + pairNumber);
-            if (DE % 2 !== 0) {
-                pairNumber++
-            }
-            console.log('section number: ' + sectionNumber)
-
+        betweenMarkersDiv.appendChild(fieldset);
+        console.log('pair number: ' + pairNumber);
+        if (DE % 2 !== 0) {
+            pairNumber++
+        }
+        console.log('section number: ' + sectionNumber)
     }
-    DE++
-
-
 
     sectionNumber++
 }
-
-function createFieldset () {       
-
-    console.log('createFieldset function executed');
-    // sectionClass = `section${sectionNumber}`;
-    // pairClass = `pair${pairNumber}`;
-       
-
-}
-
-// function createRightStitch () {
-//     console.log('createRightStitch function executed');
-//     // Right
-//     leftANDrightDiv.append(pairRightDiv)
-//     pairRightDiv.append(rightTitle);
-//     pairRightDiv.append(switchBtnDiv);
-//     //  switchBtnDiv.append(MCoption);
-//     // MCoption.classList.add(sectionClass, pairClass, 'right');
-//     // switchBtnDiv.append(label);
-//     // label.append(input);
-//     // label.append(span);
-//     // switchBtnDiv.append(CCoption)
-//         // MCoption.classList.add(sectionClass, pairClass, 'right');
-//     // CCoption.classList.add(sectionClass, pairClass, 'right')
-// }
-
-// function createLeftStitch () {
-//     console.log('createLeftStitch function executed');
-//     // Left
-//     leftANDrightDiv.appendChild(pairLeftDiv)
-//     pairLeftDiv.appendChild(leftTitle);
-//     pairLeftDiv.appendChild(switchBtnDiv);
-//     switchBtnDiv.appendChild(MCoption);
-//     MCoption.classList.add(sectionClass, pairClass, 'left');
-//     switchBtnDiv.appendChild(label);
-//     label.appendChild(input);
-//     label.appendChild(span);
-//     switchBtnDiv.appendChild(CCoption)
-//     CCoption.classList.add(sectionClass, pairClass, 'left')
-
-// }
 
 function addEventListeners () {
     console.log('function addEventListeners executed');

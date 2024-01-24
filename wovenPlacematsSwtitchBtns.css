@@ -33,14 +33,18 @@ p {
 h1, h2, h3, h4, button {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
+    color: var(--color3);
+    /* color: red; */
 }
 
 h1 {
     font-size: 1.5rem;
+    columns: var(--color3);
 }
 
 h2, h3 {
     font-size: 1.2rem;
+    color: var(--color4);
 }
 
 button {
@@ -267,6 +271,7 @@ fieldset {
 
 /* Big screen */
 @media screen and (min-width: 1029px) {
+
     #userInputDiv {
         display: flex;
         flex-wrap: wrap;
@@ -276,26 +281,13 @@ fieldset {
         flex-wrap: nowrap;
         margin-top: 0.25rem;
     }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: var(--color6);
-        -webkit-transition: .4s;
-        transition: .4s;
+      h3 {
+        font-size: 1.5rem;
       }
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 1.2em;
-        width: 1.2em;
-        left: 0.4em;
-        bottom: 0.4em;
-        background-color: var(--color7);
-        -webkit-transition: .4s;
-        transition: .4s;
+      h4 {
+        font-size: 1.3rem;
+      }
+      .YCselection {
+        font-size: 1rem;
       }
 }

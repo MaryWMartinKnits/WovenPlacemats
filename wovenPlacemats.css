@@ -64,14 +64,6 @@ button {
     border-radius: 0.375rem;
 }
 
-/* .dropdown-button {
-    width: fit-content;
-    background-color: var(--color6);
-    color: var(--color3);
-    border-color: var(--color3);
-    border-radius: 0.375rem;
-} */
-
 .dropdown-button:hover {
     background-color: var(--color3);
     border-color: var(--color4);
@@ -131,11 +123,6 @@ footer {
     /* background-color: burlywood; */
     margin: 0.1rem;
 
-}
-
-.Beginning, .End {
-    display: flex;
-    width: fit-content ;
 }
 
 .BetweenMarkers {
