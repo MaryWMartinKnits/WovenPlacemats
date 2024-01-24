@@ -231,12 +231,60 @@ fieldset {
     border-radius: 50%;
   }
 
+
+  /* output section */
+
+.selectionOutputSection {
+    display: block;
+}
+
+.eachSectionDiv {
+    display: flex;
+    border: 1px solid var(--color6);
+    justify-content: space-evenly;
+}
+.pairStitchesDiv {
+    display: block;
+}
+
+.pairStitchesDiv p {
+    display: block;
+}
+
   /* Responsive Design: */
 
 /* Smartphone */
 @media screen and (max-width: 500px) {
     #userInputDiv {
         flex-direction: column;
+    }
+    .selectionOutputSection {
+        display: block;
+        /* border:1px solid yellow; */
+    }
+    .selectionOutputSection h4, .selectionOutputSection h3 {
+        padding: 0.5rem 0 0.2rem 0;
+        text-indent: 1rem;
+        /* background-color: olive; */
+    }
+    .eachSectionDiv {
+        display: block;
+        /* border: 1px solid yellow; */
+        padding: 0.5rem;
+    }
+    
+    .eachPairDiv {
+        /* border: 1px solid blue; */
+    }
+    
+    .pairStitchesDiv {
+        display: block;
+        /* border: 1px solid orange; */
+    }
+    
+    .pairStitchesDiv p {
+        display: block;
+        /* border: 1px solid green */
     }
 }
 
@@ -248,6 +296,29 @@ fieldset {
     }
     .betweenMarkers {
         flex-wrap: wrap;
+    }
+    .selectionOutputSection {
+        display: block;
+        padding: 0.25rem;
+    }
+    
+    .eachSectionDiv {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .eachPairDiv {
+        margin: 0.25rem;
+        min-width: max-content;
+    }
+    
+    .pairStitchesDiv {
+        display: block;
+    }
+    
+    .pairStitchesDiv p {
+        display: block;
+        /* border: 2px solid green */
     }
 }
 
@@ -263,6 +334,36 @@ fieldset {
         flex-direction: column;        
         margin-top: 0.25rem;
     }
+
+    .selectionOutputSection {
+        display: block;
+        /* background-color: lavender; */
+        margin: 0.5rem 0 0.2rem 0;
+    }
+    .eachSectionDiv {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+   .eachPairDiv {
+       /* border: 2px dotted blue; */
+       margin: 0.2rem;
+       min-width: max-content;
+   }
+   
+   .pairStitchesDiv {
+       display: block;
+       /* border: 2px solid yellowgreen; */
+       font-size: 0.8rem;
+   }
+
+   .pairStitchesDiv p {
+    font-size: 1rem;
+    }
+   .pairStitchesDiv p {
+       display: block;
+       /* border: 2px solid green */
+   }
 }
 
 /* Desktop */
@@ -276,6 +377,34 @@ fieldset {
         flex-wrap: nowrap;
         margin-top: 0.25rem;
     }
+
+    .selectionOutputSection {
+        display: block;
+        /* background-color: lavender; */
+        /* border: 2px solid var(--color6); */
+    }
+    .eachSectionDiv {
+        display: flex;
+        flex-wrap: wrap;
+        border-style: none;
+    }
+
+    .selectionOutputSection h3 {
+        margin: 0.6rem 0 0.2rem 0;
+        text-indent: 1.5rem;
+    }
+   .eachPairDiv {
+       border: 1px solid var(--color6);
+       margin: 0.15rem;
+       padding: 0.25rem;
+       min-width: max-content;
+   }
+
+   .pairStitchesDiv {
+       display: block;
+       /* border: 2px solid yellowgreen; */
+       font-size: 0.8rem;
+   }
 }
 
 /* Big screen */
@@ -292,11 +421,45 @@ fieldset {
     }
       h3 {
         font-size: 1.5rem;
+        text-indent: 2rem;
       }
       h4 {
         font-size: 1.3rem;
+        /* text-indent: 1rem; */
+
       }
       .YCselection {
         font-size: 1rem;
       }
+
+      .selectionOutputSection {
+        display: block;
+        /* background-color: lavender; */
+        /* border: 2px solid var(--color6); */
+    }
+
+    .selectionOutputSection h3, .selectionOutputSection h4 {
+        margin: 1rem 0 0.5rem 0;
+    }
+    .eachSectionDiv {
+        display: flex;
+        flex-wrap: wrap;
+        /* border: 2px solid orange; */
+    }
+   .eachPairDiv {
+       /* border: 1px solid var(--color6); */
+       margin: 0.15rem;
+       padding: 0.25rem;
+       min-width: max-content;
+   }
+
+   .pairStitchesDiv {
+       display: block;
+       /* border: 2px solid yellowgreen; */
+       font-size: 0.8rem;
+   }
 }
+
+
+
+

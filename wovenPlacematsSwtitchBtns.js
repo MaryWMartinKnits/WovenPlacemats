@@ -228,22 +228,37 @@ function readValues () {
 function displaySelectedValues () {
     console.log('displaySelectedValues function executed');
     userInputDiv.classList.add('hidden');
-    let inputSelectionTitle = document.createElement('h2');
-    inputSelectionTitle.innerHTML = 'User Selection:';
+    let inputSelectionTitle = document.createElement('div');
+    inputSelectionTitle.innerHTML = `<h2> User selection: </h2>`;
+    // let inputSelectionTitle = document.createElement('h2');
+    // inputSelectionTitle.innerHTML = 'User Selection:';
+    inputSelectionTitle.classList.add('inputSelectionTitleDiv');
     outputDiv.appendChild(inputSelectionTitle);
     let pNumber = 0;
     let stNumber = 0
     let stDirection //
+    
     for (let i = 0; i < numberOfSections; i++) {
+
+        let sectionDiv = document.createElement('div');
+        sectionDiv.classList.add('selectionOutputSection');
+        outputDiv.appendChild(sectionDiv);
+
         let sNumber = i + 1;
         let sectionTitle = document.createElement('h3');
         sectionTitle.innerHTML = (`Section ${sNumber}`);
-        outputDiv.appendChild(sectionTitle);
+        sectionDiv.appendChild(sectionTitle);
+        let eachSectionDiv = document.createElement('div');
+        eachSectionDiv.classList.add('eachSectionDiv');
+        sectionDiv.appendChild(eachSectionDiv);
          for (let j = 0; j < numberofDEperSection; j++) {
             pNumber++
+            let eachPairDiv = document.createElement('div');
+            eachPairDiv.classList.add('eachPairDiv');
+            eachSectionDiv.appendChild(eachPairDiv);
             let pairNumberOutputTitle = document.createElement('h4');
             pairNumberOutputTitle.innerHTML = (`   Pair ${pNumber}`);
-            outputDiv.appendChild(pairNumberOutputTitle);
+            eachPairDiv.appendChild(pairNumberOutputTitle);
             let leftText = 'Left';
             let rightText = 'Right';
             // let cableDirectionANDColor = document.createElement('p')
@@ -252,40 +267,42 @@ function displaySelectedValues () {
                 while (condition == counter) {
                     // let cableDirectionANDColor = document.createElement('p')
                     console.log('counter = ' + counter)
+                    let pairStitchesDiv = document.createElement('div');
+                    pairStitchesDiv.classList.add('pairStitchesDiv');
+                    eachPairDiv.appendChild(pairStitchesDiv);
                     if (userSelectionArray[stNumber].direction = 'right') {
+                        let stitchSection = document.createElement('div');
+                        stitchSection.classList.add('stitchSection');
+                        pairStitchesDiv.appendChild(stitchSection);
+
                         let cableDirectionANDColor = document.createElement('p')
 
                         console.log(`right ${stNumber+1}`);
                         stDirection = rightText;
                         cableDirectionANDColor.innerHTML = 
                         `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-                        outputDiv.appendChild(cableDirectionANDColor);
+                        stitchSection.appendChild(cableDirectionANDColor);
                         stNumber++
                         // counter++
                      }
                      if (userSelectionArray[stNumber].direction = 'left') {
+                        let stitchSection = document.createElement('div');
+                        stitchSection.classList.add('stitchSection');
+                        pairStitchesDiv.appendChild(stitchSection);
+
                         let cableDirectionANDColor = document.createElement('p')
 
                         console.log(`left ${stNumber+1}`)
                         stDirection = leftText
                         cableDirectionANDColor.innerHTML = 
                         `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-                        outputDiv.appendChild(cableDirectionANDColor);
+                        stitchSection.appendChild(cableDirectionANDColor);
                         stNumber++
                         counter++
                      }
-                    //  outputDiv.appendChild(cableDirectionANDColor);
 
-                }
-                // outputDiv.appendChild(cableDirectionANDColor);
 
-                // cableDirectionANDColor.innerHTML = (`<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>`) ;
-                // stNumber++
-                
-                // cableDirectionANDColor.innerHTML = (`<strong>${leftORrightText}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>`) ;
-
-            // }
-            
+                }      
 
         }
     }
