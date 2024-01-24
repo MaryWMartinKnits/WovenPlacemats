@@ -79,9 +79,18 @@ footer {
     display: flex;
 }
 
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+.disabledBtn {
+    background-color: rgb(180, 169, 187);
+    border-color: var(--color6);
+    color: var(--color7);
+}
+
 .betweenMarkers {
     display: flex;
-    /* flex-direction: column; */
 
 }
 
