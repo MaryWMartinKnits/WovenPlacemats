@@ -5,7 +5,11 @@
 let windowWidth;
 let screenDisplay;
 
+let allYCbuttons = [];
 let YCselectionButtons = [];
+let allYCcheckboxes
+let firedCheckboxID;
+let checkboxClassList;
 let YCparentDiv;
 let YCultimateParent;
 
@@ -81,20 +85,17 @@ function init() {
 
 function getDOMelements () {
     console.log('function getDOMelements executed');
-    // YCselectionButtons = document.querySelectorAll('.YCselection');
     outputDiv = document.querySelector('#outputDiv')
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
     readValuesBtn = document.querySelector('#readValues');
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
-    YCselectionButtons = document.querySelectorAll('.YCselection');
-    createInputSection(); //
+    createInputSection(); 
+    createYCselectionButtons()
     addEventListeners ();
+    YCselectionButtons = document.querySelectorAll('.selected');
 
 }
-
-
-// createBetweenMarkersDiv.appendChild(breakingPoint);
 
 function createInputSection () {
     console.log('createInputSection function executed');
@@ -105,40 +106,41 @@ function createInputSection () {
 
 function createBetweenMarkersDiv() {
     console.log('createBetweenMarkersDiv function executed');
-    
-    
     betweenMarkersDiv = document.createElement('div');
     betweenMarkersDiv.innerHTML = '';
     betweenMarkersDiv.classList.add('section', 'betweenMarkers')
     userInputDiv.appendChild(betweenMarkersDiv);
     for (let i = 0; i < numberofDEperSection; i++) {
-        console.log('for loop inside createBerweenMarkersDiv function, i = ' + i);
+        // console.log('for loop inside createBerweenMarkersDiv function, i = ' + i);
         pairClass = `pair${pairNumber}`;
         sectionClass = `section${sectionNumber}`;
         let fieldset = document.createElement('fieldset');
         fieldset.innerHTML = (`
             <div class="pairNumber"><h3> Pair ${pairNumber} </h3></div>
             <div class="leftANDright">
-            <div class="pairRight"> <div class="pairTitle"> <h4> Right </h4>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
-            <div class="pairLeft">  <div class="pairTitle"> <h4> Left   </h4> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
+            <div class="pairRight"> <div class="pairTitle"> <h4> Right </h4>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value='noneSelected'> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
+            <div class="pairLeft">  <div class="pairTitle"> <h4> Left   </h4> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
             </div> `)
         betweenMarkersDiv.appendChild(fieldset);
-        console.log('pair number: ' + pairNumber);
+        // console.log('pair number: ' + pairNumber);
         if (DE % 2 !== 0) {
             pairNumber++
         }
-        console.log('section number: ' + sectionNumber)
+        // console.log('section number: ' + sectionNumber)
     }
-
     sectionNumber++
+}
+
+function createYCselectionButtons () {
+    // allYCbuttons = document.querySelectorAll('.YCselection');
+    allYCcheckboxes = document.querySelectorAll('.YCcheckbox');
 }
 
 function addEventListeners () {
     console.log('function addEventListeners executed');
-    for (let i = 0; i < YCselectionButtons.length; i++) {
-        // YCselectionButtons[i].addEventListener('change', changeColorSelection(YCselectionButtons[i]));
-        YCselectionButtons[i].addEventListener('change', changeColorSelection);
-
+    for (let i = 0; i < allYCcheckboxes.length; i++) {
+        // allYCcheckboxes[i].addEventListener('change', changeColorSelection)
+        allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
     }
     getUserSelectionBtn.addEventListener('click', getUserSelection);
     readValuesBtn.addEventListener('click', readValues);
@@ -146,13 +148,23 @@ function addEventListeners () {
     algorithmBtn.addEventListener('click', WovenPlacematSetUpRow1);
 }
 
- function changeColorSelection (checkedYC) {
-     console.log('changeColorSelection function executed');
-     console.log('checkedYC: ')
-     console.log(checkedYC);
-     firedButton = checkedYC
-     // firedButton.classList.add('selected');
- }
+function changeColorSelection (checkedYC) {
+    console.log('changeColorSelection function executed for: ');
+    console.log(checkedYC);
+    firedCheckboxID = event.target.id;
+    checkedYC = document.querySelector('#'+firedCheckboxID);
+    // console.log(checkedYC);
+    if (checkedYC.checked) {
+        checkedYC.value = 'CCselected';
+        checkedYC.classList.add('CCselected')
+        checkedYC.classList.remove('MCselected')
+    } else {
+        checkedYC.value = 'MCselected';
+        checkedYC.classList.add('MCselected')
+        checkedYC.classList.remove('CCselected')
+    }
+    // console.log(checkedYC.value);
+}
 
 function displayWindowWidth () {
     if (window.innerWidth > 1028) {
@@ -173,31 +185,22 @@ function displayWindowWidth () {
 function getUserSelection () {
     console.log('getUserSelection function executed')
     // create an array of selected buttons as objects with properties:
-    let y = 0;
-    for (let i = 0; i < YCselectionButtons.length; i++) {
-        console.log('1st for loop: [i = ' + i + ']' );
-        buttonsClassList = YCselectionButtons[i].classList
-        // console.log('y: ' + y);
-        if (buttonsClassList.contains('selected')) {
-            console.log('selected');
-            let thisObject = {};
-            thisObject['section'] = YCselectionButtons[i].classList[1];
-            thisObject['pairNumber'] = YCselectionButtons[i].classList[2];
-            thisObject['direction'] = YCselectionButtons[i].classList[3];
-            thisObject['yarnColor'] = YCselectionButtons[i].classList[4];
-            thisObject['selection'] = YCselectionButtons[i].classList[5];
-            userSelectionArray.push(thisObject);
-            console.log('userSelectionArray =');
-            console.log(userSelectionArray);
-            y++
+    for (let i = 0; i < allYCcheckboxes.length; i++) {
+        checkboxClassList = allYCcheckboxes[i].classList;
+        let thisObject = {};
+        thisObject['section'] = allYCcheckboxes[i].classList[1];
+        thisObject['pairNumber'] = allYCcheckboxes[i].classList[2];
+        thisObject['direction'] = allYCcheckboxes[i].classList[3];
+        if (checkboxClassList.contains('CCselected')) {
+             thisObject['yarnColor'] = 'CC';
+        } else if (checkboxClassList.contains('MCselected')) {
+            thisObject['yarnColor'] = 'MC';
+        } else {
+            thisObject['yarnColor'] = 'MC';
         }
+        userSelectionArray.push(thisObject);
     }
-    for (let i = 0; i < userSelectionArray.length; i++) {
-        console.log('userSelectionArray[' + i +']:');
-        console.log('pairNumber: ' + userSelectionArray[i].pairNumber);
-        console.log('direction: ' + userSelectionArray[i].direction);
-        console.log('yarnColor: ' + userSelectionArray[i].yarnColor);
-    }
+    console.log(userSelectionArray);
 }
 
 function readValues () {
