@@ -40,8 +40,6 @@ let pairNumber = 1;
     let pairClass = `pair${pairNumber}`;
     let userInputDiv = document.querySelector('#userInputDiv');
     let betweenMarkersDiv = document.createElement('div');
-    betweenMarkersDiv.classList.add('section', 'betweenMarkers');
-    // let fieldset = document.createElement('fieldset');
     let pairNumberDiv = document.createElement('div');
     pairNumberDiv.classList.add('pairNumberDiv');
     let pairNumberTitle = document.createElement('h3');
@@ -66,7 +64,6 @@ let pairNumber = 1;
     let label = document.createElement('label');
     label.classList.add('switch');
     let input = document.createElement('input');
-    //need to add input type="checkbox"
     let span = document.createElement('span');
     span.classList.add('slider', 'round');
 
@@ -108,11 +105,17 @@ function createInputSection () {
 
 function createBetweenMarkersDiv() {
     console.log('createBetweenMarkersDiv function executed');
-    // let betweenMarkersCollection = document.querySelectorAll('.section');
+    
+    
+    betweenMarkersDiv = document.createElement('div');
+    betweenMarkersDiv.innerHTML = '';
+    betweenMarkersDiv.classList.add('section', 'betweenMarkers')
     userInputDiv.appendChild(betweenMarkersDiv);
     for (let i = 0; i < numberofDEperSection; i++) {
         console.log('for loop inside createBerweenMarkersDiv function, i = ' + i);
-    let fieldset = document.createElement('fieldset');
+        pairClass = `pair${pairNumber}`;
+        sectionClass = `section${sectionNumber}`;
+        let fieldset = document.createElement('fieldset');
     fieldset.innerHTML = (`
             <div class="pairNumber"><h3> Pair ${pairNumber} </h3></div>
             <div class="leftANDright">
@@ -125,7 +128,9 @@ function createBetweenMarkersDiv() {
                 pairNumber++
             }
             console.log('section number: ' + sectionNumber)
+
     }
+    DE++
 
 
 
@@ -135,63 +140,43 @@ function createBetweenMarkersDiv() {
 function createFieldset () {       
 
     console.log('createFieldset function executed');
-    sectionClass = `section${sectionNumber}`;
-    pairClass = `pair${pairNumber}`;
-    //         fieldset.innerHTML = (`
-    //         <div class="pairNumber"><h3> Pair ${pairNumber} </h3></div>
-    //         <div class="leftANDright">
-    //         <div class="pairRight"> <div class="pairTitle"> <h4> Right </h4>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
-    //         <div class="pairLeft">  <div class="pairTitle"> <h4> Left   </h4> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
-    //         </div> `)
-    //         console.log('pair number: ' + pairNumber);
-    //         if (DE % 2 !== 0) {
-    //             pairNumber++
-    //         }
-    //         console.log('section number: ' + sectionNumber)
-            
-    // // betweenMarkersDiv.append(fieldset);
-    // // fieldset.append(pairNumberDiv);
-    // // pairClass = 'Pair'+DE;
-    // // pairNumberTitle.innerHTML = 'Pair ' + DE;
-    // // pairNumberDiv.append(pairNumberTitle);
-    // // fieldset.append(leftANDrightDiv);
-    // // createRightStitch();
-    // // createLeftStitch();
-    // DE++
+    // sectionClass = `section${sectionNumber}`;
+    // pairClass = `pair${pairNumber}`;
        
 
 }
 
-function createRightStitch () {
-    console.log('createRightStitch function executed');
-    // Right
-    leftANDrightDiv.append(pairRightDiv)
-    pairRightDiv.append(rightTitle);
-    pairRightDiv.append(switchBtnDiv);
-    // switchBtnDiv.append(MCoption);
-    // MCoption.classList.add(sectionClass, pairClass, 'right');
-    // switchBtnDiv.append(label);
-    // label.append(input);
-    // label.append(span);
-    // switchBtnDiv.append(CCoption)
-    // CCoption.classList.add(sectionClass, pairClass, 'right')
-}
+// function createRightStitch () {
+//     console.log('createRightStitch function executed');
+//     // Right
+//     leftANDrightDiv.append(pairRightDiv)
+//     pairRightDiv.append(rightTitle);
+//     pairRightDiv.append(switchBtnDiv);
+//     //  switchBtnDiv.append(MCoption);
+//     // MCoption.classList.add(sectionClass, pairClass, 'right');
+//     // switchBtnDiv.append(label);
+//     // label.append(input);
+//     // label.append(span);
+//     // switchBtnDiv.append(CCoption)
+//         // MCoption.classList.add(sectionClass, pairClass, 'right');
+//     // CCoption.classList.add(sectionClass, pairClass, 'right')
+// }
 
-function createLeftStitch () {
-    console.log('createLeftStitch function executed');
-    // Left
-    leftANDrightDiv.appendChild(pairLeftDiv)
-    pairLeftDiv.appendChild(leftTitle);
-    pairLeftDiv.appendChild(switchBtnDiv);
-    switchBtnDiv.appendChild(MCoption);
-    MCoption.classList.add(sectionClass, pairClass, 'left');
-    switchBtnDiv.appendChild(label);
-    label.appendChild(input);
-    label.appendChild(span);
-    switchBtnDiv.appendChild(CCoption)
-    CCoption.classList.add(sectionClass, pairClass, 'left')
+// function createLeftStitch () {
+//     console.log('createLeftStitch function executed');
+//     // Left
+//     leftANDrightDiv.appendChild(pairLeftDiv)
+//     pairLeftDiv.appendChild(leftTitle);
+//     pairLeftDiv.appendChild(switchBtnDiv);
+//     switchBtnDiv.appendChild(MCoption);
+//     MCoption.classList.add(sectionClass, pairClass, 'left');
+//     switchBtnDiv.appendChild(label);
+//     label.appendChild(input);
+//     label.appendChild(span);
+//     switchBtnDiv.appendChild(CCoption)
+//     CCoption.classList.add(sectionClass, pairClass, 'left')
 
-}
+// }
 
 function addEventListeners () {
     console.log('function addEventListeners executed');
@@ -217,11 +202,13 @@ function addEventListeners () {
 function displayWindowWidth () {
     if (window.innerWidth > 1028) {
         screenDisplay = "BIG screen";
-    } else if (window.innerWidth > 788) {
+    } else if (window.innerWidth > 976) {
         screenDisplay = 'Desktop';
-    } else if (window.innerWidth > 645) {
-        screenDisplay = 'Tablet'
-    } else {
+    } else if (window.innerWidth > 746) {
+        screenDisplay = 'BIG Tablet'
+    }  else if (window.innerWidth > 500) {
+    screenDisplay = 'small Tablet'
+    }  else {
         screenDisplay = 'Smartphone'
     }
     windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
