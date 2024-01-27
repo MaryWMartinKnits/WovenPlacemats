@@ -4,6 +4,8 @@
 
 let windowWidth;
 let screenDisplay;
+let begOfPage;
+let userInputTitle;
 
 let allYCbuttons = [];
 let YCselectionButtons = [];
@@ -24,6 +26,7 @@ let firedButton;
 let selectedYarnColors;
 
 let displayValuesBtn;
+let setUpRowsDiv;
 
 
 
@@ -94,11 +97,13 @@ function init() {
 
 function getDOMelements () {
     console.log('function getDOMelements executed');
+    begOfPage = document.querySelector('#begOfPage')
     outputDiv = document.querySelector('#outputDiv')
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
     displayValuesBtn = document.querySelector('#displayValues');
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
+    setUpRowsDiv = document.querySelector('#setUpRows');
     createInputSection(); 
     createYCselectionButtons()
     addEventListeners ();
@@ -108,40 +113,45 @@ function getDOMelements () {
 
 function createInputSection () {
     console.log('createInputSection function executed');
+    userInputTitle = document.createElement('h2');
+    userInputTitle.innerHTML = 'User Input:';
+    begOfPage.appendChild(userInputTitle);
     for (let i = 0; i < numberOfSections; i++) {
-        createBetweenMarkersDiv();
-    }
-}
+        let wholeSection = document.createElement('div');
+        userInputDiv.appendChild(wholeSection);
+        let sectionSection = document.createElement('div');
+        sectionSection.classList.add ('sectionTitle');
+        sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
+        wholeSection.appendChild(sectionSection);
 
-function createBetweenMarkersDiv() {
-    console.log('createBetweenMarkersDiv function executed');
-    betweenMarkersDiv = document.createElement('div');
-    betweenMarkersDiv.innerHTML = '';
-    betweenMarkersDiv.classList.add('section', 'betweenMarkers')
-    userInputDiv.appendChild(betweenMarkersDiv);
-    for (let i = 0; i < numberofDEperSection; i++) {
-        // console.log('for loop inside createBerweenMarkersDiv function, i = ' + i);
-        pairClass = `pair${pairNumber}`;
-        sectionClass = `section${sectionNumber}`;
-        let fieldset = document.createElement('fieldset');
-        fieldset.innerHTML = (`
-            <div class="pairNumber"><h3> Pair ${pairNumber} </h3></div>
-            <div class="leftANDright">
-            <div class="pairRight"> <div class="pairTitle"> <h4> Right </h4>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value='noneSelected'> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
-            <div class="pairLeft">  <div class="pairTitle"> <h4> Left   </h4> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
-            </div> `)
-        betweenMarkersDiv.appendChild(fieldset);
-        // console.log('pair number: ' + pairNumber);
-        if (DE % 2 !== 0) {
-            pairNumber++
+        betweenMarkersDiv = document.createElement('div');
+        betweenMarkersDiv.innerHTML = '';
+        // betweenMarkersDiv.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`
+        betweenMarkersDiv.classList.add('section', 'betweenMarkers')
+        wholeSection.appendChild(betweenMarkersDiv);
+        for (let i = 0; i < numberofDEperSection; i++) {
+            // console.log('for loop inside createBerweenMarkersDiv function, i = ' + i);
+            pairClass = `pair${pairNumber}`;
+            sectionClass = `section${sectionNumber}`;
+            let fieldset = document.createElement('fieldset');
+            fieldset.innerHTML = (`
+                <div class="pairNumber"><h4> Pair ${pairNumber} </h4></div>
+                <div class="leftANDright">
+                <div class="pairRight"> <div class="pairTitle"> <h5> Right </h5>  </div><div class="switchBtnDiv">  <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value='noneSelected'> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p></div></div>
+                <div class="pairLeft">  <div class="pairTitle"> <h5> Left   </h5> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
+                </div> `)
+            betweenMarkersDiv.appendChild(fieldset);
+            // console.log('pair number: ' + pairNumber);
+            if (DE % 2 !== 0) {
+                pairNumber++
+            }
+            // console.log('section number: ' + sectionNumber)
         }
-        // console.log('section number: ' + sectionNumber)
+        sectionNumber++
     }
-    sectionNumber++
 }
 
 function createYCselectionButtons () {
-    // allYCbuttons = document.querySelectorAll('.YCselection');
     allYCcheckboxes = document.querySelectorAll('.YCcheckbox');
 }
 
@@ -180,7 +190,8 @@ function displayWindowWidth () {
         screenDisplay = "BIG screen";
     } else if (window.innerWidth > 976) {
         screenDisplay = 'Desktop';
-    } else if (window.innerWidth > 746) {
+    } else if (window.innerWidth > 776) {
+    // } else if (window.innerWidth > 746) {
         screenDisplay = 'BIG Tablet'
     }  else if (window.innerWidth > 500) {
     screenDisplay = 'small Tablet'
@@ -219,7 +230,9 @@ function getUserSelection () {
 
 function displaySelectedValues () {
     console.log('displaySelectedValues function executed');
+    userInputTitle.classList.add('hidden');
     userInputDiv.classList.add('hidden');
+    outputDiv.classList.remove('hidden');
     let inputSelectionTitle = document.createElement('div');
     inputSelectionTitle.innerHTML = `<h2> User selection: </h2>`;
     // let inputSelectionTitle = document.createElement('h2');
@@ -352,7 +365,7 @@ function WovenPlacematSetUpRow1 () {
                 }
             } else if ( previousStitchSection !== thisSection) {
                 console.log(`Section: ${thisSection} should be different`);
-                newcounter++;
+                // newcounter++;
                 if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
                     if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
                         DEstitchCount = DEstitchCount + 2;
