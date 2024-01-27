@@ -25,16 +25,7 @@ let selectedYarnColors;
 
 let displayValuesBtn;
 
-let outputDiv;
-let getSetUpRowsBtn;
-let algorithmBtn;
-let middleSections = '';
-let SetUpRow1 = '';
-let beg = ' beginning of pattern '
-let end = ' end of pattern.'
-let DEstitchCount = 0
-let originalStitchCount = 85 //number of sts to begin with, I think it's 85. Have to check this!
-// let DE;
+
 
 let DE = 1;
 let pairNumber = 1;
@@ -72,13 +63,27 @@ let pairNumber = 1;
     let input = document.createElement('input');
     let span = document.createElement('span');
     span.classList.add('slider', 'round');
-
-let kfb = ' kfb ';
-let cero_into_one = ' 0-into-1 '
-let ktbl1 = ' ktbl ';
-let m1L = ' m1L ';
-let purlStitchCount = 0 // might have to initialize it at another value depending on pattern. Check this!
-// let purl = purlStitchCount
+    let outputDiv;
+    let getSetUpRowsBtn;
+    let algorithmBtn;
+    let middleSections = '';
+    let SetUpRow1 = '';
+    let beg = ' Set up row 1 (with MC): beginning of pattern,  '; //  change beeggining of pattern for however the set up row starts
+    let end = ' pm, end of pattern.';
+    let placeMarker = ' <strong> pm </strong>, ';
+    // let placeMarker = ' pm, ';
+    let slipMarker = ' <strong> sm </strong>, ';
+    // let slipMarker = ' sm, ';
+    let DEstitchCount = 0
+    let originalStitchCount = 85 //number of sts to begin with, I think it's 85. Have to check this!
+    let kfb = ' kfb, ';
+    let p2 = ' p2, '
+    let cero_into_one = ' 0-into-1, ';
+    let ktbl1 = ' ktbl, ';
+    let m1L = ' m1L, p1?, ';
+    let purlStitchCount = 0 // might have to initialize it at another value depending on pattern. Check this!
+    let purl = ' p, '
+    let saveEndOfSection;
 
 window.onload = init();
 
@@ -313,54 +318,71 @@ function WovenPlacematSetUpRow1 () {
             } else {
                 previousStitchSection = userSelectionArray[i];
             }
-            
+            let newcounter = 0;
+            let counter = 1;
             if (previousStitchSection == thisSection) {
+                 if (counter == newcounter) {
+                     console.log('counter: ' + counter)
+                     console.log('newcounter: ' + newcounter)
+                     middleSections = middleSections + saveEndOfSection;
+                 }
                 console.log(`Section: ${thisSection}`);
                 if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
                     if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
                         DEstitchCount++;
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + kfb);
                         DE = kfb;
-                        middleSections = middleSections + DE
+                        middleSections = middleSections + DE + p2
                     } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
                         DE = ktbl1;
-                        middleSections = middleSections + DE
+                        middleSections = middleSections + DE + p2
                     }
                 } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
                     if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
                         purlStitchCount++;
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + 'p1' + ' / purlStitchCount = ' + purlStitchCount);
                         // return purlStitchCount;
-                        middleSections = middleSections + 'p' //+ purlStitchCount
+                        middleSections = middleSections + p2 + purl
                     } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + ktbl1);
                         DE = ktbl1;
-                        middleSections = middleSections + DE
+                        middleSections = middleSections + DE + p2
                     }
                 }
             } else if ( previousStitchSection !== thisSection) {
+                console.log(`Section: ${thisSection} should be different`);
+                newcounter++;
                 if (userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'MC') {
                     if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
                         DEstitchCount = DEstitchCount + 2;
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + cero_into_one);
                         DE = cero_into_one;
+                        saveEndOfSection = DE + p2 + placeMarker;
+                        // middleSections = middleSections + DE + p2
                     } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
                         DEstitchCount++;
-                        console.log('stitch count = ' + DEstitchCount + ' ; ' + m1L);
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + m1L + p2);
                         DE = m1L;
-                        middleSections = middleSections + DE
+                        saveEndOfSection = DE + p2 + placeMarker ;
+                        // middleSections = middleSections + DE + p2
                     }
                 } else if ((userSelectionArray[i].direction == 'right' && userSelectionArray[i].yarnColor == 'CC')) {
                     if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'CC') {
-                        
+                        console.log('stitch count = ' + DEstitchCount + ' ; ' + 'p1');
+                        saveEndOfSection = DE + p2 + placeMarker;
+                        // middleSections = middleSections + purl + p2;
                     } else if (userSelectionArray[i+1].direction == 'left' && userSelectionArray[i+1].yarnColor == 'MC') {
                         DEstitchCount++;
                         console.log('stitch count = ' + DEstitchCount + ' ; ' + m1L);
                         DE = m1L;
-                        middleSections = middleSections + DE
+                        saveEndOfSection = DE + p2 + placeMarker;
+                        // middleSections = middleSections + DE + p2
                     }
+                    
                 }
+               
+                // middleSections = middleSections + placeMarker
             }
         }
 
