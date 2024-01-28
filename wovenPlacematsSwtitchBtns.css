@@ -19,6 +19,7 @@
 
 body {
     background-color: var(--color5);
+    /* background-color: var(--color7); */
 }
 
 main {
@@ -87,7 +88,7 @@ footer {
 .disabledBtn {
     background-color: rgb(180, 169, 187);
     border-color: var(--color6);
-    color: var(--color7);
+    color: var(--color7); /*7->5*/
 }
 
 .betweenMarkers {
@@ -213,7 +214,7 @@ fieldset {
     width: 1em;
     left: 0.25em;
     bottom: 0.25em;
-    background-color: var(--color7);
+    background-color: var(--color7); /* 7 -> 5*/
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -325,7 +326,6 @@ fieldset {
     
     .pairStitchesDiv p {
         display: block;
-        /* border: 2px solid green */
     }
 }
 
@@ -344,7 +344,6 @@ fieldset {
 
     .selectionOutputSection {
         display: block;
-        /* background-color: lavender; */
         margin: 0.5rem 0 0.2rem 0;
     }
     .eachSectionDiv {
@@ -353,14 +352,12 @@ fieldset {
 
     }
    .eachPairDiv {
-       /* border: 2px dotted blue; */
        margin: 0.2rem;
        min-width: max-content;
    }
    
    .pairStitchesDiv {
        display: block;
-       /* border: 2px solid yellowgreen; */
        font-size: 0.8rem;
    }
 
@@ -369,7 +366,6 @@ fieldset {
     }
    .pairStitchesDiv p {
        display: block;
-       /* border: 2px solid green */
    }
 }
 
@@ -387,7 +383,6 @@ fieldset {
 
     .selectionOutputSection {
         display: block;
-        /* background-color: lavender; */
         /* border: 2px solid var(--color6); */
     }
     .eachSectionDiv {
@@ -409,7 +404,6 @@ fieldset {
 
    .pairStitchesDiv {
        display: block;
-       /* border: 2px solid yellowgreen; */
        font-size: 0.8rem;
    }
 }
@@ -441,8 +435,6 @@ fieldset {
 
       .selectionOutputSection {
         display: block;
-        /* background-color: lavender; */
-        /* border: 2px solid var(--color6); */
     }
 
     .selectionOutputSection h3, .selectionOutputSection h4 {
@@ -451,10 +443,8 @@ fieldset {
     .eachSectionDiv {
         display: flex;
         flex-wrap: wrap;
-        /* border: 2px solid orange; */
     }
    .eachPairDiv {
-       /* border: 1px solid var(--color6); */
        margin: 0.15rem;
        padding: 0.25rem;
        min-width: max-content;
@@ -462,10 +452,80 @@ fieldset {
 
    .pairStitchesDiv {
        display: block;
-       /* border: 2px solid yellowgreen; */
        font-size: 0.8rem;
    }
 }
+.colorCoding0 h3, .colorCoding1 h3, .colorCoding2 h3, .colorCoding3 h3 {
+    padding: 0.2rem;
+    padding-right: 1.5rem;
+    border-radius: 0.5rem;
+    color: var(--color2);
+}
+.colorCoding0  h3{
+    /* background-color: #6096ba; */
+    background-color: #5f0f40; /*Tyrian purple*/
+    
+    color: var(--color6);
+}
+
+.colorCoding1  h3{
+    /* background-color: #bb8588; */
+    background-color: #84a98c;
+    
+}
+
+.colorCoding2  h3{
+    /* background-color: #84a98c; */
+    /* background-color: #bb8588; */
+    /* background-color: #5f0f40; */
+    background-color: #274c77;
+    color: var(--color6);
+}
+
+.colorCoding3  h3{
+    background-color: #bb8588 ; /* Old rose*/
+    background-color: #D39295;
+}
+
+.kk {
+    color: #274c77;
+    color: #84a98c;
+    color: #52796f;
+    color: #6f1d1b;
+    color: #99582a;
+    color: #9a8c98;
+    color: #8b8c89;
+    color: #6096ba;
+    color: #274c77;
+    color: #0f4c5c;
+    color: #5f0f40;
+    color: #9a031e;
+    color: #bb8588;
+} 
+
+.colorCoding0 p { 
+    color: #5f0f40; /*Tyrian purple*/
+    font-weight: bold;
+}
+
+.colorCoding1 p { 
+    color: #84a98c; 
+    font-weight: bold;
+}
+
+.colorCoding2 p { 
+    color: #274c77; 
+    font-weight: bold;
+}
+
+.colorCoding3 p { 
+    color: #bb8588; /* Old rose*/
+    font-weight: bold;
+}
+
+
+
+
 
 
 

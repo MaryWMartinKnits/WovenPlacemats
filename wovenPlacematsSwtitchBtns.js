@@ -6,6 +6,7 @@ let windowWidth;
 let screenDisplay;
 let begOfPage;
 let userInputTitle;
+let colorCode;
 
 let allYCbuttons = [];
 let YCselectionButtons = [];
@@ -73,9 +74,9 @@ let middleSections = '';
 let SetUpRow1 = '';
 let beg = ' Set up row 1 (with MC): beginning of pattern,  '; //  change beeggining of pattern for however the set up row starts
 let end = ' end of pattern. ';
-let placeMarker = ' <strong> pm </strong>, ';
+let placeMarker = ' <strong> pm, </strong> ';
 // let placeMarker = ' pm, ';
-let slipMarker = ' <strong> sm </strong>, ';
+let slipMarker = ' <strong> sm, </strong> ';
 // let slipMarker = ' sm, ';
 let DEstitchCount = 0
 let originalStitchCount = 85 //number of sts to begin with, I think it's 85. Have to check this!
@@ -84,7 +85,7 @@ let p2 = ' p2, '
 let cero_into_one = ' 0-into-1, ';
 let ktbl1 = ' ktbl, ';
 let m1L = 'm1L, ';
-let purlStitchCount = 0 // might have to initialize it at another value depending on pattern. Check this!
+let purlStitchCount = 0// might have to initialize it at another value depending on pattern. Check this!
 let purl = ' p, '
 let saveEndOfSection;
 
@@ -116,18 +117,28 @@ function createInputSection () {
     userInputTitle = document.createElement('h2');
     userInputTitle.innerHTML = 'User Input:';
     begOfPage.appendChild(userInputTitle);
+    let code = 0;
     for (let i = 0; i < numberOfSections; i++) {
         let wholeSection = document.createElement('div');
         userInputDiv.appendChild(wholeSection);
         let sectionSection = document.createElement('div');
         sectionSection.classList.add ('sectionTitle');
+
         sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
         wholeSection.appendChild(sectionSection);
-
         betweenMarkersDiv = document.createElement('div');
         betweenMarkersDiv.innerHTML = '';
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
+
+        colorCode = `colorCoding${code}`
+        code ++
+        if (code == numberofDEperSection) {
+            code = 0
+        }
+        sectionSection.classList.add(`${colorCode}`)
+
         wholeSection.appendChild(betweenMarkersDiv);
+        
         for (let i = 0; i < numberofDEperSection; i++) {
             pairClass = `pair${pairNumber}`;
             sectionClass = `section${sectionNumber}`;
@@ -304,44 +315,58 @@ function wovenPlacematSetUpRow1 () {
         for (let k = 0; k < numberofDEperSection ; k++) { // 4 
             console.log(`k: ${k}`)
             console.log(userSelectionArray[counter])
-            if (k == 3) {
-                console.log(`changing sections? ${k}`)
+            if (k == numberofDEperSection-1) { // last st pair of each section
+                console.log(`changing sections:`)
                 if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'MC') {
                     if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
+                        purlStitchCount = 0;
                         DE = cero_into_one;
                         DEstitchCount = DEstitchCount + 2
+                        purlStitchCount = purlStitchCount + 2;
                     } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
+                        purlStitchCount = 0;
                         DE = m1L;
+                        purlStitchCount = purlStitchCount + 2;
                     }
                 } else if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'CC') {
                     if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
                         DE = '';
+                        purlStitchCount = purlStitchCount + 2;
 
                     } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
+                        purlStitchCount = 0;
                         DE = m1L;
+                        purlStitchCount = 2;
                     }
                 }      
             
-                middleSections = middleSections + DE + placeMarker;
+                middleSections = middleSections + DE + `p${purlStitchCount}, ` + placeMarker;
             } else {
                 if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'MC') {
                     if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
                         if (userSelectionArray[counter+1].section == userSelectionArray[counter+2].section) {
+                            purlStitchCount = 0;
                             DE = kfb;
                             DEstitchCount++
-                            console.log()
+                            purlStitchCount = purlStitchCount + 2;
+
                         } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
-                        DE = ktbl1;
+                            purlStitchCount = 0
+                            DE = ktbl1;
+                            purlStitchCount = purlStitchCount + 2
                         }
                     } else if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'CC') {
                         if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
-                            DE = purl;
+                            DE = ''; // p1
+                            purlStitchCount = purlStitchCount + 3
     
-                            } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
+                        } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
+                            purlStitchCount = 0
                             DE = ktbl1;
-                            }
+                            purlStitchCount = purlStitchCount + 2
+                        }
                     }      
-                    middleSections = middleSections + DE;      
+                    middleSections = middleSections + DE + `p${purlStitchCount}, `;      
                 }
             }
 
