@@ -459,32 +459,33 @@ fieldset {
     padding: 0.2rem;
     padding-right: 1.5rem;
     border-radius: 0.5rem;
-    color: var(--color1);
+    /* color: var(--color1); */
+    color: var(--color6);
 }
 .colorCoding0  h3{
-    background-color: #5f0f40; /*Tyrian purple*/
-    /* background-color:red; */
-    color: var(--color6);
+    /* background-color: #5f0f40;  */
+    background-color:#ff000088;
+    /* color: var(--color6); */
 }
 
 .colorCoding1  h3{
     /* background-color: #bb8588; */
-    background-color: #84a98c;
-   /* background-color: green;  */
-   color: var(--color6);
+    /* background-color: #84a98c; */
+   background-color: #00800088; 
+   /* color: var(--color6); */
 }
 
 .colorCoding2  h3{
-    background-color: #274c77;
-    color: var(--color6);
-    /* background-color: blue; */
+    /* background-color: #274c77; */
+    /* color: var(--color6); */
+    background-color: #0000ff88;
 }
 
 .colorCoding3  h3{
-    background-color: #bb8588 ; /* Old rose*/
-    background-color: #D39295;
-    /* background-color: purple; */
-    color: var(--color7);
+    /* background-color: #bb8588 ;  Old rose
+    background-color: #D39295; */
+    background-color: #80008088;
+    /* color: var(--color7); */
 }
 
 .kk {
@@ -502,35 +503,3 @@ fieldset {
     color: #9a031e;
     color: #bb8588;
 } 
-
-.colorCoding0 p { 
-    color: #5f0f40; /*Tyrian purple*/
-    font-weight: bold;
-    /* color: red; */
-}
-
-.colorCoding1 p { 
-    color: #84a98c; 
-    font-weight: bold;
-    /* color: green; */
-}
-
-.colorCoding2 p { 
-    color: #274c77; 
-    font-weight: bold;
-    /* color: blue; */
-}
-
-.colorCoding3 p { 
-    color: #bb8588; /* Old rose*/
-    font-weight: bold;
-    /* color: purple; */
-}
-
-
-
-
-
-
-
-

@@ -245,11 +245,19 @@ function displaySelectedValues () {
     let pNumber = 0;
     let stNumber = 0
     let stDirection //
-    
+    let code = 0;
     for (let i = 0; i < numberOfSections; i++) {
 
         let sectionDiv = document.createElement('div');
         sectionDiv.classList.add('selectionOutputSection');
+        
+        colorCode = `colorCoding${code}`
+        code ++
+        if (code == numberofDEperSection) {
+            code = 0
+        }
+        sectionDiv.classList.add(`${colorCode}`)
+
         outputDiv.appendChild(sectionDiv);
 
         let sNumber = i + 1;
