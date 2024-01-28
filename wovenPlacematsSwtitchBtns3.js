@@ -31,7 +31,7 @@ let setUpRowsDiv;
 
 
 
-let DE = 1;
+let DE = '';
 let pairNumber = 1;
 let numberOfDE = 28;
 let numberofDEperSection = 4
@@ -70,24 +70,35 @@ span.classList.add('slider', 'round');
 let outputDiv;
 let getSetUpRowsBtn;
 let algorithmBtn;
-let middleSections = '';
+let middleSections1 = '';
+let middleSections2 = '';
 let SetUpRow1 = '';
-let beg = ' Set up row 1 (with MC): (beginning of pattern) P2, ktbl1, p2, <strong> pm, </strong>  '; //  change beeggining of pattern for however the set up row starts
-let end = ' end of pattern. ';
+let SetUpRow2 = ''
+let beg1 = ' Set up row 1 (with MC): P2, ktbl1, p2, <strong> pm, </strong>  '; //  change beeggining of pattern for however the set up row starts
+let end1 = ' ktbl1, p2. ';
+let beg2 = '';
+let end2 = '';
 let placeMarker = ' <strong> pm, </strong> ';
 // let placeMarker = ' pm, ';
 let slipMarker = ' <strong> sm, </strong> ';
 // let slipMarker = ' sm, ';
 let DEstitchCount = 0
-let originalStitchCount = 85 //number of sts to begin with, I think it's 85. Have to check this!
+let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 5 + 11*7 + 3.
 let kfb = ' kfb, ';
 let p2 = ' p2, '
 let cero_into_one = ' 0-into-1, ';
-let ktbl1 = ' ktbl, ';
+let ktbl1 = ' ktbl1, ';
 let m1L = 'm1L, ';
 let purlStitchCount = 0// might have to initialize it at another value depending on pattern. Check this!
-let purl = ' p, '
+let purl = ''
+let lastDE;
+let lastP2;
 let saveEndOfSection;
+let divToCreateSpace;
+let neededhight;
+let optimalHeight;
+let setUpRow1Div;
+let setUpRow2Div
 
 window.onload = init();
 
@@ -109,7 +120,7 @@ function getDOMelements () {
     createYCselectionButtons()
     addEventListeners ();
     YCselectionButtons = document.querySelectorAll('.selected');
-
+    divToCreateSpace = document.querySelector('.space');
 }
 
 function createInputSection () {
@@ -118,6 +129,7 @@ function createInputSection () {
     userInputTitle.innerHTML = 'User Input:';
     begOfPage.appendChild(userInputTitle);
     let code = 0;
+    let pairNumber = 1;
     for (let i = 0; i < numberOfSections; i++) {
         let wholeSection = document.createElement('div');
         userInputDiv.appendChild(wholeSection);
@@ -138,9 +150,10 @@ function createInputSection () {
         sectionSection.classList.add(`${colorCode}`)
 
         wholeSection.appendChild(betweenMarkersDiv);
-        
-        for (let i = 0; i < numberofDEperSection; i++) {
+        for (let k = 0; k < numberofDEperSection; k++) {
+        //    console.log(pairNumber)
             pairClass = `pair${pairNumber}`;
+            // console.log(pairClass);
             sectionClass = `section${sectionNumber}`;
             let fieldset = document.createElement('fieldset');
             fieldset.innerHTML = (`
@@ -150,9 +163,7 @@ function createInputSection () {
                 <div class="pairLeft">  <div class="pairTitle"> <h5> Left   </h5> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
                 </div> `)
             betweenMarkersDiv.appendChild(fieldset);
-            if (DE % 2 !== 0) {
                 pairNumber++
-            }
         }
         sectionNumber++
     }
@@ -179,7 +190,7 @@ function changeColorSelection (checkedYC) {
     // console.log(checkedYC);
     firedCheckboxID = event.target.id;
     checkedYC = document.querySelector('#'+firedCheckboxID);
-    // console.log(checkedYC);
+    console.log(checkedYC);
     if (checkedYC.checked) {
         checkedYC.value = 'CCselected';
         checkedYC.classList.add('CCselected')
@@ -225,6 +236,7 @@ function getUserSelection () {
         } else {
             thisObject['yarnColor'] = 'MC';
         }
+        thisObject['numberID'] = i;
         userSelectionArray.push(thisObject);
     }
     console.log('userSelectionArray: ')
@@ -250,7 +262,7 @@ function displaySelectedValues () {
 
         let sectionDiv = document.createElement('div');
         sectionDiv.classList.add('selectionOutputSection');
-        
+
         colorCode = `colorCoding${code}`
         code ++
         if (code == numberofDEperSection) {
@@ -319,44 +331,88 @@ function print () {
 let purlStitchCountSum = 0;
 let savedStitchCount;
 
+function createSpace () {
+    neededhight = setUpRowsDiv.offsetHeight;
+    optimalHeight = neededhight + 5
+    divToCreateSpace.style.height = `${optimalHeight}px`;
+}
+
 function wovenPlacematSetUpRow1 () {
     let counter = 0;
     for (let i = 0; i < numberOfSections; i++) { // 7
+        middleSections1 = `${middleSections1} <span class="colorCoding${i}">` //Section ${i+1}:  `
+        lastDE = '';
         for (let k = 0; k < numberofDEperSection ; k++) { // 4 
-            console.log(`k: ${k}`)
+            console.log(`k: ${k}. LastDE: ${lastDE}. DE: ${DE}.`)
             console.log(userSelectionArray[counter])
             if (k == numberofDEperSection-1) { // last st pair of each section
                 console.log(`changing sections:`)
                 if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'MC') {
                     if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
                         purlStitchCount = 0;
+                        lastDE = DE;
                         DE = cero_into_one;
                         DEstitchCount = DEstitchCount + 2
                         purlStitchCount = purlStitchCount + 2;
                     } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
                         console.log(`last pair: right MC & left CC`);
                         purlStitchCount = 0;
+                        lastDE = DE;
                         DE = m1L;
                         purlStitchCount = purlStitchCount + 2;
                     }
                 } else if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'CC') {
                     if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
                         console.log(`last pair: right CC & left CC`);
+                        lastDE = DE;
                         DE = '';
                         purlStitchCount = purlStitchCount + 2;
 
                     } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
                         console.log(`last pair: right CC & left MC`);
                         purlStitchCount = 0;
+                        lastDE = DE;
                         DE = m1L;
                         purlStitchCount = 2;
                     }
                 }      
                 if (purlStitchCountSum == 0) {
-                    purlStitchCountSum = 2;
+                    // purlStitchCountSum = 2;
+                    lastP2 = 'p2, '
                 } //to add the last p2 of the section
-                middleSections =  `${middleSections}  ${DE} p${purlStitchCount} ${placeMarker}, `;
-                console.log('middleSections: ' + middleSections);
+
+                if (purlStitchCountSum !== 0) {
+                    savedStitchCount = purlStitchCountSum;   
+                    console.log(`middle sections: ${middleSections1}`)  ;
+
+                } else if (purlStitchCountSum == 0) {
+                    console.log(`last DE: ${lastDE}`);
+                    console.log(`DE: ${DE}`);
+                    if (lastDE == purl) {
+                        if (DE == purl) {
+                            middleSections1 =  ` ${middleSections1} `;    
+                            console.log(middleSections1)
+                        } else if (DE !== purl) {
+                            middleSections1 =  ` ${middleSections1} p${lastDE}, ${DE} p${purlStitchCount}, `;    
+                            console.log(middleSections1)
+                        }
+                    
+                    } else if (lastDE !== purl) {
+                        if (DE == purl) {
+                            middleSections1 =  ` ${middleSections1} `;   
+                            console.log(middleSections1) 
+                        } else if (DE !== purl) {
+                            middleSections1 =  ` ${middleSections1} ${DE} p${purlStitchCount}, `;
+                            console.log(middleSections1)   
+                        }  
+                    }
+                }
+
+                middleSections1 = `${middleSections1} </span> ${placeMarker}`
+
+                // middleSections1 =  `${middleSections1}  ${DE} p${purlStitchCount}, </span> ${placeMarker} `;
+
+                console.log('middleSections1: ' + middleSections1);
                 purlStitchCount = 0; //because I'm changing sections after this line.
                 purlStitchCountSum = 0; //because I'm changing sections after this line.
             } else {
@@ -365,47 +421,60 @@ function wovenPlacematSetUpRow1 () {
 
                         if (userSelectionArray[counter].yarnColor == 'MC' && userSelectionArray[counter+1].yarnColor == 'MC') {
                             purlStitchCount = 0;
+                            lastDE = DE;
                             DE = kfb;
                             DEstitchCount++
                             purlStitchCount = purlStitchCount + 2;
                         } else if (userSelectionArray[counter].direction == 'MC' && userSelectionArray[counter+1].yarnColor == 'CC') {
                             console.log(`right MC & left CC`)
                             purlStitchCount = 0
+                            lastDE = DE;
                             DE = ktbl1;
                             purlStitchCount = purlStitchCount + 2
                         } else if (userSelectionArray[counter].yarnColor == 'CC' && userSelectionArray[counter+1].yarnColor == 'CC') {
                             console.log(`right CC & left CC`);
-                            DE = ''; // p1
+                            
                             purlStitchCount = purlStitchCount + 3
+                            purl = `${purlStitchCount} ` // p2, p1,
+                            lastDE = DE;
+                            DE =  purl // p2, p1,
                             
     
                         } else if (userSelectionArray[counter].yarnColor == 'CC' && userSelectionArray[counter+1].yarnColor == 'MC') {
                             console.log(`right CC & left MC`);
                             purlStitchCount = 0
+                            lastDE = DE;
                             DE = ktbl1;
                             purlStitchCount = purlStitchCount + 2
                         }
                     }
                     if (purlStitchCountSum !== 0) {
-                        // middleSections = `${middleSections}`; 
                         savedStitchCount = purlStitchCountSum;   
-                        console.log(`middle sections: ${middleSections}`)  ;
+                        console.log(`middle sections: ${middleSections1}`)  ;
 
                     } else if (purlStitchCountSum == 0) {
-                        console.log(`DE: ${DE}`)
-                        if (DE == '') {
-                            middleSections =  ` ${middleSections} ${DE}`;   
-                        } else if (DE !== '') {
-                            middleSections =  ` ${middleSections} ${DE} p${purlStitchCount}, `;   
+                        console.log(`last DE: ${lastDE}`);
+                        console.log(`DE: ${DE}`);
+                        if (lastDE == purl) {
+                            if (DE == purl) {
+                                middleSections1 =  ` ${middleSections1} `;    
+                                console.log(middleSections)
+                            } else if (DE !== purl) {
+                                middleSections1 =  ` ${middleSections1} p${lastDE}, ${DE} p${purlStitchCount},`;    
+                                console.log(middleSections1)
+                            }
+                        
+                        } else if (lastDE !== purl) {
+                            if (DE == purl) {
+                                middleSections1 =  ` ${middleSections1} `;   
+                                console.log(middleSections1) 
+                            } else if (DE !== purl) {
+                                middleSections1 =  ` ${middleSections1} ${DE} p${purlStitchCount}, `;
+                                console.log(middleSections1)   
+                            }  
                         }
-                        // middleSections =  ` ${middleSections} ${DE} p${purlStitchCount}, `;      
-                        console.log(`middleSections (purlStitchCountSum = ${purlStitchCountSum}): ${middleSections}`);
                     }
-
                 }      
-                
-                
-                    // middleSections = middleSections + DE + `p${purlStitchCount}, `;      
             }
         
 
@@ -414,6 +483,7 @@ function wovenPlacematSetUpRow1 () {
         } //for k loop
     } //for i loop
     writeSetUpRow1();
+    createSpace();
 } // end of function
 
 
@@ -421,13 +491,30 @@ function wovenPlacematSetUpRow1 () {
 
 
 function writeSetUpRow1 () {
-    let writenStitchCount = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
     console.log('writeSetUpRow1 function executed');
-    SetUpRow1 = beg + middleSections + end + writenStitchCount;
+    let writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
+    SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
     console.log('SetUpRow1: ');
     console.log(SetUpRow1);
     let setUpRow1paragraph = document.createElement('p');
     setUpRow1paragraph.innerHTML = SetUpRow1;
-    // outputDiv.appendChild(setUpRow1paragraph);
-    setUpRowsDiv.appendChild(setUpRow1paragraph);
+    setUpRow1Div = document.createElement('div');
+    setUpRowsDiv.appendChild(setUpRow1Div);
+    setUpRow1Div.appendChild(setUpRow1paragraph);
+}
+
+function writeSetUpRow2 () {
+    console.log('writeSetUpRow2 function executed');
+    let writenStitchCount2 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
+
+    setUpRow2Div = document.createElement('div')
+    SetUpRow2 = beg1 + middleSections2 + end2
+    console.log('SetUpRow2: ');
+    console.log(SetUpRow2);
+    let setUpRow2paragraph = document.createElement('p');
+    setUpRow2paragraph.innerHTML = SetUpRow2;
+    setUpRow2Div = document.createElement('div');
+    setUpRowsDiv.appendChild(setUpRow2Div);
+    setUpRow2Div.appendChild(setUpRow2paragraph);
+
 }
