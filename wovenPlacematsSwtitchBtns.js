@@ -72,7 +72,7 @@ let getSetUpRowsBtn;
 let algorithmBtn;
 let middleSections = '';
 let SetUpRow1 = '';
-let beg = ' Set up row 1 (with MC): beginning of pattern,  '; //  change beeggining of pattern for however the set up row starts
+let beg = ' Set up row 1 (with MC): (beginning of pattern) P2, ktbl1, p2, <strong> pm, </strong>  '; //  change beeggining of pattern for however the set up row starts
 let end = ' end of pattern. ';
 let placeMarker = ' <strong> pm, </strong> ';
 // let placeMarker = ' pm, ';
