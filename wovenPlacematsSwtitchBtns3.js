@@ -308,6 +308,9 @@ function print () {
     window.print()
 }
 
+let purlStitchCountSum = 0;
+let savedStitchCount;
+
 function wovenPlacematSetUpRow1 () {
     let counter = 0;
     for (let i = 0; i < numberOfSections; i++) { // 7
@@ -341,40 +344,62 @@ function wovenPlacematSetUpRow1 () {
                         purlStitchCount = 2;
                     }
                 }      
-            
-                middleSections = middleSections + DE + `p${purlStitchCount}, ` + placeMarker;
+                if (purlStitchCountSum == 0) {
+                    purlStitchCountSum = 2;
+                } //to add the last p2 of the section
+                middleSections =  `${middleSections}  ${DE} p${purlStitchCount} ${placeMarker}, `;
+                console.log('middleSections: ' + middleSections);
+                purlStitchCount = 0; //because I'm changing sections after this line.
+                purlStitchCountSum = 0; //because I'm changing sections after this line.
             } else {
-                if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'MC') {
-                    if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
-                        if (userSelectionArray[counter+1].section == userSelectionArray[counter+2].section) {
+                if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter+1].direction == 'left') {
+                    if (userSelectionArray[counter+1].section == userSelectionArray[counter+2].section) {
+
+                        if (userSelectionArray[counter].yarnColor == 'MC' && userSelectionArray[counter+1].yarnColor == 'MC') {
                             purlStitchCount = 0;
                             DE = kfb;
                             DEstitchCount++
                             purlStitchCount = purlStitchCount + 2;
-
-                        } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
+                        } else if (userSelectionArray[counter].direction == 'MC' && userSelectionArray[counter+1].yarnColor == 'CC') {
                             console.log(`right MC & left CC`)
                             purlStitchCount = 0
                             DE = ktbl1;
                             purlStitchCount = purlStitchCount + 2
-                        }
-                    } else if (userSelectionArray[counter].direction == 'right' && userSelectionArray[counter].yarnColor == 'CC') {
-                        if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'CC') {
-                            console.log(`right CC $ left CC`);
-                            // DE = `p${purlStitchCount},`; // p1
+                        } else if (userSelectionArray[counter].yarnColor == 'CC' && userSelectionArray[counter+1].yarnColor == 'CC') {
+                            console.log(`right CC & left CC`);
+                            DE = ''; // p1
                             purlStitchCount = purlStitchCount + 3
-                            DE = `p${purlStitchCount},`; 
+                            
     
-                        } else if (userSelectionArray[counter+1].direction == 'left' && userSelectionArray[counter+1].yarnColor == 'MC') {
+                        } else if (userSelectionArray[counter].yarnColor == 'CC' && userSelectionArray[counter+1].yarnColor == 'MC') {
                             console.log(`right CC & left MC`);
                             purlStitchCount = 0
                             DE = ktbl1;
                             purlStitchCount = purlStitchCount + 2
                         }
-                    }      
-                    middleSections = middleSections + DE + `p${purlStitchCount}, `;      
-                }
+                    }
+                    if (purlStitchCountSum !== 0) {
+                        // middleSections = `${middleSections}`; 
+                        savedStitchCount = purlStitchCountSum;   
+                        console.log(`middle sections: ${middleSections}`)  ;
+
+                    } else if (purlStitchCountSum == 0) {
+                        console.log(`DE: ${DE}`)
+                        if (DE == '') {
+                            middleSections =  ` ${middleSections} ${DE}`;   
+                        } else if (DE !== '') {
+                            middleSections =  ` ${middleSections} ${DE} p${purlStitchCount}, `;   
+                        }
+                        // middleSections =  ` ${middleSections} ${DE} p${purlStitchCount}, `;      
+                        console.log(`middleSections (purlStitchCountSum = ${purlStitchCountSum}): ${middleSections}`);
+                    }
+
+                }      
+                
+                
+                    // middleSections = middleSections + DE + `p${purlStitchCount}, `;      
             }
+        
 
                 
             counter = counter + 2
