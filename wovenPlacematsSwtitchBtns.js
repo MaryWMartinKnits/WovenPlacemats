@@ -269,7 +269,6 @@ function displaySelectedValues () {
             eachPairDiv.appendChild(pairNumberOutputTitle);
             let leftText = 'Left';
             let rightText = 'Right';
-            // let cableDirectionANDColor = document.createElement('p')
             let counter = 'pair' + pNumber
             let condition = userSelectionArray[stNumber].pairNumber;
             while (condition == counter) {
