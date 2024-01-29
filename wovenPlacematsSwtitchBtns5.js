@@ -103,6 +103,7 @@ let firstStitch;
 let secondStitch;
 let thirdStitch;
 let fourthStitch;
+let newMiddleSections1;
 
 window.onload = init();
 
@@ -372,43 +373,30 @@ function setUpRow1firts3Pairs(userSelectionArray, c, k) {
                 purlStitchCount = purlStitchCount + 2
             }
         }
-        if (purlStitchCount !== 0) {
-            // savedStitchCount = purlStitchCountSum;   
-            middleSections1 = middleSections1;
-            console.log(`middle sections: ${middleSections1}`)  ;
-
-        } else if (purlStitchCount == 0) {
-            console.log(`last DE: ${lastDE}`);
-            console.log(`DE: ${DE}`);
-            if (lastDE == purl) {
-                if (DE == purl) { //entra aca aunque lastDE !== purl
-                    middleSections1 =  ` ${middleSections1} `;    
-                    console.log(middleSections1)
-                } else if (DE !== purl) {
-                    middleSections1 =  ` ${middleSections1} ${DE} p${purlStitchCount},`;    
-
-                    // middleSections1 =  ` ${middleSections1} p${lastDE}, ${DE} p${purlStitchCount},`;    
-                    //estaba agregando una p al principio de la primera sección.
-                    console.log(middleSections1)
-                }
-            
-            } else if (lastDE !== purl) {
-                if (DE == purl) {
-                    middleSections1 =  ` ${middleSections1} `;   
-                    console.log(middleSections1) 
-                } else if (DE !== purl) {
-                    middleSections1 =  ` ${middleSections1} ${DE} p${purlStitchCount}, `;
-                    console.log(middleSections1)   
-                }  
-            }
+        switch (k) {
+            case 0: 
+                firstStitch = DE;
+                break;
+            case 1: 
+                secondStitch = DE;
+                break;
+            case 2:
+                thirdStitch = DE;
+                break;
+            case 3:
+                fourthStitch = DE;
+                break;
+            default:
+                console.log( 'ERROR!');
+                break;
         }
         updateSetUpRow1();
-        return lastDE;
+        return lastDE, firstStitch, secondStitch, thirdStitch, fourthStitch;
     }
 }
-function setUpRow1lastPairOfSection (c) {
+function setUpRow1lastPairOfSection (c, k) {
     console.log('set up Row1: last pair of the section function executed.')
-    console.log(`before changing sections pair:`);
+    // console.log(`before changing sections pair:`);
     if (userSelectionArray[c].direction == 'right' && userSelectionArray[c].yarnColor == 'MC') {
         if (userSelectionArray[c+1].direction == 'left' && userSelectionArray[c+1].yarnColor == 'MC') {
             purlStitchCount = 0;
@@ -438,46 +426,49 @@ function setUpRow1lastPairOfSection (c) {
             purlStitchCount = 2;
         }
     }      
-    // draftWritingSetUpRow1 (lastDE, DE);
-    updateSetUpRow1(middleSections1)
-    // if (purlStitchCountSum == 0) {
-    if (purlStitchCount == 0) {
-        // purlStitchCountSum = 2;
-        lastP2 = 'p2, '
-    } //to add the last p2 of the section
+    switch (k) {
+        case 0: 
+            firstStitch = DE;
+            break;
+        case 1: 
+            secondStitch = DE;
+            break;
+        case 2:
+            thirdStitch = DE;
+            break;
+        case 3:
+            fourthStitch = DE;
+            break;
+        default:
+            console.log( 'ERROR!');
+            break;
+    }
+    middleSections1 = `${middleSections1} </span> ${placeMarker}`
+
+    draftWritingSetUpRow1 (firstStitch, secondStitch, thirdStitch, fourthStitch);
     updateSetUpRow1(middleSections1)
 }
 
-function draftWritingSetUpRow1 (lastDE, DE) {
-    if (purlStitchCount !== 0) {
-    // if (purlStitchCountSum !== 0) {
-        savedPurlStitchCount = purlStitchCount;   
-        // console.log(`middle sections: ${middleSections1}`)  ;
-    } else if (purlStitchCount == 0) {
-    // } else if (purlStitchCountSum == 0) {
-        if (lastDE == purl) {
-            
-            if (DE == purl) {
-                middleSections1 =  ` ${middleSections1} `;    
-                updateSetUpRow1()                        
-            } else if (DE !== purl) {
-                middleSections1 =  ` ${middleSections1} p${lastDE}, ${DE} p${purlStitchCount}, `;    
-                updateSetUpRow1()                        
-            }
-        
-        } else if (lastDE !== purl) {
-            
-            if (DE == purl) {
-                middleSections1 =  ` ${middleSections1} `;   
-                updateSetUpRow1()
-            } else if (DE !== purl) {
-                middleSections1 =  ` ${middleSections1} ${DE} p${purlStitchCount}, `;
-                updateSetUpRow1()
-            }
-
+function draftWritingSetUpRow1 (firstStitch, secondStitch, thirdStitch, fourthStitch) {
+    if (firstStitch == secondStitch && firstStitch == thirdStitch) {
+        if (firstStitch !== purl) {
+            newMiddleSections1 = `${middleSections1} ${firstStitch} p${purlStitchCount}, ${secondStitch} p${purlStitchCount}, ${thirdStitch} p${purlStitchCount}, ${fourthStitch} p${purlStitchCount}, `
         }
+        if (firstStitch == purl) {
+            newMiddleSections1 = `p${purlStitchCount}, `
+            console.log('purlStitchCount should be 11')
+        }
+
+    } else if (firstStitch == secondStitch || firstStitch == thirdStitch || firstStitch == fourthStitch) {
+        console.log('I need to evalueate what to do in this case')
+
     }
-    middleSections1 = `${middleSections1} </span> ${placeMarker}`
+
+    middleSections1 = `${middleSections1} ${newMiddleSections1} </span> ${placeMarker}` 
+        
+        
+       
+    
 
 }
 function wovenPlacematSetUpRow1 () {
@@ -490,7 +481,7 @@ function wovenPlacematSetUpRow1 () {
         for (let k = 0; k < numberofDEperSection ; k++) { // 4 
             if (k == numberofDEperSection-1) { // last st pair of each section
                 console.log(`changing sections:`)
-                setUpRow1lastPairOfSection(c);
+                setUpRow1lastPairOfSection(c, k);
                 
                 
 
@@ -502,7 +493,7 @@ function wovenPlacematSetUpRow1 () {
                 savedPurlStitchCount = 0;
                 // purlStitchCountSum = 0; //because I'm changing sections after this line.
             } else {
-                setUpRow1firts3Pairs (userSelectionArray, c); 
+                setUpRow1firts3Pairs (userSelectionArray, c, k, firstStitch, secondStitch, thirdStitch, fourthStitch); 
             }
             c = c + 2
         } //for k loop
@@ -535,7 +526,7 @@ function writeSetUpRow1 () {
 }
 
 function updateSetUpRow1 (middleSections1) {
-    console.log('UPDATE set up Row1 function executed.');
+    // console.log('UPDATE set up Row1 function executed.');
     writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`;
     SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
     setUpRow1paragraph = document.querySelector('.setUpRow1paragraph')
