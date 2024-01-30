@@ -72,10 +72,10 @@ let middleSections2Array = [];
 let middleSections2 = '';
 let SetUpRow1 = '';
 let SetUpRow2 = ''
-let beg1 = ' <strong> Set up row 1 (with MC): </strong> P2, ktbl1, p2, <strong> pm, </strong>  '; //  change beeggining of pattern for however the set up row starts
-let end1 = ' ktbl1, p2. Cut yarn.  Slide work. ';
-let beg2 = ' <strong> Set up row 2 (with CC): </strong> K2, sl1, k2, <strong> pm, </strong> ';
-let end2 = ' k2, sl1, k2. Cut yarn.  Slide work.';
+let beg1 = ' <strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, <strong> pm, </strong> p1,  '; //  change beeggining of pattern for however the set up row starts
+let end1 = ' p1, ktbl1, p2. Cut yarn.  Slide work. ';
+let beg2 = ' <strong> Set up row 2 (with CC): </strong> K2, sl1, k1, <strong> pm, </strong> ';
+let end2 = ' k1, sl1, k2. Cut yarn.  Slide work.';
 let placeMarker = ' <strong> pm, </strong> ';
 // let placeMarker = ' pm, ';
 let slipMarker = ' <strong> sm, </strong> ';
@@ -685,7 +685,7 @@ function first3stsOfSectionSetUpRow2 (i, setUpRow1Array) {
         // } else if () {
         //     Row2DE = `${sl1}, ${m1L} ` // right MC & left CC?
         // }
-        // Row2DE = m1L
+        Row2DE = m1L //
         DEstitchCountRow2++
     }     
     console.log(`${setUpRow1Array[i].DE} -> ${Row2DE}`)
@@ -702,7 +702,7 @@ function lastStOfSectionSetUpRow2 (i, setUpRow1Array) {
         // } else if () {
         //     Row2DE = `${sl1}, ${m1L} ` // right MC & left CC?
         // }
-        // Row2DE = m1L;
+        Row2DE = m1L; //
         DEstitchCountRow2++
     } else  { // CC & CC -> DE = ''
         Row2DE = cero_into_two;
