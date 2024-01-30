@@ -431,8 +431,8 @@ function lastStOfSection (c, thisObject) {
     thisObject['DE'] = DE;
     thisObject['purlStitchCount'] = purlStitchCount;
     thisObject['keepPurling'] = keepPurling;
+    purlStitchCount = 0;
     setUpRow1Array.push(thisObject);
-    // updateSetUpRow1();
     return purlStitchCount;
 
 }
