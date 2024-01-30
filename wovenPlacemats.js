@@ -373,7 +373,7 @@ function first3stsOfSection (c, thisObject) {
         DEstitchCount++
         purlStitchCount = purlStitchCount + 2;
         keepPurling = false;
-    } else if (userSelectionArray[c].direction == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
+    } else if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
         // console.log(`right MC & left CC`)
         purlStitchCount = 0
         DE = ktbl1;
@@ -408,7 +408,7 @@ function lastStOfSection (c, thisObject) {
         DEstitchCount++
         purlStitchCount = purlStitchCount + 2;
         keepPurling = false;
-    } else if (userSelectionArray[c].direction == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
+    } else if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
         // console.log(`right MC & left CC`)
         purlStitchCount = 0
         DE = m1L;
