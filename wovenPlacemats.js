@@ -117,6 +117,8 @@ let allSections1ArrayWritten = []
 let keepPurling = false;
 let writtenSectionAll = '';
 
+let setUpRow2Btn;
+
 window.onload = init();
 
 function init() {
@@ -135,9 +137,15 @@ function getDOMelements () {
     setUpRowsDiv = document.querySelector('#setUpRows');
     createInputSection(); 
     createYCselectionButtons()
+    setUpRow2Btn = document.querySelector('#setUpRow2Btn');
     addEventListeners ();
     YCselectionButtons = document.querySelectorAll('.selected');
     divToCreateSpace = document.querySelector('.space');
+    displayValuesBtn.disabled = true;
+    displayValuesBtn.classList.add('disabledBtn');
+    setUpRow2Btn.disabled = true;
+    setUpRow2Btn.classList.add('disabledBtn');
+    
     
 }
 
@@ -214,12 +222,9 @@ function addEventListeners () {
         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
     }
     window.addEventListener('resize', displayWindowWidth);
-
     getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
     displayValuesBtn.addEventListener('click', displaySelectedValues);
-    
-    // algorithmBtn.addEventListener('click', wovenPlacematSetUpRow1 (userSelectionArray));
-//     setUpRow1Btn.addEventListener('click', createSetUpRow1Array (userSelectionArray));
+    setUpRow2Btn.addEventListener('click', writeSetUpRow2)
 }
 
 function changeColorSelection (checkedYC) {
@@ -263,6 +268,8 @@ function createUserSelectionArray () {
     getUserSelectionBtn.disabled = true;
     getUserSelectionBtn.classList.add('disabledBtn');
     createSetUpRow1Array(userSelectionArray);
+    displayValuesBtn.disabled = false;
+    displayValuesBtn.classList.remove('disabledBtn');
     return userSelectionArray;
 }
 
@@ -353,9 +360,9 @@ function createSetUpRow1Array (userSelectionArray) {
                 thisObject['section'] = userSelectionArray[c].section;
                 thisObject['PairNumber'] = userSelectionArray[c].pairNumber
             if (j < numberofDEperSection - 1) {
-                first3stsOfSection(c, thisObject);
+                first3stsOfSectionSetUpRow1(c, thisObject);
             } else if (j == numberofDEperSection - 1) {
-                lastStOfSection(c, thisObject);
+                lastStOfSectionSetUpRow1(c, thisObject);
             }
             c = c+2
         } //j loop
@@ -365,7 +372,7 @@ function createSetUpRow1Array (userSelectionArray) {
     wovenPlacematSetUpRow1(setUpRow1Array);
 }
 
-function first3stsOfSection (c, thisObject) {
+function first3stsOfSectionSetUpRow1 (c, thisObject) {
     if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'MC') {
         // console.log(`right MC & left MC`)
         purlStitchCount = 0;
@@ -400,7 +407,7 @@ function first3stsOfSection (c, thisObject) {
     return purlStitchCount;
 }
 
-function lastStOfSection (c, thisObject) {
+function lastStOfSectionSetUpRow1 (c, thisObject) {
     if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'MC') {
         // console.log(`right MC & left MC`)
         purlStitchCount = 0;
@@ -602,26 +609,28 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     setUpRowsDiv.appendChild(setUpRow1Div);
     setUpRow1Div.appendChild(setUpRow1paragraph);
     window.addEventListener('resize', createSpace);
+    setUpRow2Btn.disabled = false;
+    setUpRow2Btn.classList.remove('disabledBtn');
 }
 
 
 
 
 
-function updateSetUpRow1 (middleSections1Array) {
-    // console.log('UPDATE set up Row1 function executed.');
-    writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`;
-    let newMiddleSections1;
-    for (let i = 0; i < middleSections1Array.length; i++) {
-       newMiddleSections1 = middleSections1 + `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
-    }
+// function updateSetUpRow1 (middleSections1Array) {
+//     // console.log('UPDATE set up Row1 function executed.');
+//     writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`;
+//     let newMiddleSections1;
+//     for (let i = 0; i < middleSections1Array.length; i++) {
+//        newMiddleSections1 = middleSections1 + `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
+//     }
    
-    SetUpRow1 = beg1 + newMiddleSections1 + end1 + writenStitchCount1;
+//     SetUpRow1 = beg1 + newMiddleSections1 + end1 + writenStitchCount1;
 
-    // SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
-    setUpRow1paragraph = document.querySelector('.setUpRow1paragraph')
-    setUpRow1paragraph.innerHTML = SetUpRow1;
-}
+//     // SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
+//     setUpRow1paragraph = document.querySelector('.setUpRow1paragraph')
+//     setUpRow1paragraph.innerHTML = SetUpRow1;
+// }
 
 function writeSetUpRow2 () {
     console.log('writeSetUpRow2 function executed');
