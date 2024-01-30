@@ -114,7 +114,6 @@ let afterPurlSts;
 let write = '';
 let index;
 let allSections1ArrayWritten = []
-let setUpRow1Btn;
 let keepPurling = false;
 let writtenSectionAll = '';
 
@@ -134,7 +133,6 @@ function getDOMelements () {
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
-    setUpRow1Btn = document.querySelector('#setUpRow1Btn');
     createInputSection(); 
     createYCselectionButtons()
     addEventListeners ();
@@ -213,7 +211,6 @@ function createYCselectionButtons () {
 function addEventListeners () {
     console.log('function addEventListeners executed');
     for (let i = 0; i < allYCcheckboxes.length; i++) {
-        // allYCcheckboxes[i].addEventListener('change', changeColorSelection)
         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
     }
     window.addEventListener('resize', displayWindowWidth);
@@ -265,7 +262,7 @@ function createUserSelectionArray () {
     console.log(userSelectionArray);
     getUserSelectionBtn.disabled = true;
     getUserSelectionBtn.classList.add('disabledBtn');
-    setUpRow1Btn.addEventListener('click', createSetUpRow1Array (userSelectionArray));
+    createSetUpRow1Array(userSelectionArray);
     return userSelectionArray;
 }
 
