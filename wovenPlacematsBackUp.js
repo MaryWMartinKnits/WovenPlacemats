@@ -99,7 +99,7 @@ let setUpRow1Div;
 let setUpRow2Div
 // let purlStitchCountSum = 0;
 let savedPurlStitchCount = 0;
-let writenStitchCount1;
+let writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
 let setUpRow1paragraph;
 let firstStitch;
 let secondStitch;
@@ -112,11 +112,8 @@ let ExtraPurlStsInvolved;
 let beforePurlSts = false;
 let afterPurlSts;
 let write = '';
-let index;
-let allSections1ArrayWritten = []
-let setUpRow1Btn;
-let keepPurling = false;
-let writtenSectionAll = '';
+// let ArrayDE;
+// let newMiddle1Array;
 
 window.onload = init();
 
@@ -134,30 +131,11 @@ function getDOMelements () {
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
-    setUpRow1Btn = document.querySelector('#setUpRow1Btn');
     createInputSection(); 
     createYCselectionButtons()
     addEventListeners ();
     YCselectionButtons = document.querySelectorAll('.selected');
     divToCreateSpace = document.querySelector('.space');
-    
-}
-
-function displayWindowWidth () {
-    if (window.innerWidth > 1028) {
-        screenDisplay = "BIG screen";
-    } else if (window.innerWidth > 976) {
-        screenDisplay = 'Desktop';
-    } else if (window.innerWidth > 776) {
-    // } else if (window.innerWidth > 746) {
-        screenDisplay = 'BIG Tablet'
-    }  else if (window.innerWidth > 500) {
-    screenDisplay = 'small Tablet'
-    }  else {
-        screenDisplay = 'Smartphone'
-    }
-    windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
-
 }
 
 function createInputSection () {
@@ -216,13 +194,10 @@ function addEventListeners () {
         // allYCcheckboxes[i].addEventListener('change', changeColorSelection)
         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
     }
-    window.addEventListener('resize', displayWindowWidth);
-
-    getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
+    getUserSelectionBtn.addEventListener('click', getUserSelection);
     displayValuesBtn.addEventListener('click', displaySelectedValues);
-    
-    // algorithmBtn.addEventListener('click', wovenPlacematSetUpRow1 (userSelectionArray));
-//     setUpRow1Btn.addEventListener('click', createSetUpRow1Array (userSelectionArray));
+    window.addEventListener('resize', displayWindowWidth);
+    algorithmBtn.addEventListener('click', wovenPlacematSetUpRow1);
 }
 
 function changeColorSelection (checkedYC) {
@@ -242,8 +217,25 @@ function changeColorSelection (checkedYC) {
     // console.log(checkedYC.value);
 }
 
-function createUserSelectionArray () {
-    console.log('createUserSelectionArray function executed')
+function displayWindowWidth () {
+    if (window.innerWidth > 1028) {
+        screenDisplay = "BIG screen";
+    } else if (window.innerWidth > 976) {
+        screenDisplay = 'Desktop';
+    } else if (window.innerWidth > 776) {
+    // } else if (window.innerWidth > 746) {
+        screenDisplay = 'BIG Tablet'
+    }  else if (window.innerWidth > 500) {
+    screenDisplay = 'small Tablet'
+    }  else {
+        screenDisplay = 'Smartphone'
+    }
+    windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
+
+}
+
+function getUserSelection () {
+    console.log('getUserSelection function executed')
     // create an array of selected buttons as objects with properties:
     for (let i = 0; i < allYCcheckboxes.length; i++) {
         checkboxClassList = allYCcheckboxes[i].classList;
@@ -265,8 +257,6 @@ function createUserSelectionArray () {
     console.log(userSelectionArray);
     getUserSelectionBtn.disabled = true;
     getUserSelectionBtn.classList.add('disabledBtn');
-    setUpRow1Btn.addEventListener('click', createSetUpRow1Array (userSelectionArray));
-    return userSelectionArray;
 }
 
 function displaySelectedValues () {
@@ -348,7 +338,18 @@ function displaySelectedValues () {
     }
 }
 
-function createSetUpRow1Array (userSelectionArray) {
+function print () {
+    window.print()
+}
+
+function createSpace () {
+    neededhight = setUpRowsDiv.offsetHeight;
+    optimalHeight = neededhight + 5
+    divToCreateSpace.style.height = `${optimalHeight}px`;
+}
+
+
+function createSetUpRow1Array () {
     for (let i = 0; i < numberOfSections; i++) {
         for (let j = 0; j < numberofDEperSection; j++) {
             let thisObject = {};
@@ -356,8 +357,11 @@ function createSetUpRow1Array (userSelectionArray) {
                 thisObject['section'] = userSelectionArray[c].section;
                 thisObject['PairNumber'] = userSelectionArray[c].pairNumber
             if (j < numberofDEperSection - 1) {
+                // console.log(`j = ${j}. Three (3) first sts of the section:`);
                 first3stsOfSection(c, thisObject);
+            // } else if (userSelectionArray[c+1].section !== userSelectionArray[c+2].section) {
             } else if (j == numberofDEperSection - 1) {
+                // console.log(`j = ${j}. LAST st of the section:`)
                 lastStOfSection(c, thisObject);
             }
             c = c+2
@@ -365,8 +369,9 @@ function createSetUpRow1Array (userSelectionArray) {
     } //i loop
     console.log('setUpRow1Array:');
     console.log(setUpRow1Array);
-    wovenPlacematSetUpRow1(setUpRow1Array);
 }
+// let stopPurls = false;
+let keepPurling = false;
 
 function first3stsOfSection (c, thisObject) {
     if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'MC') {
@@ -402,6 +407,7 @@ function first3stsOfSection (c, thisObject) {
     setUpRow1Array.push(thisObject);
     return purlStitchCount;
 }
+
 
 function lastStOfSection (c, thisObject) {
     if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'MC') {
@@ -440,162 +446,118 @@ function lastStOfSection (c, thisObject) {
 
 }
 
-function wovenPlacematSetUpRow1 (setUpRow1Array) {
-    console.log(`wovenPlacematSetUpRow1 function executed.`)
-    FIRSTsection_SetUpRow1(setUpRow1Array);
-    MiddleSections_SetUpRow1(setUpRow1Array);
-    LASTsection_SetUpRow1(setUpRow1Array);
-    console.log(`allSections1ArrayWritten: `);
-    console.log(`${allSections1ArrayWritten}`);
-    writeSetUpRow1(allSections1ArrayWritten);
+function wovenPlacematSetUpRow1 () {
+    // let c = 0;
+    writeSetUpRow1();
+    createSpace();
+    createSetUpRow1Array();
+    writeMiddleSection_SetUpRow1(setUpRow1Array, middleSections1Array);
+    // newMiddle1Array = middleSections1Array
+    updateSetUpRow1(middleSections1Array);
     createSpace();
 } // end of function
 
-function FIRSTsection_SetUpRow1 (setUpRow1Array) {
-    console.log('writeFIRSTsection_SetUpRow1 function executed');
-    beforePurlSts = false;
-    for (let i = 0; i < numberofDEperSection; i++) {
-        console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
-            // let thisObject = {};
+
+
+
+function writeMiddleSection_SetUpRow1 (setUpRow1Array, middleSections1Array) {
+    for (let i = 0; i < setUpRow1Array.length; i++) {
+            console.log(`Section: ${setUpRow1Array[i].section}`)
+            console.log(`i: ${i} `)
+            
+            let thisObject = {};
+                
+            
+
             ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
-            if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) { // Exception: the last st of the section cannot have extra purling sts after.
+            if (i < 1) {// Exception: for the first st there is no previous purling stitch count
+                console.log(`i: ${i} if i < 1`)
+                beforePurlSts = false;
+            } else if (i > 0 && i < setUpRow1Array.length - 1) {
+                console.log(`i: ${i}. if i > 0`)
+                if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
+                    beforePurlSts = setUpRow1Array[i-1].keepPurling;
+                }  else if (setUpRow1Array[i].section !== setUpRow1Array[i+1].section) {
+                    beforePurlSts = false
+                    write = '' //starting each section with a clean string for write.
+                    purlStitchCount = 0;
+                } 
+            } else if (i > setUpRow1Array.length - 1) {
+                beforePurlSts = setUpRow1Array[i-1].keepPurling; //!!!!!!
+            }
+
+            if (i < setUpRow1Array.length - 1 && setUpRow1Array[i].section == setUpRow1Array[i+1].section) { // Exception: the last st cannot have extra purling sts after.
                 afterPurlSts = setUpRow1Array[i+1].keepPurling;
             } else {
-                afterPurlSts = false // Exception: the last st of the section cannot have extra purling sts after.
+                afterPurlSts = false 
             }
 
-            if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
-                determineStitchPatternFor3FirstPairs (i, setUpRow1Array)
-            } else if (setUpRow1Array[i].section !== setUpRow1Array[i+1].section) { 
-                determineStitchPatternForLASTPair(i, setUpRow1Array);
+            console.log(`beforePurlSts: ${beforePurlSts}.    ExtraPurlStsInvolved: ${ExtraPurlStsInvolved}.    afterPurlSts: ${afterPurlSts}`)
+
+            if (i < setUpRow1Array.length - 1 && setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
+                if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
+                    if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
+                        if (afterPurlSts) {
+                            write = write;
+                        } else if (!afterPurlSts) {
+                            write = `${write} p${purlStitchCount},`;
+                        }
+    
+                    } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
+                        if (afterPurlSts) {
+                            write = `${write} p${setUpRow1Array[i].purlStitchCount}, `;
+                        }else if (!afterPurlSts) {
+                            write = `${write} ${setUpRow1Array[i].DE}, p2, `; //!!!!
+                        }
+                    }
+                } else if (!beforePurlSts) { // false, there's not a previous purl st count.
+                    if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
+                        if (afterPurlSts) {
+                            write = write;
+                        }else if (!afterPurlSts) {
+                            write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
+                        }
+    
+                    } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
+                        if (afterPurlSts) {
+                            write = `${write} ${setUpRow1Array[i].DE}, `;
+                        }else if (!afterPurlSts) {
+                            write = `${write} ${setUpRow1Array[i].DE}, p2, `;
+                        }
+                    }
+                }
+            }
+            
+            if (i < setUpRow1Array.length - 2) {
+                if (setUpRow1Array[i].section !== setUpRow1Array[i+2].section || setUpRow1Array[i].section !== setUpRow1Array[i+1].section) {
+
+                    let setUpRow1StSection = setUpRow1Array[i].section;
+                    thisObject['section'] = setUpRow1StSection;
+                    thisObject['writtenInstructions'] = write;
+                    middleSections1Array.push(thisObject);
+                    console.log('middleSections1Array: ');
+                    console.log(middleSections1Array);
+                    write = '';
+                }
+            } else if (i >= setUpRow1Array.length - 2) {
+                // if ()
+                let setUpRow1StSection = setUpRow1Array[i].section;
+                thisObject['section'] = setUpRow1StSection;
+                thisObject['writtenInstructions'] = write;
+                middleSections1Array.push(thisObject);
+                console.log('middleSections1Array: ');
+                console.log(middleSections1Array);
+                write = '';
             }
     } // i loop
-
+    return middleSections1Array;
 }
 
-function MiddleSections_SetUpRow1 (setUpRow1Array) {
-    console.log('writeMiddleSections_SetUpRow1 function executed');
-    for (let i = 4; i < setUpRow1Array.length - 4; i++) {
-        console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
-        ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
-
-        if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) { // Exception: the last st of the section cannot have extra purling sts after.
-            afterPurlSts = setUpRow1Array[i+1].keepPurling;
-        } else {
-            afterPurlSts = false // Exception: the last st of the section cannot have extra purling sts after.
-        }
-
-        if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
-            determineStitchPatternFor3FirstPairs(i, setUpRow1Array);
-        } else if (setUpRow1Array[i].section !== setUpRow1Array[i+1].section) {
-            determineStitchPatternForLASTPair(i, setUpRow1Array);
-        }
-    } // i loop
-    // return middleSections1Array;
-}
-
-function LASTsection_SetUpRow1 (setUpRow1Array) {
-    console.log('writeLASTsection_SetUpRow1 function executed');
-    for (let i = setUpRow1Array.length - 4; i < setUpRow1Array.length; i++) {
-        ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
-        if (setUpRow1Array[i].section == setUpRow1Array[i-(numberofDEperSection-1)].section) { // setUpRow1Array[i].section == setUpRow1Array[i+1].section
-            afterPurlSts = false; //last pair of the section, there are no afterPurl sts.
-            console.log(`i: ${i} -> if`);
-            determineStitchPatternForLASTPair(i, setUpRow1Array)
-        } else {
-            console.log(`i: ${i} -> else`);
-            determineStitchPatternFor3FirstPairs(i, setUpRow1Array);
-        }
-    } // i loop
-}
-
-function determineStitchPatternFor3FirstPairs (i, setUpRow1Array) {
-    if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
-        if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-            if (afterPurlSts) {
-                write = write;
-            } else if (!afterPurlSts) {
-                write = `${write} p${purlStitchCount},`;
-            }
-
-        } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-            if (afterPurlSts) {
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `;
-            }else if (!afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `; //!!!!
-            }
-        }
-    } else if (!beforePurlSts) { // false, there's not a previous purl st count.
-        if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-            if (afterPurlSts) {
-                write = write;
-            }else if (!afterPurlSts) {
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
-            }
-
-        } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-            if (afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, `;
-            }else if (!afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `;
-            }
-        }
-    }
-    return write;
-}
-
-function determineStitchPatternForLASTPair (i, setUpRow1Array) {
-    afterPurlSts = false;
-    if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
-        if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-                write = `${write} p${setUpRow1Array[i].purlStitchCount},`;
-
-        } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `; //!!!!
-        }
-    } else if (!beforePurlSts) { // false, there's not a previous purl st count.
-        if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
-
-        } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `;
-        }
-    }
-        let thisObject = {};
-        let setUpRow1StSection = setUpRow1Array[i].section;
-        thisObject['section'] = setUpRow1StSection;
-        thisObject['writtenInstructions'] = write;
-        middleSections1Array.push(thisObject);
-        for (let x = 0; x < middleSections1Array.length; x++) {
-            if ( middleSections1Array[x].section == setUpRow1Array[i].section) {
-                index = x;
-                // return index;
-                console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
-            }
-        }
-
-        console.log('middleSections1Array: ');
-        console.log(middleSections1Array);
-        write = '';
-        
-        for (let i = 0; i < middleSections1Array.length; i++) {
-            allSections1ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
-        }
-        return allSections1ArrayWritten;
-    return write;
-}
-
-function writeSetUpRow1 (middleSections1ArrayWritten) {
+function writeSetUpRow1 () {
     console.log('writeSetUpRow1 function executed');
-    console.log('middleSections1ArrayWritten: ');
-    console.log(middleSections1ArrayWritten);
-    writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
-    //  SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
+     writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`
+     SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
     // SetUpRow1 = middleSections1; //change to previous ones when fixed!
-    for (let i = 0; i < middleSections1ArrayWritten.length; i++) {
-        writtenSectionAll = writtenSectionAll + middleSections1ArrayWritten[i]
-    }
-    SetUpRow1  = `${beg1} ${writtenSectionAll} ${end1} ${writenStitchCount1}`
     console.log('SetUpRow1: ');
     console.log(SetUpRow1);
     let setUpRow1paragraph = document.createElement('p');
@@ -604,24 +566,26 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     setUpRow1Div = document.createElement('div');
     setUpRowsDiv.appendChild(setUpRow1Div);
     setUpRow1Div.appendChild(setUpRow1paragraph);
+
     window.addEventListener('resize', createSpace);
+
 }
-
-
-
-
 
 function updateSetUpRow1 (middleSections1Array) {
     // console.log('UPDATE set up Row1 function executed.');
+    // middleSections1Array = newMiddle1Array
     writenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCount} increased sts = ${originalStitchCount + DEstitchCount} total sts).`;
-    let newMiddleSections1;
-    for (let i = 0; i < middleSections1Array.length; i++) {
-       newMiddleSections1 = middleSections1 + `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
+    // if (middleSections1Array.length >= numberOfSections -1)
+    for (let i = 0; i < middleSections1Array.length; i = i + 2) {
+        let thisSection = middleSections1Array[i].section;
+        console.log('this section:' + thisSection);
+        let sectionColor = thisSection[thisSection.length-1]-1;
+        console.log('sectionColor: ' + sectionColor)
+        middleSections1 = middleSections1 + `<span class="colorCoding${sectionColor}"> ${middleSections1Array[i].writtenInstructions} ${middleSections1Array[i+1].writtenInstructions} </span> ${placeMarker}`
     }
    
-    SetUpRow1 = beg1 + newMiddleSections1 + end1 + writenStitchCount1;
 
-    // SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
+    SetUpRow1 = beg1 + middleSections1 + end1 + writenStitchCount1;
     setUpRow1paragraph = document.querySelector('.setUpRow1paragraph')
     setUpRow1paragraph.innerHTML = SetUpRow1;
 }
@@ -640,15 +604,4 @@ function writeSetUpRow2 () {
     setUpRowsDiv.appendChild(setUpRow2Div);
     setUpRow2Div.appendChild(setUpRow2paragraph);
 
-}
-
-function createSpace () {
-    neededhight = setUpRowsDiv.offsetHeight;
-    optimalHeight = neededhight + 5
-    divToCreateSpace.style.height = `${optimalHeight}px`;
-}
-
-
-function print () {
-    window.print()
 }
