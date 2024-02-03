@@ -47,7 +47,7 @@ let placeMarker = ' <strong> pm, </strong> ';
 let slipMarker = ' <strong> sm, </strong> ';
 let DEstitchCountRow1 = 0;
 let DEstitchCountRow2 = 0;
-let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 5 + 11*7 + 3.
+let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 4 + 11*7 + 4.
 let kfb = ' kfb';
 let p2 = ' p2'
 let cero_into_two = ' 0-into-2';
@@ -97,6 +97,7 @@ let writtenStitchCount2;
 let Row1DE;  
 let Row1DEinstructions;
 let colorCode;
+let combination = '';
 
 
 // choosing colors:
@@ -443,28 +444,34 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         DE = `${cero_into_two}`
         DEstitchCountRow1++
         purlStitchCount++
-        // keepPurling = false;
+        combination = 'right MC & left MC'
+
     } else if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
         // console.log(`right MC & left CC`)
         purlStitchCount = 0
         DE = m1L;
         purlStitchCount++
-        // keepPurling = false;
+        combination = 'right MC & left CC'
+
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'CC') {
         // console.log(`right CC & left CC`);
         purlStitchCount++
         DE = ''
         keepPurling = true;
+        combination = 'right CC & left CC'
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'MC') {
         // console.log(`right CC & left MC`);
         purlStitchCount = 0
         DE = m1L;
         purlStitchCount++
-        // keepPurling = false;
+        combination = 'right CC & left MC'
+ 
     }
     thisObject['DE'] = DE;
     thisObject['purlStitchCount'] = purlStitchCount;
     thisObject['keepPurling'] = keepPurling;
+    thisObject['combination'] = combination;
+    combination = ''
     purlStitchCount = 1; //every new ection will starts with p1
     setUpRow1Array.push(thisObject);
     return purlStitchCount;
@@ -476,8 +483,8 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     FIRSTsection_SetUpRow1(setUpRow1Array);
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
-    console.log(`allSections1ArrayWritten: `);
-    console.log(`${allSections1ArrayWritten}`);
+    // console.log(`allSections1ArrayWritten: `);
+    // console.log(`${allSections1ArrayWritten}`);
     writeSetUpRow1(allSections1ArrayWritten);
     createSpace();
 } // end of function
@@ -486,7 +493,7 @@ function FIRSTsection_SetUpRow1 (setUpRow1Array) {
     console.log('writeFIRSTsection_SetUpRow1 function executed');
     beforePurlSts = false;
     for (let i = 0; i < numberofDEperSection; i++) {
-        console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
+        // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
             // let thisObject = {};
             ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
             if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
@@ -502,13 +509,14 @@ function FIRSTsection_SetUpRow1 (setUpRow1Array) {
                 determineStitchPatternForLASTpair(i, setUpRow1Array);
             }
     } // i loop
-
+    console.log('middleSections1Array: ');
+    console.log(middleSections1Array);
 }
 
 function MiddleSections_SetUpRow1 (setUpRow1Array) {
     console.log('writeMiddleSections_SetUpRow1 function executed');
     for (let i = 4; i < setUpRow1Array.length - 4; i++) {
-        console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
+        // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
 
         if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) { // Exception: the last st of the section cannot have extra purling sts after.
@@ -533,26 +541,26 @@ function LASTsection_SetUpRow1 (setUpRow1Array) {
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
 
         if (setUpRow1Array[i].section !== setUpRow1Array[i-1].section) {
-            console.log(`i: ${i} -> if: FIRST pair`);
+            // console.log(`i: ${i} -> if: FIRST pair`);
             beforePurlSts = false; //
             afterPurlSts = setUpRow1Array[i+1].keepPurling; //
             determineStitchPatternForFIRSTpair(i, setUpRow1Array)
         } else if (setUpRow1Array[i].section == setUpRow1Array[i-1].section && setUpRow1Array[i].section !== setUpRow1Array[i-(numberofDEperSection-1)].section) {
-            console.log(`i: ${i} -> else if: middle pairs`);
+            // console.log(`i: ${i} -> else if: middle pairs`);
             beforePurlSts = setUpRow1Array[i-1].keepPurling; //
             afterPurlSts = setUpRow1Array[i+1].keepPurling; //
             determineStitchPatternForMIDDLEpairs(i, setUpRow1Array);
         } else if (setUpRow1Array[i].section == setUpRow1Array[i-(numberofDEperSection-1)].section) {
             beforePurlSts = setUpRow1Array[i-1].keepPurling; //
             afterPurlSts = false; //last pair of the section, there are no afterPurl sts.
-            console.log(`i: ${i} -> if: LAST PAIR`);
+            // console.log(`i: ${i} -> if: LAST PAIR`);
             determineStitchPatternForLASTpair(i, setUpRow1Array)
         }
     } // i loop
 }
 
 function determineStitchPatternForFIRSTpair (i, setUpRow1Array) {
-    console.log('determineStitchPatternForFIRSTpair funtion executed')
+    // console.log('determineStitchPatternForFIRSTpair funtion executed')
     beforePurlSts = false; // false, there's not a previous purl st count for the first pair.
     if (!beforePurlSts) {
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
@@ -574,7 +582,7 @@ function determineStitchPatternForFIRSTpair (i, setUpRow1Array) {
 }
 
 function determineStitchPatternForMIDDLEpairs (i, setUpRow1Array) {
-    console.log('determineStitchPatternForMIDDLEpairs function executed')
+    // console.log('determineStitchPatternForMIDDLEpairs function executed')
     if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
             if (afterPurlSts) {
@@ -611,7 +619,7 @@ function determineStitchPatternForMIDDLEpairs (i, setUpRow1Array) {
 }
 
 function determineStitchPatternForLASTpair (i, setUpRow1Array) {
-    console.log('determineStitchPatternForLASTpair function executed')
+    // console.log('determineStitchPatternForLASTpair function executed')
     afterPurlSts = false;
     if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
@@ -636,24 +644,19 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
         for (let x = 0; x < middleSections1Array.length; x++) {
             if ( middleSections1Array[x].section == setUpRow1Array[i].section) {
                 index = x;
-                console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
+                // console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
             }
         }
-
-        console.log('middleSections1Array: ');
-        console.log(middleSections1Array);
         write = '';
         
         for (let i = 0; i < middleSections1Array.length; i++) {
             allSections1ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
         }
         return allSections1ArrayWritten;
-    // return write;
 }
 
 function writeSetUpRow1 (middleSections1ArrayWritten) {
-    console.log('middleSections1ArrayWritten: ');
-    console.log(middleSections1ArrayWritten);
+    console.log('writeSetUpRow1 function executed');
     totalStCountRow1 = originalStitchCount + DEstitchCountRow1;
     // writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
     writtenStitchCount1 = `(${totalStCountRow1} sts).`
@@ -662,8 +665,6 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
         writtenSection1All = writtenSection1All + middleSections1ArrayWritten[i]
     }
     SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
-    // console.log('SetUpRow1: ');
-    // console.log(SetUpRow1);
     let setUpRow1paragraph = document.createElement('p');
     setUpRow1paragraph.classList.add('setUpRow1paragraph');
     setUpRow1paragraph.innerHTML = SetUpRow1;
@@ -671,11 +672,11 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     setUpRowsDiv.appendChild(setUpRow1Div);
     setUpRow1Div.appendChild(setUpRow1paragraph);
     window.addEventListener('resize', createSpace);
-    // return totalStCountRow1;
-    createSetUpRow2Array(setUpRow1Array) //
+     createSetUpRow2Array(setUpRow1Array) //
 }
 
 function createSetUpRow2Array (setUpRow1Array) {
+    console.log('createSetUpRow2Array function executed');
     let c = 0;
     let colorCode = c;
     DEstitchCountRow2 = 0;
@@ -693,6 +694,9 @@ function createSetUpRow2Array (setUpRow1Array) {
             console.log(setUpRow2Array);
             c++
         }
+                console.log(`setUpRow1Array: i= ${i}.  Section: ${setUpRow1Array[i].section}. Pair: ${setUpRow1Array[i].pairNumber}`);
+                console.log(`setUpRow2Array: i= ${i}.  Section: ${setUpRow2Array[i].section}. Pair: ${setUpRow2Array[i].pairNumber}  `)
+
     } // i loop
     console.log('setUpRow2Array:');
     console.log(setUpRow2Array);
@@ -704,7 +708,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     Row1DEinstructions = setUpRow1Array[i].DE;
     let Row1DEobject;
     Row1DE = '';
-    let Row1DEpossibleStitches = [kfb, purl, ktbl1, cero_into_two];
+    let Row1DEpossibleStitches = [kfb, purl, ktbl1, cero_into_two, m1L];
         while (Row1DE == '') {
             for (let j = 0; j < Row1DEpossibleStitches.length; j++) {
                 Row1DEobject = Row1DEinstructions.match(Row1DEpossibleStitches[j]);
@@ -712,7 +716,8 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                     Row1DE = Row1DEobject[0];
                     if (Row1DE !== '') {
                         Row1DE = Row1DEobject[0];
-                        // console.log(`Row1DE = ${Row1DE}`);
+                        console.log(`j = ${j} Row1DE = ${Row1DE}`);
+                        break
                     }
                 }
             } 
@@ -729,6 +734,8 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
             Row2DE = sl2;
             DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both MC last pair';
+        } else if (Row1DE == m1L) {
+
         } else if (Row1DE == ktbl1) { // MC & CC
             let oldStitchCount = DEstitchCountRow2;
             while (oldStitchCount == DEstitchCountRow2) {
@@ -740,13 +747,13 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                                     Row2DE = `${sl1}, ${m1L} ` // rigth MC && left CC
                                     DEstitchCountRow2++
                                     // combination = 'rigth MC && left CC';
-                                    combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
+                                    // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
                                     break;
                                 } else if (userSelectionArray[k].yarnColor == 'CC' && userSelectionArray[k+1].yarnColor == "MC") {
                                     Row2DE = `${m1L}, ${sl1} `  // right CC && left MC
                                     DEstitchCountRow2++
                                     // combination = 'right CC && left MC';
-                                    combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
+                                    // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
                                     break;
                                 }
                             }
@@ -760,10 +767,10 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     thisObject['Row1DE'] = Row1DE; 
     thisObject['Row2DE'] = Row2DE;
     thisObject['DEstitchCountRow2'] = DEstitchCountRow2;
-    thisObject['combination'] = combination;
+    // thisObject['combination'] = combination;
     setUpRow2Array.push(thisObject);
     // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].PairNumber}: Row1DE = ${Row1DE}. Row2DE = ${Row2DE}. Combination: ${combination}`)
-    combination = ''
+    // combination = ''
     Row1DE = '';
     Row2DE = '';
     // return thisObject;
