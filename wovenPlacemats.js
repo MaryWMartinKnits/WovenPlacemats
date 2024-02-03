@@ -356,7 +356,7 @@ function createSetUpRow1Array (userSelectionArray) {
             let thisObject = {};
                 thisObject['numberID'] = c;
                 thisObject['section'] = userSelectionArray[c].section;
-                thisObject['PairNumber'] = userSelectionArray[c].pairNumber
+                thisObject['pairNumber'] = userSelectionArray[c].pairNumber
             if (j == 0) { //1st pair
                 firstPairOfSection_SetUpRow1 (c, thisObject)
             }else if (j < numberofDEperSection - 1) { //2nd and 3rd pair
@@ -682,11 +682,11 @@ function createSetUpRow2Array (setUpRow1Array) {
     DEstitchCountRow2 = 0;
     for (let i = 0; i < setUpRow1Array.length; i++) {
         colorCode = c;
-        // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].PairNumber}: Row1DE = ${setUpRow1Array[i].DE}`)
+        // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].pairNumber}: Row1DE = ${setUpRow1Array[i].DE}`)
         let thisObject = {};
         thisObject['numberID'] = i;
         thisObject['section'] = setUpRow1Array[i].section;
-        thisObject['pairNumber'] = setUpRow1Array[i].PairNumber;
+        thisObject['pairNumber'] = setUpRow1Array[i].pairNumber;
         thisObject['colorCode'] = colorCode;
         allPairsOfSection_SetUpRow2(i, thisObject)
         if (i == numberofDEperSection - 1) {
@@ -694,9 +694,7 @@ function createSetUpRow2Array (setUpRow1Array) {
             console.log(setUpRow2Array);
             c++
         }
-                console.log(`setUpRow1Array: i= ${i}.  Section: ${setUpRow1Array[i].section}. Pair: ${setUpRow1Array[i].pairNumber}`);
-                console.log(`setUpRow2Array: i= ${i}.  Section: ${setUpRow2Array[i].section}. Pair: ${setUpRow2Array[i].pairNumber}  `)
-
+               
     } // i loop
     console.log('setUpRow2Array:');
     console.log(setUpRow2Array);
@@ -709,20 +707,24 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     let Row1DEobject;
     Row1DE = '';
     let Row1DEpossibleStitches = [kfb, purl, ktbl1, cero_into_two, m1L];
-        while (Row1DE == '') {
-            for (let j = 0; j < Row1DEpossibleStitches.length; j++) {
+        for (let j = 0; j < Row1DEpossibleStitches.length; j++) {
+            // do {
                 Row1DEobject = Row1DEinstructions.match(Row1DEpossibleStitches[j]);
                 if (Row1DEobject !== null) {
                     Row1DE = Row1DEobject[0];
                     if (Row1DE !== '') {
                         Row1DE = Row1DEobject[0];
-                        console.log(`j = ${j} Row1DE = ${Row1DE}`);
-                        break
+                        console.log(`j = ${j} yes = ${Row1DEpossibleStitches[j]}`)
+                        // console.log(`j = ${j} Row1DE = ${Row1DE}.  setUpRow1Array: i= ${i}.  Section: ${setUpRow1Array[i].section}. Pair: ${setUpRow1Array[i].pairNumber}`);
+                        // console.log(`setUpRow2Array: i= ${i}.  Section: ${setUpRow2Array[i].section}. Pair: ${setUpRow2Array[i].pairNumber}  `)`);
+                        break;
                     }
                 }
-            } 
-        }
-        let combination = '';
+            // } while (Row1DE == '')
+        } // j loop
+        console.log('out of little while loop. j')
+
+        combination = '';
         if (Row1DE == kfb) { // MC & MC
             Row2DE = sl2;
             combination = 'both MC'
@@ -769,7 +771,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     thisObject['DEstitchCountRow2'] = DEstitchCountRow2;
     // thisObject['combination'] = combination;
     setUpRow2Array.push(thisObject);
-    // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].PairNumber}: Row1DE = ${Row1DE}. Row2DE = ${Row2DE}. Combination: ${combination}`)
+    // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].pairNumber}: Row1DE = ${Row1DE}. Row2DE = ${Row2DE}. Combination: ${combination}`)
     // combination = ''
     Row1DE = '';
     Row2DE = '';
