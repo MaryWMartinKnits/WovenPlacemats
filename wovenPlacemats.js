@@ -725,7 +725,6 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                                     DEstitchCountRow2++
                                     if (Row1DE == ktbl1) {
                                         combination = 'rigth MC & left CC';
-                                        // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
                                         break;
                                     } else if (Row1DE == m1L) {
                                         combination = "rigth MC & left CC last pair"
