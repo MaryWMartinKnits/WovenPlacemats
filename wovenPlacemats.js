@@ -55,8 +55,10 @@ let ktbl1 = ' ktbl1';
 let m1L = ' m1L';
 let sl1 = ' sl1';
 let purlStitchCount = 1// might have to initialize it at another value depending on pattern. Check this!
-let purl = ''
-let p1 = ' p1'
+let purl = '';
+let p1 = ' p1';
+let k1 = ' k1';
+let k2 = ' k2';
 let lastDE;
 let lastP2;
 let saveEndOfSection;
@@ -80,7 +82,7 @@ let beforePurlSts = false;
 let afterPurlSts;
 let write = '';
 let write2 = '';
-let index;
+// let index;
 let allSections1ArrayWritten = [];
 let allSections2ArrayWritten = [];
 let keepPurling = false;
@@ -483,8 +485,6 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     FIRSTsection_SetUpRow1(setUpRow1Array);
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
-    // console.log(`allSections1ArrayWritten: `);
-    // console.log(`${allSections1ArrayWritten}`);
     writeSetUpRow1(allSections1ArrayWritten);
     createSpace();
 } // end of function
@@ -532,7 +532,6 @@ function MiddleSections_SetUpRow1 (setUpRow1Array) {
             determineStitchPatternForLASTpair(i, setUpRow1Array);
         }
     } // i loop
-    // return middleSections1Array;
 }
 
 function LASTsection_SetUpRow1 (setUpRow1Array) {
@@ -641,12 +640,12 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
         thisObject['section'] = setUpRow1StSection;
         thisObject['writtenInstructions'] = write;
         middleSections1Array.push(thisObject);
-        for (let x = 0; x < middleSections1Array.length; x++) {
-            if ( middleSections1Array[x].section == setUpRow1Array[i].section) {
-                index = x;
-                // console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
-            }
-        }
+        // for (let x = 0; x < middleSections1Array.length; x++) {
+        //     // if ( middleSections1Array[x].section == setUpRow1Array[i].section) {
+        //     //     index = x;
+        //     //     // console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
+        //     // }
+        // }
         write = '';
         
         for (let i = 0; i < middleSections1Array.length; i++) {
@@ -672,33 +671,7 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     setUpRowsDiv.appendChild(setUpRow1Div);
     setUpRow1Div.appendChild(setUpRow1paragraph);
     window.addEventListener('resize', createSpace);
-     createSetUpRow2Array(setUpRow1Array) //
-}
-
-function createSetUpRow2Array (setUpRow1Array) {
-    console.log('createSetUpRow2Array function executed');
-    let c = 0;
-    let colorCode = c;
-    DEstitchCountRow2 = 0;
-    for (let i = 0; i < setUpRow1Array.length; i++) {
-        colorCode = c;
-        // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].pairNumber}: Row1DE = ${setUpRow1Array[i].DE}`)
-        let thisObject = {};
-        thisObject['numberID'] = i;
-        thisObject['section'] = setUpRow1Array[i].section;
-        thisObject['pairNumber'] = setUpRow1Array[i].pairNumber;
-        thisObject['colorCode'] = colorCode;
-        allPairsOfSection_SetUpRow2(i, thisObject)
-        if (i == numberofDEperSection - 1) {
-            console.log('setUpRow2Array:');
-            console.log(setUpRow2Array);
-            c++
-        }
-               
-    } // i loop
-    console.log('setUpRow2Array:');
-    console.log(setUpRow2Array);
-    // wovenPlacematSetUpRow1(setUpRow2Array);
+    createSetUpRow2Array(setUpRow1Array) //
 }
 
 function allPairsOfSection_SetUpRow2 (i, thisObject) {
@@ -734,11 +707,13 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
             combination = 'both CC';
         } else if (Row1DE == cero_into_two) { // MC & MC for last pair
             Row2DE = sl2;
-            DEstitchCountRow2 = DEstitchCountRow2 + 2;
+            // DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both MC last pair';
-        } else if (Row1DE == m1L) {
-
-        } else if (Row1DE == ktbl1) { // MC & CC
+        } else if (Row1DE == '') {
+            Row2DE = cero_into_two;
+            DEstitchCountRow2 = DEstitchCountRow2 + 2;
+            combination = 'both CC last pair';
+        } else if (Row1DE == ktbl1 || Row1DE == m1L) { // MC & CC
             let oldStitchCount = DEstitchCountRow2;
             while (oldStitchCount == DEstitchCountRow2) {
                 for (let k = 0; k < userSelectionArray.length; k++) {
@@ -748,15 +723,23 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                                 if (userSelectionArray[k].yarnColor == 'MC' && userSelectionArray[k+1].yarnColor == 'CC') {
                                     Row2DE = `${sl1}, ${m1L} ` // rigth MC && left CC
                                     DEstitchCountRow2++
-                                    // combination = 'rigth MC && left CC';
-                                    // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
-                                    break;
+                                    if (Row1DE == ktbl1) {
+                                        combination = 'rigth MC & left CC';
+                                        // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
+                                        break;
+                                    } else if (Row1DE == m1L) {
+                                        combination = "rigth MC & left CC last pair"
+                                        break;
+                                    }
                                 } else if (userSelectionArray[k].yarnColor == 'CC' && userSelectionArray[k+1].yarnColor == "MC") {
-                                    Row2DE = `${m1L}, ${sl1} `  // right CC && left MC
-                                    DEstitchCountRow2++
-                                    // combination = 'right CC && left MC';
-                                    // combination = `${userSelectionArray[k].direction} ${userSelectionArray[k].yarnColor} & ${userSelectionArray[k+1].direction} ${userSelectionArray[k+1].yarnColor}`
-                                    break;
+                                        Row2DE = `${m1L}, ${sl1} `  // right CC && left MC
+                                        DEstitchCountRow2++
+                                    if (Row1DE == ktbl1) {
+                                        combination = 'right CC & left MC';
+                                        break;
+                                    } else if (Row1DE == m1L) {
+                                        combination = 'right CC & left MC last pair';
+                                    }
                                 }
                             }
                         }
@@ -778,55 +761,107 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     // return thisObject;
 }
 
+function createSetUpRow2Array (setUpRow1Array) {
+    console.log('createSetUpRow2Array function executed');
+    let c = 0;
+    let colorCode = c;
+    DEstitchCountRow2 = 0;
+    for (let i = 0; i < setUpRow1Array.length; i++) {
+        colorCode = c;
+        // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].pairNumber}: Row1DE = ${setUpRow1Array[i].DE}`)
+        let thisObject = {};
+        thisObject['numberID'] = i;
+        thisObject['section'] = setUpRow1Array[i].section;
+        thisObject['pairNumber'] = setUpRow1Array[i].pairNumber;
+        thisObject['colorCode'] = colorCode;
+        allPairsOfSection_SetUpRow2(i, thisObject)
+        if (i == numberofDEperSection - 1) {
+            console.log('setUpRow2Array:');
+            console.log(setUpRow2Array);
+            c++
+        }
+    } // i loop
+    console.log('setUpRow2Array:');
+    console.log(setUpRow2Array);
+    wovenPlacematSetUpRow2(setUpRow2Array);
+}
 
 
-// function lastStOfSectionSetUpRow2 (i, setUpRow1Array) {
-//     console.log('lastStOfSEctionSetUpRow2 funtion executed');
-//     if (setUpRow1Array[i].DE == cero_into_two) { // MC && MC
-//         Row2DE = sl2;
-//     } else if ((setUpRow1Array[i].DE == m1L) ) { // MC & CC
-//         // if () {
-//         //     Row2DE = `${m1L}, ${sl1} ` // left MC & right CC?
-//         // } else if () {
-//         //     Row2DE = `${sl1}, ${m1L} ` // right MC & left CC?
-//         // }
-//         Row2DE = m1L; //
-//         DEstitchCountRow2++
-//     } else  { // CC & CC -> DE = ''
-//         Row2DE = cero_into_two;
-//         DEstitchCountRow2 = DEstitchCountRow2 + 2;
-//     }
-//     console.log(`${setUpRow1Array[i].DE} -> ${Row2DE}`)
-//     return Row2DE;
-// }
 
-// function determineStitchPatternForRow2 (setUpRow1and2array) {
-//     for (let i = 0; i < setUpRow1and2array.length; i++) {
-//         if ( i < setUpRow1and2array.length -1 ) {
-//             if (setUpRow1and2array[i].section == setUpRow1and2array[i+1].section) {
-//                 write2 = write2 + `${setUpRow1and2array[i].Row2DE}, k2, `
-//             } else {
-//                 write2 = write2 + `${setUpRow1and2array[i].Row2DE}, k2, `;
-//                 let object2 = {};
-//                 object2['section'] = setUpRow1and2array[i].section;
-//                 object2['writtenInstructions'] = write2;
-//                 middleSections2Array.push(object2)
-//                 write2 = '';
-//             }
-            
-//         } else if ( i == setUpRow1and2array.length - 1) {
-//             write2 = write2 + `${setUpRow1and2array[i].Row2DE}, k2,  `;
-//             let object2 = {};
-//             object2['section'] = setUpRow1and2array[i].section;
-//             object2['writtenInstructions'] = write2;
-//             middleSections2Array.push(object2)
-//             write2 = '';
-//         }
-//         console.log('middleSections2Array: ');
-//             console.log(middleSections2Array);
-//     }
-//     writeSetUpRow2()
-// }
+function wovenPlacematSetUpRow2 (setUpRow2Array) {
+    console.log(`wovenPlacematSetUpRow1 function executed.`)
+    FIRSTsection_SetUpRow2(setUpRow2Array);
+    middleSections_SetUpRow2(setUpRow2Array);
+    LASTsection_SetUpRow2(setUpRow2Array);
+    writeSetUpRow2(allSections2ArrayWritten);
+    // createSpace();
+} // end of function
+
+function FIRSTsection_SetUpRow2 (setUpRow2Array) {
+    for (let i = 0; i < numberofDEperSection; i++) {
+            if (i == 0) {
+                determineStitchPatternForFIRSTpairRow2(i, setUpRow2Array)
+            } else if (setUpRow2Array[i].section == setUpRow2Array[i+1].section) {
+                determineStitchPatternForMIDDLEpairsRow2 (i, setUpRow2Array)
+            } else if (setUpRow2Array[i].section !== setUpRow2Array[i+1].section) { 
+                determineStitchPatternForLASTpairRow2(i, setUpRow2Array);
+            }
+    } // i loop
+}
+
+function middleSections_SetUpRow2(setUpRow2Array) {
+    for (let i = 4; i < setUpRow2Array.length - 4; i++) {
+        if (setUpRow2Array[i].section !== setUpRow2Array[i-1].section) { //firts pair of the section
+            determineStitchPatternForFIRSTpairRow2(i, setUpRow2Array)
+        } else if (setUpRow2Array[i].section == setUpRow2Array[i+1].section) { // 2nd and 3rd pair of the section
+            determineStitchPatternForMIDDLEpairsRow2(i, setUpRow2Array);
+        } else if (setUpRow2Array[i].section !== setUpRow2Array[i+1].section) { // fourth pair of the section
+            determineStitchPatternForLASTpairRow2(i, setUpRow2Array);
+        }
+    } // i loop
+}
+
+function LASTsection_SetUpRow2(setUpRow2Array) {
+    for (let i = setUpRow2Array.length - 4; i < setUpRow2Array.length; i++) {
+        if (setUpRow2Array[i].section !== setUpRow2Array[i-1].section) {
+            determineStitchPatternForFIRSTpairRow2(i, setUpRow2Array)
+        } else if (setUpRow2Array[i].section == setUpRow2Array[i-1].section && setUpRow2Array[i].section !== setUpRow2Array[i-(numberofDEperSection-1)].section) {
+            determineStitchPatternForMIDDLEpairsRow2(i, setUpRow2Array);
+        } else if (setUpRow2Array[i].section == setUpRow2Array[i-(numberofDEperSection-1)].section) {
+            determineStitchPatternForLASTpairRow2(i, setUpRow2Array)
+        }
+    } // i loop
+}
+
+function determineStitchPatternForFIRSTpairRow2 (i, setUpRow2Array) {
+    write2 = `${k1}, ${setUpRow2Array[i].Row2DE}, ${k2}, `
+    return write2;
+}
+
+function determineStitchPatternForMIDDLEpairsRow2 (i, setUpRow2Array) {
+    write2 = `${write2} ${setUpRow2Array[i].Row2DE}, ${k2}, `
+    return write2;
+}
+
+function determineStitchPatternForLASTpairRow2 (i, setUpRow2Array) {
+    write2 = `${write2}  ${setUpRow2Array[i].Row2DE}, ${k1},`
+
+    let thisObject = {};
+        let setUpRow2StSection = setUpRow2Array[i].section;
+        thisObject['section'] = setUpRow2StSection;
+        thisObject['writtenInstructions'] = write2;
+        middleSections2Array.push(thisObject);
+
+        write2 = '';
+
+    for (let i = 0; i < middleSections2Array.length; i++) {
+        allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${placeMarker}`
+    }
+    return allSections2ArrayWritten;
+}
+
+
+
 
 function writeSetUpRow2 () {
     console.log('writeSetUpRow2 function executed');
@@ -843,8 +878,6 @@ function writeSetUpRow2 () {
     }
 
     SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;
-    console.log('SetUpRow2: ');
-    console.log(SetUpRow2);
     let setUpRow2paragraph = document.createElement('p');
     setUpRow2paragraph.classList.add('setUpRow2paragraph');
     setUpRow2paragraph.innerHTML = SetUpRow2;
