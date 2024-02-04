@@ -651,12 +651,6 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
         thisObject['section'] = setUpRow1StSection;
         thisObject['writtenInstructions'] = write;
         middleSections1Array.push(thisObject);
-        // for (let x = 0; x < middleSections1Array.length; x++) {
-        //     // if ( middleSections1Array[x].section == setUpRow1Array[i].section) {
-        //     //     index = x;
-        //     //     // console.log(`i: ${i}. Written instructions: ${middleSections1Array[index].writtenInstructions}`)
-        //     // }
-        // }
         write = '';
         
         for (let i = 0; i < middleSections1Array.length; i++) {
