@@ -82,7 +82,6 @@ let beforePurlSts = false;
 let afterPurlSts;
 let write = '';
 let write2 = '';
-// let index;
 let allSections1ArrayWritten = [];
 let allSections2ArrayWritten = [];
 let keepPurling = false;
@@ -100,6 +99,18 @@ let Row1DE;
 let Row1DEinstructions;
 let colorCode;
 let combination = '';
+
+// SVG:
+let NumberCablePairs;
+let NumVerticalRepeats;
+let NumberOfCables;
+let svgHeight;
+let svgWidth
+let PairNumber;
+let cablesArray = [];
+let RightMoving; // boolean variable;
+let NextX;
+let NextY;
 
 
 // choosing colors:
@@ -136,7 +147,7 @@ function getDOMelements () {
     displayValuesBtn.disabled = true;
     displayValuesBtn.classList.add('disabledBtn');
     userInputDiv = document.querySelector('#userInputDiv');
-
+    svgChartDiv = document.querySelector('#svgChartDiv');
 
     // choosing colors:
 
@@ -268,7 +279,7 @@ function createUserSelectionArray () {
     displayValuesBtn.classList.remove('disabledBtn');
     createChartBtn.disabled = false;
     createChartBtn.classList.remove('disabledBtn')
-    createChartBtn.addEventListener('click', creatingSVG);
+    createChartBtn.addEventListener('click', SVGcondition);
 
     return userSelectionArray;
 }
@@ -657,8 +668,8 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
 function writeSetUpRow1 (middleSections1ArrayWritten) {
     console.log('writeSetUpRow1 function executed');
     totalStCountRow1 = originalStitchCount + DEstitchCountRow1;
-    // writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
-    writtenStitchCount1 = `(${totalStCountRow1} sts).`
+    writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
+    // writtenStitchCount1 = `(${totalStCountRow1} sts).`
 
     for (let i = 0; i < middleSections1ArrayWritten.length; i++) {
         writtenSection1All = writtenSection1All + middleSections1ArrayWritten[i]
@@ -890,6 +901,122 @@ function createSpace () {
     optimalHeight = neededhight + 5
     divToCreateSpace.style.height = `${optimalHeight}px`;
 }
+
+function  SVGcondition () {
+    console.log('SVGcondition function executed');
+    // createChartBtn.disabled = true;
+    // createChartBtn.classList.add('disabledBtn');
+
+    NumberCablePairs = numberOfDE; // = 28
+    if (NumberCablePairs % 4 == 0) {
+        createSVG (NumberCablePairs)
+    } else {
+        console.log(`the number of cable pairs should be divisible by 4. Current number of pairs = ${NumberCablePairs}`)
+    }
+}
+
+function createSVG (NumberCablePairs) {
+    console.log('createSVG function executed')
+    let a = 100;
+    NumVerticalRepeats = NumberCablePairs / 2; // = 14
+    NumberOfCables = NumberCablePairs * 2; // = 56
+    svgHeight = a * NumVerticalRepeats;
+    svgWidth =  a * NumberCablePairs;
+    let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
+    console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
+    initialCoordinates ();
+    startCables (); 
+    SVGinnerHTML ();
+}
+
+function initialCoordinates (a) {
+    PairNumber = 1
+    for (let i = 0; i < NumberOfCables ; i++) { // 56
+        let thisObject = {};
+        thisObject['x1'] = a * PairNumber - (a / 2);
+        thisObject['y1'] = svgHeight;
+        thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
+        if (userSelectionArray[i].direction == 'right') {
+            RightMoving = true;
+        } else if (userSelectionArray[i].direction == 'left') {
+            RightMoving = false;
+        }
+        thisObject['rightMoving'] = RightMoving;
+        cablesArray.push(thisObject);
+        if (i % 2 == 0) {
+            PairNumber++
+        }
+    }
+}
+
+function startCables () {
+    console.log('startCables function executed')
+    for (let i = 0; i < NumberOfCables; i++) {
+        let CurrentX = cablesArray[i].x1;
+        let CurrentY = cablesArray[i].y1;
+        // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
+        while (CurrentY < svgHeight) {
+            if (RightMoving) { // RIGHT moving cable: will travel right until it reaches either the right edge or the top edge and will stop.
+                if ((svgWidth - CurrentX) < CurrentY) { //it has hit the right edge.
+                    NextX = svgWidth;
+                    NextY = CurrentY + (svgWidth - CurrentX);
+                    break;
+                } else if (CurrentY >= svgHeight) { // condition for right moving cable stopping at the top edge??
+                    NextX = CurrentX + CurrentY;
+                    NextY = 0;
+                    break;
+                } 
+                RightMoving = false;
+            } else if (!RightMoving) { // LEFT moving cable:
+                if (CurrentX < CurrentY) { // has hit the left edge.
+                    NextX = 0;
+                    NextY = CurrentY-CurrentX;
+                    break;
+                } else if (CurrentY >= svgHeight) { // has hit the top edge. Condition??
+                    NextY = 0;
+                    NextX = CurrentX-CurrentY;
+                    break;
+                }
+                RightMoving = true;
+            }
+            CurrentX++;
+            CurrentY++;
+        }
+        cablesArray[i]['NextX'] = NextX;
+        cablesArray[i]['NextY'] = NextY;
+        if (cablesArray[i].selectedColour = 'MC') {
+            cablesArray[i]['Colour'] = 'blue';
+        } else if (cablesArray[i].selectedColour = 'CC') {
+            cablesArray[i]['Colour'] = 'red';
+        }
+        
+        cablesArray[i]['line'] = '`<line x1=${CurrentX} y1=${CurrentY} x2=${NextX} y2=${NextY} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`'
+        CurrentX = NextX;
+        CurrentY = NextY;
+    }
+}
+
+function SVGinnerHTML () {
+    console.log('SVGinnerHTML function executed');
+    // let SVGdiv = document.createElement('div');
+    // SVGdiv.classList.add('SVGdiv');
+    // `<svg height="1400" width="2800" style="background-color: white;"> </svg>`
+    // svgChartDiv.appendChild(SVGdiv);
+    let SVG = document.createElement('svg');
+    SVG.classList.add('SVGplacemat');
+    let allLines = ``;
+    for (let i = 0; i < cablesArray.length; i++) {
+        allLines = `${allLines} ${cablesArray[i].line}`
+    }
+    console.log('allLines: ');
+    console.log(allLines);
+    SVG.innerHTML = allLines;
+    svgChartDiv.appendChild(SVG);
+
+}
+
+
+
 
 // picking MC and CC
 
