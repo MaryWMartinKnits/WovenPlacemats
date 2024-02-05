@@ -13,9 +13,6 @@ let YCselectionButtons = [];
 let allYCcheckboxes
 let firedCheckboxID;
 let checkboxClassList;
-// let YCparentDiv;
-// let YCultimateParent;
-
 let getUserSelectionBtn;
 let userSelectionArray = [];
 let displayValuesBtn;
@@ -63,7 +60,7 @@ let lastDE;
 let lastP2;
 let saveEndOfSection;
 let divToCreateSpace;
-let neededhight;
+let neededHeight_SetUpRows;
 let optimalHeight;
 let setUpRow1Div;
 let setUpRow2Div
@@ -99,6 +96,7 @@ let Row1DE;
 let Row1DEinstructions;
 let colorCode;
 let combination = '';
+let createChartBtn;
 
 // SVG:
 let NumberCablePairs;
@@ -111,6 +109,8 @@ let cablesArray = [];
 let RightMoving; // boolean variable;
 let NextX;
 let NextY;
+let neededHeight_Chart
+let cablesThatChangedDirectionsArray = [];
 
 
 // choosing colors:
@@ -120,7 +120,7 @@ let allMClines;
 let allCClines;
 let pickedMC;
 let pickedCC;
-let createChartBtn;
+
 //
 
 window.onload = init();
@@ -139,6 +139,9 @@ function getDOMelements () {
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
+    createChartBtn = document.querySelector('#createChartBtn')
+    createChartBtn.disabled = true;
+    createChartBtn.classList.add('disabledBtn')
     createInputSection(); 
     createYCselectionButtons()
     addEventListeners ();
@@ -151,9 +154,7 @@ function getDOMelements () {
 
     // choosing colors:
 
-    createChartBtn = document.querySelector('#createChartBtn');
-    createChartBtn.disabled = true;
-    createChartBtn.classList.add('disabledBtn')
+
 
 }
 
@@ -175,7 +176,7 @@ function displayWindowWidth () {
 }
 
 function createInputSection () {
-    console.log('createInputSection function executed');
+    console.log('function createInputSection executed');
     userInputTitle = document.createElement('h2');
     userInputTitle.innerHTML = 'User Input:';
     begOfPage.appendChild(userInputTitle);
@@ -232,6 +233,7 @@ function addEventListeners () {
     window.addEventListener('resize', displayWindowWidth);
     getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
     displayValuesBtn.addEventListener('click', displaySelectedValues);
+    // createChartBtn.addEventListener('click', SVGcondition); //
 }
 
 function changeColorSelection (checkedYC) {
@@ -252,7 +254,7 @@ function changeColorSelection (checkedYC) {
 }
 
 function createUserSelectionArray () {
-    console.log('createUserSelectionArray function executed')
+    console.log('function createUserSelectionArray executed')
     // create an array of selected buttons as objects with properties:
     for (let i = 0; i < allYCcheckboxes.length; i++) {
         checkboxClassList = allYCcheckboxes[i].classList;
@@ -280,12 +282,11 @@ function createUserSelectionArray () {
     createChartBtn.disabled = false;
     createChartBtn.classList.remove('disabledBtn')
     createChartBtn.addEventListener('click', SVGcondition);
-
     return userSelectionArray;
 }
 
 function displaySelectedValues () {
-    console.log('displaySelectedValues function executed');
+    console.log('function displaySelectedValues executed');
     userInputTitle.classList.add('hidden');
     userInputDiv.classList.add('hidden');
     outputDiv.classList.remove('hidden');
@@ -295,7 +296,7 @@ function displaySelectedValues () {
     outputDiv.appendChild(inputSelectionTitle);
     let pNumber = 0;
     let stNumber = 0
-    let stDirection //
+    let stDirection; 
     let code = 0;
     for (let i = 0; i < numberOfSections; i++) {
 
@@ -455,7 +456,7 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         // console.log(`right MC & left MC`)
         purlStitchCount = 0;
         DE = `${cero_into_two}`
-        DEstitchCountRow1++
+        DEstitchCountRow1 = DEstitchCountRow1 + 2
         purlStitchCount++
         combination = 'right MC & left MC'
 
@@ -492,7 +493,7 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
 }
 
 function wovenPlacematSetUpRow1 (setUpRow1Array) {
-    console.log(`wovenPlacematSetUpRow1 function executed.`)
+    console.log(`function wovenPlacematSetUpRow1 executed.`)
     FIRSTsection_SetUpRow1(setUpRow1Array);
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
@@ -501,7 +502,7 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
 } // end of function
 
 function FIRSTsection_SetUpRow1 (setUpRow1Array) {
-    console.log('writeFIRSTsection_SetUpRow1 function executed');
+    console.log('function writeFIRSTsection_SetUpRow1 executed');
     beforePurlSts = false;
     for (let i = 0; i < numberofDEperSection; i++) {
         // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
@@ -525,7 +526,7 @@ function FIRSTsection_SetUpRow1 (setUpRow1Array) {
 }
 
 function MiddleSections_SetUpRow1 (setUpRow1Array) {
-    console.log('writeMiddleSections_SetUpRow1 function executed');
+    console.log('function writeMiddleSections_SetUpRow1 executed');
     for (let i = 4; i < setUpRow1Array.length - 4; i++) {
         // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
@@ -546,7 +547,7 @@ function MiddleSections_SetUpRow1 (setUpRow1Array) {
 }
 
 function LASTsection_SetUpRow1 (setUpRow1Array) {
-    console.log('writeLASTsection_SetUpRow1 function executed');
+    console.log('function writeLASTsection_SetUpRow1 executed');
     for (let i = setUpRow1Array.length - 4; i < setUpRow1Array.length; i++) {
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
 
@@ -660,7 +661,7 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
 }
 
 function writeSetUpRow1 (middleSections1ArrayWritten) {
-    console.log('writeSetUpRow1 function executed');
+    console.log('function writeSetUpRow1 executed');
     totalStCountRow1 = originalStitchCount + DEstitchCountRow1;
     writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
     // writtenStitchCount1 = `(${totalStCountRow1} sts).`
@@ -680,7 +681,7 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
 }
 
 function allPairsOfSection_SetUpRow2 (i, thisObject) {
-    console.log('allPairsOfSection_SetUpRow2 function executed'); 
+    console.log('function allPairsOfSection_SetUpRow2 executed'); 
     Row1DEinstructions = setUpRow1Array[i].DE;
     let Row1DEobject;
     Row1DE = '';
@@ -766,7 +767,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
 }
 
 function createSetUpRow2Array (setUpRow1Array) {
-    console.log('createSetUpRow2Array function executed');
+    console.log('function createSetUpRow2Array executed');
     let c = 0;
     let colorCode = c;
     DEstitchCountRow2 = 0;
@@ -793,12 +794,11 @@ function createSetUpRow2Array (setUpRow1Array) {
 
 
 function wovenPlacematSetUpRow2 (setUpRow2Array) {
-    console.log(`wovenPlacematSetUpRow1 function executed.`)
+    console.log(`function wovenPlacematSetUpRow1 executed.`)
     FIRSTsection_SetUpRow2(setUpRow2Array);
     middleSections_SetUpRow2(setUpRow2Array);
     LASTsection_SetUpRow2(setUpRow2Array);
     writeSetUpRow2(allSections2ArrayWritten);
-    // createSpace();
 } // end of function
 
 function FIRSTsection_SetUpRow2 (setUpRow2Array) {
@@ -868,7 +868,7 @@ function determineStitchPatternForLASTpairRow2 (i, setUpRow2Array) {
 
 
 function writeSetUpRow2 () {
-    console.log('writeSetUpRow2 function executed');
+    console.log('function writeSetUpRow2 executed');
     totalStCountRow2 = totalStCountRow1 + DEstitchCountRow2;
     writtenStitchCount2 = `(${totalStCountRow2}sts). `
     writtenStitchCount2 = `(${totalStCountRow1} sts + ${DEstitchCountRow2} increased sts = ${totalStCountRow2} total sts).` // erase after checking accuracy.
@@ -891,13 +891,14 @@ function writeSetUpRow2 () {
 }
 
 function createSpace () {
-    neededhight = setUpRowsDiv.offsetHeight;
-    optimalHeight = neededhight + 5
+    neededHeight_SetUpRows = setUpRowsDiv.offsetHeight;
+    neededHeight_Chart = svgChartDiv.offsetHeight;
+    optimalHeight = neededHeight_SetUpRows + 5 + neededHeight_Chart;
     divToCreateSpace.style.height = `${optimalHeight}px`;
 }
 
 function  SVGcondition () {
-    console.log('SVGcondition function executed');
+    console.log('function SVGcondition executed');
     // createChartBtn.disabled = true;
     // createChartBtn.classList.add('disabledBtn');
 
@@ -910,25 +911,28 @@ function  SVGcondition () {
 }
 
 function createSVG (NumberCablePairs) {
-    console.log('createSVG function executed')
-    let a = 100;
+    console.log('function createSVG executed')
+    let scalar = 100;
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
     NumberOfCables = NumberCablePairs * 2; // = 56
-    svgHeight = a * NumVerticalRepeats;
-    svgWidth =  a * NumberCablePairs;
+    svgHeight = scalar * NumVerticalRepeats;
+    svgWidth =  scalar * NumberCablePairs;
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
-    initialCoordinates ();
+    initialCoordinates (scalar);
     startCables (); 
     SVGinnerHTML ();
 }
 
-function initialCoordinates (a) {
+function initialCoordinates (scalar) {
+    console.log('function initialCoordinates executed')
+    console.log('scalar = ' + scalar);
     PairNumber = 1
     for (let i = 0; i < NumberOfCables ; i++) { // 56
         let thisObject = {};
-        thisObject['x1'] = a * PairNumber - (a / 2);
+        thisObject['x1'] = scalar * PairNumber - (scalar / 2); // The initial position of each pair is X= width - [(PairNum - .5) * 100]
         thisObject['y1'] = svgHeight;
+        // thisObject['y1'] = 0;
         thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
         if (userSelectionArray[i].direction == 'right') {
             RightMoving = true;
@@ -943,70 +947,168 @@ function initialCoordinates (a) {
     }
 }
 
+
 function startCables () {
-    console.log('startCables function executed')
+    console.log('function startCables executed')
+    let newDirection;
     for (let i = 0; i < NumberOfCables; i++) {
         let CurrentX = cablesArray[i].x1;
         let CurrentY = cablesArray[i].y1;
         // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
-        while (CurrentY < svgHeight) {
-            if (RightMoving) { // RIGHT moving cable: will travel right until it reaches either the right edge or the top edge and will stop.
-                if ((svgWidth - CurrentX) < CurrentY) { //it has hit the right edge.
-                    NextX = svgWidth;
-                    NextY = CurrentY + (svgWidth - CurrentX);
-                    break;
-                } else if (CurrentY >= svgHeight) { // condition for right moving cable stopping at the top edge??
-                    NextX = CurrentX + CurrentY;
-                    NextY = 0;
-                    break;
-                } 
-                RightMoving = false;
-            } else if (!RightMoving) { // LEFT moving cable:
-                if (CurrentX < CurrentY) { // has hit the left edge.
+        
+        if (RightMoving) { // RIGHT moving cable: will travel right until it reaches either the right edge or the top edge and will stop.
+            if ((svgWidth - CurrentX) < CurrentY) {  //it has hit the right edge.
+            // if ((svgWidth - CurrentX) < CurrentY && (CurrentY < svgHeight)) {  //it has hit the right edge (and not the top edge).
+                NextX = svgWidth;
+                NextY = CurrentY + (svgWidth - CurrentX);
+                // RightMoving = false;
+                cablesArray[i]['x2'] = NextX;
+                cablesArray[i]['y2'] = NextY;
+                newDirection = false;
+            // } else if ((CurrentY >= svgHeight)) { // condition for right moving cable stopping at the top edge??
+            } else if (CurrentY < svgHeight) {
+                NextX = CurrentX + CurrentY;
+                NextY = 0;
+                cablesArray[i]['x2'] = NextX;
+                cablesArray[i]['y2'] = NextY;
+            } 
+        } else if (!RightMoving) { // LEFT moving cable:
+            // if (CurrentX < CurrentY && (CurrentY < svgHeight)) { // left cable has hit the left edge.
+            if (CurrentX < CurrentY) { // left cable has hit the left edge.
                     NextX = 0;
-                    NextY = CurrentY-CurrentX;
-                    break;
-                } else if (CurrentY >= svgHeight) { // has hit the top edge. Condition??
-                    NextY = 0;
-                    NextX = CurrentX-CurrentY;
-                    break;
-                }
-                RightMoving = true;
+                NextY = CurrentY-CurrentX;
+                // RightMoving = true;
+                cablesArray[i]['x2'] = NextX;
+                cablesArray[i]['y2'] = NextY;
+                newDirection = true;
+            } else if (CurrentY < svgHeight) { // has hit the top edge. Condition??
+                NextY = 0;
+                NextX = CurrentX-CurrentY;
+                cablesArray[i]['x2'] = NextX;
+                cablesArray[i]['y2'] = NextY;
             }
-            CurrentX++;
-            CurrentY++;
         }
-        cablesArray[i]['NextX'] = NextX;
-        cablesArray[i]['NextY'] = NextY;
+
+        if (newDirection) { // new direction is right
+            if (CurrentY > 0) { // condition for right moving cable stopping at the top edge??
+                CurrentX = cablesArray[i].x2;
+                CurrentY = cablesArray[i].y2;
+                // cablesThatChangedDirectionsArray[i]['x1'] = CurrentX;
+                // cablesThatChangedDirectionsArray[i]['y1'] = CurrentY;
+                NextX = CurrentX + CurrentY;
+                NextY = 0;
+                // cablesThatChangedDirectionsArray[i]['newDirection'] = newDirection;
+
+                // cablesThatChangedDirectionsArray[i]['x2'] = NextX;
+                // cablesThatChangedDirectionsArray[i]['y2'] = NextY;
+                cablesArray[i]['x3'] = NextX;
+                cablesArray[i]['y3'] = NextY;
+            } else {
+                // cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
+                console.log('NO')
+            }
+        } else if (!newDirection) { // new direction is left.
+            if (CurrentY > 0) { // left cable has hit the top edge. Condition??
+                CurrentX = cablesArray[i].x2;
+                CurrentY = cablesArray[i].y2;
+                // cablesThatChangedDirectionsArray[i]['x1'] = CurrentX;
+                // cablesThatChangedDirectionsArray[i]['y1'] = CurrentY;
+                NextY = 0;
+                NextX = CurrentX-CurrentY;
+                // cablesThatChangedDirectionsArray[i]['newDirection'] = newDirection;
+                
+                // cablesThatChangedDirectionsArray[i]['x2'] = NextY;
+                // cablesThatChangedDirectionsArray[i]['y2'] = NextY;
+                cablesArray[i]['x3'] = NextX;
+                cablesArray[i]['y3'] = NextY;
+            } else {
+                cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
+            }
+        }
+
+        // if (cablesArray[i].newDirection) { // new direction is right
+        //     if (CurrentY > 0) { // condition for right moving cable stopping at the top edge??
+        //         CurrentX = cablesArray[i].x2;
+        //         CurrentY = cablesArray[i].y2;
+        //         NextX = CurrentX + CurrentY;
+        //         NextY = 0;
+        //         cablesThatChangedDirectionsArray[i]['newDirection'] = cablesArray[i].newDirection;
+        //         cablesThatChangedDirectionsArray[i]['x1'] = cablesArray[i].x2;
+        //         cablesThatChangedDirectionsArray[i]['y1'] = cablesArray[i].y2;
+        //         cablesThatChangedDirectionsArray[i]['x2'] = NextX;
+        //         cablesThatChangedDirectionsArray[i]['y2'] = NextY;
+        //     } else {
+        //         // cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
+        //         console.log('NO')
+        //     }
+        // } else if (!cablesArray[i].newDirection) { // new direction is left.
+        //     if (CurrentY > 0) { // left cable has hit the top edge. Condition??
+        //         CurrentX = cablesArray[i].x2;
+        //         CurrentY = cablesArray[i].y2;
+        //         NextY = 0;
+        //         NextX = CurrentX-CurrentY;
+        //         cablesThatChangedDirectionsArray[i]['newDirection'] = cablesArray[i].newDirection;
+        //         cablesThatChangedDirectionsArray[i]['x1'] = cablesArray[i].x2;
+        //         cablesThatChangedDirectionsArray[i]['y1'] = cablesArray[i].y2;
+        //         cablesThatChangedDirectionsArray[i]['x2'] = NextY;
+        //         cablesThatChangedDirectionsArray[i]['y2'] = NextY;
+        //     } else {
+        //         cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
+        //     }
+        // }
+
         if (cablesArray[i].selectedColour = 'MC') {
             cablesArray[i]['Colour'] = 'blue';
         } else if (cablesArray[i].selectedColour = 'CC') {
             cablesArray[i]['Colour'] = 'red';
         }
-        
-        cablesArray[i]['line'] = '`<line x1=${CurrentX} y1=${CurrentY} x2=${NextX} y2=${NextY} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`'
-        CurrentX = NextX;
-        CurrentY = NextY;
-    }
+        cablesArray[i]['line1'] = `<line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
+        cablesArray[i]['line2'] = `<line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
+       
+        // cablesThatChangedDirectionsArray[i]['line'] = `<line x1=${cablesThatChangedDirectionsArray[i].x1} y1=${cablesThatChangedDirectionsArrayy[i].y1} x2=${cablesThatChangedDirectionsArray[i].x2} y2=${cablesThatChangedDirectionsArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
+       
+    } // for i loop
+    console.log('cablesArray:');
+    console.log(cablesArray);
 }
 
 function SVGinnerHTML () {
-    console.log('SVGinnerHTML function executed');
-    // let SVGdiv = document.createElement('div');
-    // SVGdiv.classList.add('SVGdiv');
-    // `<svg height="1400" width="2800" style="background-color: white;"> </svg>`
-    // svgChartDiv.appendChild(SVGdiv);
+    console.log('function SVGinnerHTML executed');
+    let SVGdiv = document.createElement('div'); //
+    SVGdiv.classList.add('SVGdiv'); //
+    svgChartDiv.appendChild(SVGdiv); //
     let SVG = document.createElement('svg');
+    SVG.style.height = '1400px';
+    SVG.style.width = '2800px';
+    SVG.style.backgroundColor = 'white';
     SVG.classList.add('SVGplacemat');
-    let allLines = ``;
+    let allLines = '';
+    SVGdiv.appendChild(SVG); //
+    let line1;
+    let line2;
     for (let i = 0; i < cablesArray.length; i++) {
-        allLines = `${allLines} ${cablesArray[i].line}`
-    }
+        if (cablesArray[i].x1 !== undefined && cablesArray[i].x1 !== NaN) {
+            if (cablesArray[i].y1 !== undefined && cablesArray[i].y1 !== NaN) {
+                if (cablesArray[i].x2 !== undefined && cablesArray[i].x2 !== NaN) {
+                    if (cablesArray[i].y2 !== undefined && cablesArray[i].y2 !== NaN) {
+                        line1 = cablesArray[i].line1;
+                        allLines = `${allLines} ${line1}`;
+                        if (cablesArray[i].x3 !== undefined && cablesArray[i].x3 !== NaN) {
+                            if (cablesArray[i].y3 !== undefined && cablesArray[i].y3 !== NaN) {
+                                line2 = cablesArray[i].line2;
+                                allLines = `${allLines} ${line2}`;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        SVG.innerHTML = allLines;
+
+    } // i loop
     console.log('allLines: ');
     console.log(allLines);
-    SVG.innerHTML = allLines;
-    svgChartDiv.appendChild(SVG);
-
 }
 
 
