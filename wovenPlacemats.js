@@ -94,7 +94,6 @@ let colorCode;
 let combination = '';
 let createChartBtn;
 let createSetUpRowsBtn;
-let userInputDiv; //
 
 // continue editing colors:
 let continueEditingBtn;
@@ -164,8 +163,8 @@ function getDOMelements () {
     divToCreateSpace = document.querySelector('.space');
     // displayValuesBtn.disabled = true;
     // displayValuesBtn.classList.add('disabledBtn');
-    userInputDiv = document.querySelector('#userInputDiv');
-    svgChartDiv = document.querySelector('#svgChartDiv');
+    let userInputDiv = document.querySelector('#userInputDiv');
+    let svgChartDiv = document.querySelector('#svgChartDiv');
 
     // choosing colors:
 
@@ -218,7 +217,9 @@ function createInputSection () {
 
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
+        //    console.log(pairNumber)
             pairClass = `pair${pairNumber}`;
+            // console.log(pairClass);
             sectionClass = `section${sectionNumber}`;
             let fieldset = document.createElement('fieldset');
             fieldset.innerHTML = (`
@@ -237,15 +238,15 @@ function createInputSection () {
 function createYCselectionButtons () {
     console.log('function createYCselectionButtons executed');
     allYCcheckboxes = document.querySelectorAll('.YCcheckbox');
-    for (let i = 0; i < allYCcheckboxes.length; i++) {
-        if (userSelectionArray.length > 0) {
-            allYCcheckboxes[i].classList.add(userSelectionArray[i].section);
-            allYCcheckboxes[i].classList.add(userSelectionArray[i].pairNumber);
-            allYCcheckboxes[i].classList.add(userSelectionArray[i].direction);
-            allYCcheckboxes[i].classList.add(userSelectionArray[i].oldSelection);
-        }
-        allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
-    }
+    // for (let i = 0; i < allYCcheckboxes.length; i++) {
+    //     if (userSelectionArray.length > 0) {
+    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].section);
+    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].pairNumber);
+    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].direction);
+    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].oldSelection);
+    //     }
+    //     allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
+    // }
 }
 
 function addEventListeners () {
@@ -979,45 +980,14 @@ function continueEditingColors () {
 
 }
 let checkboxPreviousSelectionArray = [];
+
 function createNewInputSection () {
-    console.log('function createNEWinputSection executed');
-    // userInputDiv.innerHTML = '';
-    // for (let a = 0; a < allYCcheckboxes.length; a++) {
-    //     let YCcheckboxClassList = allYCcheckboxes[a].classList;
-    //     let thisObject = {};
-    //     for (let b = 0; b < YCcheckboxClassList.length; b++) {
-    //         thisObject['section'] = YCcheckboxClassList[1];
-    //         thisObject['pair'] = YCcheckboxClassList[2];
-    //         thisObject['direction'] = YCcheckboxClassList[3]
-    //     }
-    // }
-    for (let i = 0; i < allYCcheckboxes.length; i++ ) {
-        let classList_i = allYCcheckboxes[i].classList
-        let x;
-        for (let j = 0; j < classList_i.length; j++) {
-            
-            if (allYCcheckboxes[i].classList[j] == 'CCselected') {
-                console.log(`i = ${i}. ${userSelectionArray[i].pairNumber} ${userSelectionArray[i].direction}: CCselected`)
-                classList_i.add('CCselected');
-                x = 'CCselected'
-            } else if (j == classList_i.length - 1) {
-                classList_i.add('MCselected');
-                x = 'MCselected'
-            }
-        } // j loop
-        createNewUserSelectionArrayForInput (i, x) // = oldUserSelectionArray
-    } // i loop
-    console.log('previus userSelectionArray:');
-    console.log(userSelectionArray);
-    console.log('new input userSelectionArray: ');
-    console.log(oldUserSelectionArray);
-    userSelectionArray = oldUserSelectionArray; //update the userSelectionArray
-    // userInputTitle = document.createElement('h2');
-    // userInputTitle.innerHTML = 'NEW User Input:';
-    // begOfPage.appendChild(userInputTitle);
+    console.log('function createNEWnputSection executed');
+    userInputTitle = document.createElement('h2');
+    userInputTitle.innerHTML = 'User Input:';
+    begOfPage.appendChild(userInputTitle);
     let code = 0;
     let pairNumber = 1;
-    let counter = 0;
     for (let i = 0; i < numberOfSections; i++) {
         let wholeSection = document.createElement('div');
         userInputDiv.appendChild(wholeSection);
@@ -1055,37 +1025,19 @@ function createNewInputSection () {
                         <div class="switchBtnDiv">  
                             <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> 
                             <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right ${allYCcheckboxes[counter].value}" id="checkbox${pairNumber}right" value="${allYCcheckboxes[pairNumber].value}"> 
+                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value='noneSelected'> 
                                 <span class="slider round"> </span>
-                            </label> 
-                            <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
-                        </div>
-                    </div>
+                                </label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
+                                </div>
+                                </div>
                 
-                    <div class="pairLeft">  
-                        <div class="pairTitle"> 
-                            <h5> Left   </h5> 
-                        </div> 
-                        <div class="switchBtnDiv"> 
-                            <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  
-                            <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left ${allYCcheckboxes[counter].value}" id="checkbox${pairNumber}left" value="${allYCcheckboxes[pairNumber].value}"> 
-                                <span class="slider round"> </span>
-                            </label> 
-                            <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  
-                        </div>
-                    </div>
+                    <div class="pairLeft">  <div class="pairTitle"> <h5> Left   </h5> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
                 </div> `)
             betweenMarkersDiv.appendChild(fieldset);
-            pairNumber++
-            counter = pairNumber + 1
-        } // k loop
-    sectionNumber++
-    } // i loop
-    newUserSelectionBtn.disabled = false;
-    newUserSelectionBtn.classList.remove('disabledBtn');
-    console.log('input section updated');
-    createYCselectionButtons();
+                pairNumber++
+        }
+        sectionNumber++
+    }
 }
 
 function createNewUserSelectionArrayForInput (i, x) {
