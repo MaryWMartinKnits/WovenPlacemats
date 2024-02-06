@@ -233,7 +233,7 @@ fieldset {
   input:focus + .slider {
     box-shadow: 0 0 1px var(--color4);
   }
-  input:checked + .slider:before {
+  input:checked + .slider:before, .CCselected + .slider:before {
     /* -webkit-transform: translateX(1.5em); */
     -ms-transform: translateX(1.5em);
     transform: translateX(1.8em);

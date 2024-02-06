@@ -1005,6 +1005,7 @@ function createNewInputSection () {
     userInputDiv.innerHTML = '';
     let code = 0;
     let pairNumber = 1;
+    let sectionNumber = 1
     let counter = 0;
     for (let i = 0; i < numberOfSections; i++) {
         let wholeSection = document.createElement('div');
@@ -1043,7 +1044,7 @@ function createNewInputSection () {
                             <div class="switchBtnDiv">  
                                 <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> 
                                 <label class="switch">   
-                                    <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value="${userSelectionArray[counter].yarnColor}selected"> 
+                                    <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}right" value="${userSelectionArray[counter].yarnColor}selected"> 
                                     <span class="slider round"> </span>
                                 </label> 
                                     <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
@@ -1057,7 +1058,7 @@ function createNewInputSection () {
                         <div class="switchBtnDiv"> 
                             <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  
                             <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left" value="${userSelectionArray[counter+1].yarnColor}selected"> 
+                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}left" value="${userSelectionArray[counter+1].yarnColor}selected"> 
                                 <span class="slider round"> </span>
                             </label> 
                                 <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  
@@ -1067,7 +1068,7 @@ function createNewInputSection () {
                 </div> `)
             betweenMarkersDiv.appendChild(fieldset);
                 pairNumber++
-                counter++
+                counter = counter + 2;
         } // k loop (pairs of each section)
         sectionNumber++
     } // i loop (sections)
