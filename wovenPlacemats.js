@@ -102,6 +102,7 @@ let newUserSelectionArray = [];
 let allSwitches;
 let newUserSelectionBtn;
 let checkboxPreviousSelectionArray = [];
+let newYCcheckboxes;
 
 // SVG:
 let NumberCablePairs;
@@ -255,6 +256,15 @@ function createInputSection () {
 function createYCselectionButtons () {
     console.log('function createYCselectionButtons executed');
     allYCcheckboxes = document.querySelectorAll('.YCcheckbox');
+    if (userSelectionArray.length == numberOfDE * 2) {
+        for (let i = 0; i < allYCcheckboxes.length; i ++) {
+            allYCcheckboxes[i].classList.add(`${userSelectionArray[i].yarnColor}`) //
+            allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
+
+        }
+        // allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
+
+    }
     // for (let i = 0; i < allYCcheckboxes.length; i++) {
     //     if (userSelectionArray.length > 0) {
     //         allYCcheckboxes[i].classList.add(userSelectionArray[i].section);
@@ -277,8 +287,10 @@ function addEventListeners () {
     createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
     // newUserSelectionBtn.addEventListener('click', createNewInputSection);
     newUserSelectionBtn.addEventListener('click', createNewUserSelectionArrayForOutput);
+    let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
-         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
+        thisCheckbox = allYCcheckboxes[i];
+         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
      }
 
 }
@@ -1002,6 +1014,7 @@ function createNewInputSection () {
     // begOfPage.appendChild(userInputTitle);
         console.log('userSelectionArray: ')
         console.log(userSelectionArray);
+        storeOldUserSelectionArray();
     userInputDiv.innerHTML = '';
     let code = 0;
     let pairNumber = 1;
@@ -1044,7 +1057,7 @@ function createNewInputSection () {
                             <div class="switchBtnDiv">  
                                 <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> 
                                 <label class="switch">   
-                                    <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}right" value="${userSelectionArray[counter].yarnColor}selected"> 
+                                    <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} right ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}right_new" value="${userSelectionArray[counter].yarnColor}selected"> 
                                     <span class="slider round"> </span>
                                 </label> 
                                     <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
@@ -1058,7 +1071,7 @@ function createNewInputSection () {
                         <div class="switchBtnDiv"> 
                             <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  
                             <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}left" value="${userSelectionArray[counter+1].yarnColor}selected"> 
+                                <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}left_new" value="${userSelectionArray[counter+1].yarnColor}selected"> 
                                 <span class="slider round"> </span>
                             </label> 
                                 <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  
@@ -1072,51 +1085,59 @@ function createNewInputSection () {
         } // k loop (pairs of each section)
         sectionNumber++
     } // i loop (sections)
+        newYCcheckboxes = document.querySelectorAll('.newCheckbox')
+        addEventListeners(); //
 }
 
-function createNewUserSelectionArrayForInput (i, x) {
-    console.log('function createNewUserSelectionArrayForInput executed');
-    let thisObject = {};
+function storeOldUserSelectionArray () {
+    console.log('function storeOldUserSelectionArray executed');
+    for (let i = 0; i < userSelectionArray.length; i++) {
+        let thisObject = {};
         thisObject['section'] = userSelectionArray[i].section;
         thisObject['pairNumber'] = userSelectionArray[i].pairNumber;
         thisObject['direction'] = userSelectionArray[i].direction;
-        thisObject['oldSelection'] = userSelectionArray[i].yarnColor;
-        thisObject['newSelection'] = x
+        // thisObject['oldSelection'] = userSelectionArray[i].yarnColor;
+        thisObject['oldSelection'] = `${userSelectionArray[i].yarnColor}selected`;
+        // thisObject['newSelection'] = x
         thisObject['numberID'] = i;
-    oldUserSelectionArray.push(thisObject);
-    // userSelectionArray.push(thisObject); //
+        oldUserSelectionArray.push(thisObject);
+    }
+    console.log('oldUserSelectionArray: ');
+    console.log(oldUserSelectionArray);
 }
 
 function createNewUserSelectionArrayForOutput () {
     console.log('function createNewUserSelectionArrayForOutput executed');
-    // createYCselectionButtons();
-
+    let checkboxClassList;
     for (let i = 0; i < allYCcheckboxes.length; i++) {
         checkboxClassList = allYCcheckboxes[i].classList;
-        let userSelectionArrayClassList = userSelectionArray[i].classList
         let thisObject = {};
-        // thisObject['section'] = allYCcheckboxes[i].classList[1];
-        thisObject['section'] = userSelectionArrayClassList.section;
-        thisObject['pairNumber'] = allYCcheckboxes[i].classList[2];
-        thisObject['direction'] = allYCcheckboxes[i].classList[3];
+        thisObject['numberID'] = i;
+        thisObject['section'] = oldUserSelectionArray[i].section;
+        thisObject['pairNumber'] = oldUserSelectionArray[i].pairNumber;
+        thisObject['direction'] = oldUserSelectionArray[i].direction;
+        // if (oldUserSelectionArray[i].contains('oldSelection')) {
+        //     thisObject['oldSelection'] = oldUserSelectionArray[i].oldSelection;
+        // }
+
         if (checkboxClassList.contains('CCselected')) {
-             thisObject['yarnColor'] = 'CC';
-             thisObject['newSelection'] = 'CCselected';
-        } else if (checkboxClassList.contains('MCselected') || checkboxClassList.contains('noneSelected')) {
-            thisObject['yarnColor'] = 'MC';
+        //  thisObject['newYarnColor'] = 'CC';
+            thisObject['newSelection'] = 'CCselected';
+        } else if (checkboxClassList.contains('MCselected') || checkboxClassList.contains('noneSelected') || allYCcheckboxes[i].value == 'MCselected') {
+        //  thisObject['newYarnColor'] = 'MC';
             thisObject['newSelection'] = 'MCselected';
         } else {
-            // thisObject['yarnColor'] = 'MC';
             console.log('error')
+            thisObject['newSelection'] = 'MC?'
         }
-        thisObject['numberID'] = i;
-        // userSelectionArray.push(thisObject);
         newUserSelectionArray.push(thisObject);
-            }
-    console.log('old userSelectionArray: ')
-    console.log(userSelectionArray);
+    } // i loop
+    console.log('old userSelectionArray: ');
+    console.log(oldUserSelectionArray);
+    console.log('new userSelectionArray:');
+    console.log(newUserSelectionArray);
     userSelectionArray = newUserSelectionArray;
-    console.log('new userSelectionArray:')
+    console.log('userSelectionArray = newUserSelectionArray: ')
     console.log(userSelectionArray);
 }
 
