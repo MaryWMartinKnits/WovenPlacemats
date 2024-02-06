@@ -1286,9 +1286,9 @@ function startCables () {
             }
         }
 
-        if (cablesArray[i].selectedColour = 'MC') {
+        if (cablesArray[i].selectedColour == 'MC') {
             cablesArray[i]['Colour'] = 'blue';
-        } else if (cablesArray[i].selectedColour = 'CC') {
+        } else if (cablesArray[i].selectedColour == 'CC') {
             cablesArray[i]['Colour'] = 'red';
         }
         cablesArray[i]['line1'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
