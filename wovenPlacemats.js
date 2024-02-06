@@ -9,7 +9,7 @@ let userInputTitle;
 
 
 let allYCbuttons = [];
-let YCselectionButtons = [];
+// let YCselectionButtons = [];
 let allYCcheckboxes
 let firedCheckboxID;
 let checkboxClassList;
@@ -143,28 +143,23 @@ function getDOMelements () {
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
     // displayValuesBtn = document.querySelector('#displayValues');
     createSetUpRowsBtn = document.querySelector('#createSetUpRowsBtn');
-    createSetUpRowsBtn.disabled = true;
-    createSetUpRowsBtn.classList.add('disabledBtn');
+    disableBtn(createSetUpRowsBtn);
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
     continueEditingBtn = document.querySelector('#continueEditingBtn');
-    continueEditingBtn.disabled = true;
-    continueEditingBtn.classList.add('disabledBtn');
-    continueEditingBtn.classList.add('hidden');
+    hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
-    createChartBtn.disabled = true;
-    createChartBtn.classList.add('disabledBtn');
+    disableBtn(createChartBtn);
     newUserSelectionBtn = document.querySelector('#newUserSelectionBtn')
-    newUserSelectionBtn.disabled = true;
-    newUserSelectionBtn.classList.add('hidden');
+    hideBtn(newUserSelectionBtn);
     divToCreateSpace = document.querySelector('.space');
     let userInputDiv = document.querySelector('#userInputDiv');
     let svgChartDiv = document.querySelector('#svgChartDiv');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-    YCselectionButtons = document.querySelectorAll('.selected');
+    // YCselectionButtons = document.querySelectorAll('.selected');
 
     // displayValuesBtn.disabled = true;
     // displayValuesBtn.classList.add('disabledBtn');
@@ -262,18 +257,8 @@ function createYCselectionButtons () {
             allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
 
         }
-        // allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
 
     }
-    // for (let i = 0; i < allYCcheckboxes.length; i++) {
-    //     if (userSelectionArray.length > 0) {
-    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].section);
-    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].pairNumber);
-    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].direction);
-    //         allYCcheckboxes[i].classList.add(userSelectionArray[i].oldSelection);
-    //     }
-    //     allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
-    // }
 }
 
 function addEventListeners () {
@@ -1086,7 +1071,10 @@ function createNewInputSection () {
         sectionNumber++
     } // i loop (sections)
         newYCcheckboxes = document.querySelectorAll('.newCheckbox')
-        addEventListeners(); //
+        for (let i = 0; i < newYCcheckboxes.length; i++) {
+            let thisCheckbox = newYCcheckboxes[i];
+             newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
+         }
 }
 
 function storeOldUserSelectionArray () {
@@ -1108,9 +1096,9 @@ function storeOldUserSelectionArray () {
 
 function createNewUserSelectionArrayForOutput () {
     console.log('function createNewUserSelectionArrayForOutput executed');
-    let checkboxClassList;
-    for (let i = 0; i < allYCcheckboxes.length; i++) {
-        checkboxClassList = allYCcheckboxes[i].classList;
+    // allYCcheckboxes = newYCcheckboxes;
+    for (let i = 0; i < newYCcheckboxes.length; i++) {
+        let checkboxClassList = newYCcheckboxes[i].classList;
         let thisObject = {};
         thisObject['numberID'] = i;
         thisObject['section'] = oldUserSelectionArray[i].section;
@@ -1123,12 +1111,13 @@ function createNewUserSelectionArrayForOutput () {
         if (checkboxClassList.contains('CCselected')) {
         //  thisObject['newYarnColor'] = 'CC';
             thisObject['newSelection'] = 'CCselected';
+            thisObject['yarnColor'] = 'CC';
         } else if (checkboxClassList.contains('MCselected') || checkboxClassList.contains('noneSelected') || allYCcheckboxes[i].value == 'MCselected') {
         //  thisObject['newYarnColor'] = 'MC';
             thisObject['newSelection'] = 'MCselected';
+            thisObject['yarnColor'] = 'MC';
         } else {
             console.log('error')
-            thisObject['newSelection'] = 'MC?'
         }
         newUserSelectionArray.push(thisObject);
     } // i loop
@@ -1139,6 +1128,7 @@ function createNewUserSelectionArrayForOutput () {
     userSelectionArray = newUserSelectionArray;
     console.log('userSelectionArray = newUserSelectionArray: ')
     console.log(userSelectionArray);
+    enableBtn(createSetUpRowsBtn);
 }
 
 function  SVGcondition () {
