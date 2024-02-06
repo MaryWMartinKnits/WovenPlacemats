@@ -515,3 +515,9 @@ fieldset {
     padding: 0 0.5rem;
     margin: 5px;
 }
+
+.buttonsDiv {
+    display: flex;
+    justify-content: space-between;
+    background-color: antiquewhite;
+}

@@ -306,13 +306,20 @@ function changeColorSelection (checkedYC) {
 function disableInputSwitches () {
     console.log('function disableInputSwitches executed');
     allSwitches = document.querySelectorAll('input');
-    // console.log('allSwitches: ');
-    // console.log(allSwitches);
     console.log('allSwitches.length = ' + allSwitches.length);
     for ( let i = 0; i < allSwitches.length; i ++) {
         allSwitches[i].disabled = true;
     }
     enableBtn(createSetUpRowsBtn);
+}
+
+function enableInputSwitches () {
+    console.log('function disableInputSwitches executed');
+    allSwitches = document.querySelectorAll('input');
+    console.log('allSwitches.length = ' + allSwitches.length);
+    for ( let i = 0; i < allSwitches.length; i ++) {
+        allSwitches[i].disabled = false;
+    }
 }
 
 function createUserSelectionArray () {
@@ -571,8 +578,8 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
     writeSetUpRow1(allSections1ArrayWritten);
-    continueEditingBtn.disabled = true;
-    continueEditingBtn.classList.add('disabledBtn')
+    disableBtn(continueEditingBtn);
+    disableInputSwitches()
     createSpace();
 } // end of function
 
@@ -963,9 +970,8 @@ function writeSetUpRow2 () {
     setUpRow2Div = document.createElement('div');
     setUpRowsDiv.appendChild(setUpRow2Div);
     setUpRow2Div.appendChild(setUpRow2paragraph);
-    continueEditingBtn.disabled = false;
-    continueEditingBtn.classList.remove('disabledBtn');
-    continueEditingBtn.classList.remove('hidden');
+    hideBtn(continueEditingBtn)
+    disableInputSwitches()
 }
 
 function createSpace () {
@@ -981,13 +987,12 @@ function continueEditingColors () {
     console.log('function continueEditingColors executed');
     disableBtn(continueEditingBtn);
     enableBtn(newUserSelectionBtn);
-    for ( let i = 0; i < allSwitches.length; i ++) {
-        allSwitches[i].disabled = false;
-    }
+    // for ( let i = 0; i < allSwitches.length; i ++) {
+    //     allSwitches[i].disabled = false;
+    // }
+    enableInputSwitches
     disableBtn(createSetUpRowsBtn);
     disableBtn(createChartBtn);
-    // console.log('userSelectionArray:');
-    // console.log(userSelectionArray);
     createNewInputSection ();
 
 }
@@ -1079,6 +1084,9 @@ function createNewInputSection () {
 
 function storeOldUserSelectionArray () {
     console.log('function storeOldUserSelectionArray executed');
+    if (oldUserSelectionArray.length > 0) {
+        userSelectionArray = oldUserSelectionArray;
+    }
     for (let i = 0; i < userSelectionArray.length; i++) {
         let thisObject = {};
         thisObject['section'] = userSelectionArray[i].section;
@@ -1097,6 +1105,9 @@ function storeOldUserSelectionArray () {
 function createNewUserSelectionArrayForOutput () {
     console.log('function createNewUserSelectionArrayForOutput executed');
     // allYCcheckboxes = newYCcheckboxes;
+    if (newUserSelectionArray.length > 0) {
+        newUserSelectionArray = [];
+    }
     for (let i = 0; i < newYCcheckboxes.length; i++) {
         let checkboxClassList = newYCcheckboxes[i].classList;
         let thisObject = {};
@@ -1128,17 +1139,23 @@ function createNewUserSelectionArrayForOutput () {
     userSelectionArray = newUserSelectionArray;
     console.log('userSelectionArray = newUserSelectionArray: ')
     console.log(userSelectionArray);
+    disableBtn(continueEditingBtn);
+    disableInputSwitches();
+    disableBtn(newUserSelectionBtn);
+    enableBtn(createChartBtn);
+    continueEditingBtn.classList.add('hidden');
     enableBtn(createSetUpRowsBtn);
 }
 
 function  SVGcondition () {
     console.log('function SVGcondition executed');
-    for ( let i = 0; i < allSwitches.length; i ++) {
-        allSwitches[i].disabled = true;
-    }
+    disableBtn(continueEditingBtn);
+    // for ( let i = 0; i < allSwitches.length; i ++) {
+    //     allSwitches[i].disabled = true;
+    // }
+    disableInputSwitches();
     continueEditingBtn.classList.remove('hidden');
-    // createChartBtn.disabled = true;
-    // createChartBtn.classList.add('disabledBtn');
+    disableBtn(createChartBtn);
 
     NumberCablePairs = numberOfDE; // = 28
     if (NumberCablePairs % 4 == 0) {
@@ -1160,8 +1177,10 @@ function createSVG (NumberCablePairs) {
     initialCoordinates (scalar);
     startCables (); 
     SVGinnerHTML ();
-    continueEditingBtn.disabled = false;
-    continueEditingBtn.classList.remove('disabledBtn');
+    if (newUserSelectionArray.length == 0) {
+        enableBtn(continueEditingBtn);
+    }
+    disableInputSwitches();
 }
 
 function initialCoordinates (scalar) {
