@@ -530,3 +530,8 @@ fieldset {
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.SVGdiv {
+    min-height: 100px;
+    background-color: antiquewhite;
+}

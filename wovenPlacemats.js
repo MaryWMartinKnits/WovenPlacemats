@@ -970,8 +970,9 @@ function writeSetUpRow2 () {
     setUpRow2Div = document.createElement('div');
     setUpRowsDiv.appendChild(setUpRow2Div);
     setUpRow2Div.appendChild(setUpRow2paragraph);
-    hideBtn(continueEditingBtn)
-    disableInputSwitches()
+    hideBtn(continueEditingBtn);
+    disableInputSwitches();
+    disableBtn(createSetUpRowsBtn);
 }
 
 function createSpace () {
@@ -1285,44 +1286,13 @@ function startCables () {
             }
         }
 
-        // if (cablesArray[i].newDirection) { // new direction is right
-        //     if (CurrentY > 0) { // condition for right moving cable stopping at the top edge??
-        //         CurrentX = cablesArray[i].x2;
-        //         CurrentY = cablesArray[i].y2;
-        //         NextX = CurrentX + CurrentY;
-        //         NextY = 0;
-        //         cablesThatChangedDirectionsArray[i]['newDirection'] = cablesArray[i].newDirection;
-        //         cablesThatChangedDirectionsArray[i]['x1'] = cablesArray[i].x2;
-        //         cablesThatChangedDirectionsArray[i]['y1'] = cablesArray[i].y2;
-        //         cablesThatChangedDirectionsArray[i]['x2'] = NextX;
-        //         cablesThatChangedDirectionsArray[i]['y2'] = NextY;
-        //     } else {
-        //         // cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
-        //         console.log('NO')
-        //     }
-        // } else if (!cablesArray[i].newDirection) { // new direction is left.
-        //     if (CurrentY > 0) { // left cable has hit the top edge. Condition??
-        //         CurrentX = cablesArray[i].x2;
-        //         CurrentY = cablesArray[i].y2;
-        //         NextY = 0;
-        //         NextX = CurrentX-CurrentY;
-        //         cablesThatChangedDirectionsArray[i]['newDirection'] = cablesArray[i].newDirection;
-        //         cablesThatChangedDirectionsArray[i]['x1'] = cablesArray[i].x2;
-        //         cablesThatChangedDirectionsArray[i]['y1'] = cablesArray[i].y2;
-        //         cablesThatChangedDirectionsArray[i]['x2'] = NextY;
-        //         cablesThatChangedDirectionsArray[i]['y2'] = NextY;
-        //     } else {
-        //         cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
-        //     }
-        // }
-
-        if (cablesArray[i].selectedColour = 'MC') {
+        if (cablesArray[i].selectedColour == 'MC') {
             cablesArray[i]['Colour'] = 'blue';
-        } else if (cablesArray[i].selectedColour = 'CC') {
+        } else if (cablesArray[i].selectedColour == 'CC') {
             cablesArray[i]['Colour'] = 'red';
         }
-        cablesArray[i]['line1'] = `<line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
-        cablesArray[i]['line2'] = `<line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
+        cablesArray[i]['line1'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
+        cablesArray[i]['line2'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
        
         // cablesThatChangedDirectionsArray[i]['line'] = `<line x1=${cablesThatChangedDirectionsArray[i].x1} y1=${cablesThatChangedDirectionsArrayy[i].y1} x2=${cablesThatChangedDirectionsArray[i].x2} y2=${cablesThatChangedDirectionsArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
        
@@ -1333,16 +1303,7 @@ function startCables () {
 
 function SVGinnerHTML () {
     console.log('function SVGinnerHTML executed');
-    let SVGdiv = document.createElement('div'); //
-    SVGdiv.classList.add('SVGdiv'); //
-    svgChartDiv.appendChild(SVGdiv); //
-    let SVG = document.createElement('svg');
-    SVG.style.height = '1400px';
-    SVG.style.width = '2800px';
-    SVG.style.backgroundColor = 'white';
-    SVG.classList.add('SVGplacemat');
     let allLines = '';
-    SVGdiv.appendChild(SVG); //
     let line1;
     let line2;
     for (let i = 0; i < cablesArray.length; i++) {
@@ -1362,12 +1323,14 @@ function SVGinnerHTML () {
                 }
             }
         }
-        
-        SVG.innerHTML = allLines;
-
     } // i loop
+        let SVGinDiv = document.createElement('div');
+        SVGinDiv.classList.add('SVGinDiv');
+        SVGinDiv.innerHTML = `<svg class="SVGplacemat" style="background-color:white; height:1400px; width: 2800px"> ${allLines}  </svg>`
+        svgChartDiv.appendChild(SVGinDiv);
     console.log('allLines: ');
-    console.log(allLines);
+    // console.log(allLines);
+    console.log('svgChartDivHeight: ' + neededHeight_Chart)
 }
 
 
