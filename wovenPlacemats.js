@@ -174,7 +174,7 @@ function disableBtn (button) {
     button.classList.add('disabledBtn');
 }
 
-function hideBtn () {
+function hideBtn (button) {
     button.disabled = true;
     button.classList.add('hidden');
 }
