@@ -91,6 +91,7 @@ footer {
 .hidden {
     visibility: hidden;
     height: 0;
+    width: min-content;
 }
 .disabledBtn {
     background-color: rgb(180, 169, 187);
@@ -461,6 +462,9 @@ fieldset {
        display: block;
        font-size: 0.8rem;
    }
+   .buttonsDiv {
+    max-width: max-content;
+   }
 }
 .colorCoding0 h3, .colorCoding1 h3, .colorCoding2 h3, .colorCoding3 h3 {
     padding: 0.2rem;
@@ -516,8 +520,13 @@ fieldset {
     margin: 5px;
 }
 
+.outsideBtnsDiv {
+    display: flex;
+    justify-content: center;
+}
+
 .buttonsDiv {
     display: flex;
     justify-content: space-between;
-    background-color: antiquewhite;
+    flex-wrap: wrap;
 }
