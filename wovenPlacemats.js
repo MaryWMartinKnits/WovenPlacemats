@@ -9,13 +9,13 @@ let userInputTitle;
 
 
 let allYCbuttons = [];
-let YCselectionButtons = [];
+// let YCselectionButtons = [];
 let allYCcheckboxes
 let firedCheckboxID;
 let checkboxClassList;
 let getUserSelectionBtn;
 let userSelectionArray = [];
-let displayValuesBtn;
+// let displayValuesBtn;
 let setUpRowsDiv;
 let DE = '';
 let pairNumber = 1;
@@ -56,15 +56,11 @@ let purl = '';
 let p1 = ' p1';
 let k1 = ' k1';
 let k2 = ' k2';
-let lastDE;
-let lastP2;
-let saveEndOfSection;
 let divToCreateSpace;
 let neededHeight_SetUpRows;
 let optimalHeight;
 let setUpRow1Div;
 let setUpRow2Div
-let savedPurlStitchCount = 0;
 let writtenStitchCount1;
 let setUpRow1paragraph;
 let firstStitch;
@@ -97,10 +93,16 @@ let Row1DEinstructions;
 let colorCode;
 let combination = '';
 let createChartBtn;
+let createSetUpRowsBtn;
 
 // continue editing colors:
 let continueEditingBtn;
+let oldUserSelectionArray = [];
 let newUserSelectionArray = [];
+let allSwitches;
+let newUserSelectionBtn;
+let checkboxPreviousSelectionArray = [];
+let newYCcheckboxes;
 
 // SVG:
 let NumberCablePairs;
@@ -139,30 +141,48 @@ function getDOMelements () {
     begOfPage = document.querySelector('#begOfPage')
     outputDiv = document.querySelector('#outputDiv')
     getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
-    displayValuesBtn = document.querySelector('#displayValues');
+    // displayValuesBtn = document.querySelector('#displayValues');
+    createSetUpRowsBtn = document.querySelector('#createSetUpRowsBtn');
+    disableBtn(createSetUpRowsBtn);
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
     continueEditingBtn = document.querySelector('#continueEditingBtn');
-    continueEditingBtn.disabled = true;
-    continueEditingBtn.classList.add('disabledBtn');
+    hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
-    createChartBtn.disabled = true;
-    createChartBtn.classList.add('disabledBtn');
+    disableBtn(createChartBtn);
+    newUserSelectionBtn = document.querySelector('#newUserSelectionBtn')
+    hideBtn(newUserSelectionBtn);
+    divToCreateSpace = document.querySelector('.space');
+    let userInputDiv = document.querySelector('#userInputDiv');
+    let svgChartDiv = document.querySelector('#svgChartDiv');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-    YCselectionButtons = document.querySelectorAll('.selected');
-    divToCreateSpace = document.querySelector('.space');
-    displayValuesBtn.disabled = true;
-    displayValuesBtn.classList.add('disabledBtn');
-    userInputDiv = document.querySelector('#userInputDiv');
-    svgChartDiv = document.querySelector('#svgChartDiv');
+    // YCselectionButtons = document.querySelectorAll('.selected');
+
+    // displayValuesBtn.disabled = true;
+    // displayValuesBtn.classList.add('disabledBtn');
+
 
     // choosing colors:
 
+}
 
+function disableBtn (button) {
+    button.disable = true;
+    button.classList.add('disabledBtn');
+}
 
+function hideBtn () {
+    button.disabled = true;
+    button.classList.add('hidden');
+}
+
+function enableBtn (button) {
+    button.disabled = false;
+    button.classList.remove('disabledBtn');
+    button.classList.remove('hidden');
 }
 
 function displayWindowWidth () {
@@ -229,20 +249,34 @@ function createInputSection () {
 }
 
 function createYCselectionButtons () {
+    console.log('function createYCselectionButtons executed');
     allYCcheckboxes = document.querySelectorAll('.YCcheckbox');
+    if (userSelectionArray.length == numberOfDE * 2) {
+        for (let i = 0; i < allYCcheckboxes.length; i ++) {
+            allYCcheckboxes[i].classList.add(`${userSelectionArray[i].yarnColor}`) //
+            allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
+
+        }
+
+    }
 }
 
 function addEventListeners () {
     console.log('function addEventListeners executed');
     window.addEventListener('resize', displayWindowWidth);
     getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
-    displayValuesBtn.addEventListener('click', displaySelectedValues);
+    // displayValuesBtn.addEventListener('click', displaySelectedValues);
     continueEditingBtn.addEventListener('click', continueEditingColors);
         // createChartBtn.addEventListener('click', SVGcondition); //
-
-    for (let i = 0; i < allYCcheckboxes.length; i++) {
-        allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
-    }
+    // createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array(userSelectionArray))
+    createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
+    // newUserSelectionBtn.addEventListener('click', createNewInputSection);
+    newUserSelectionBtn.addEventListener('click', createNewUserSelectionArrayForOutput);
+    let thisCheckbox;
+     for (let i = 0; i < allYCcheckboxes.length; i++) {
+        thisCheckbox = allYCcheckboxes[i];
+         allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
+     }
 
 }
 
@@ -253,198 +287,156 @@ function changeColorSelection (checkedYC) {
     // console.log(checkedYC);
     if (checkedYC.checked) {
         checkedYC.value = 'CCselected';
-        checkedYC.classList.add('CCselected')
-        checkedYC.classList.remove('MCselected')
+        checkedYC.classList.add('CCselected');
+        checkedYC.classList.remove('MCselected');
+        checkedYC.classList.remove('noneSelected');
+        checkedYC.classList.remove('on');
     } else {
         checkedYC.value = 'MCselected';
-        checkedYC.classList.add('MCselected')
-        checkedYC.classList.remove('CCselected')
+        checkedYC.classList.add('MCselected');
+        checkedYC.classList.remove('CCselected');
+        checkedYC.classList.remove('noneSelected');
+        checkedYC.classList.remove('on');
     }
     // console.log(checkedYC.value);
+    console.log('checkedYC.classList:')
+    console.log(checkedYC.classList)
 }
 
-function continueEditingColors () {
-    console.log('function continueEditingColors executed');
-    console.log('userSelectionArray:');
-    console.log(userSelectionArray);
-    userInputDiv.innerHTML = '';
-    createNewInputSection ();
-
-    // newUserSelectionArray = ;
-}
-
-function createNewInputSection () {
-    console.log('function createNEWnputSection executed');
-    userInputTitle = document.createElement('h2');
-    userInputTitle.innerHTML = 'User Input:';
-    begOfPage.appendChild(userInputTitle);
-    let code = 0;
-    let pairNumber = 1;
-    for (let i = 0; i < numberOfSections; i++) {
-        let wholeSection = document.createElement('div');
-        userInputDiv.appendChild(wholeSection);
-        let sectionSection = document.createElement('div');
-        sectionSection.classList.add ('sectionTitle');
-
-        sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
-        wholeSection.appendChild(sectionSection);
-        betweenMarkersDiv = document.createElement('div');
-        betweenMarkersDiv.innerHTML = '';
-        betweenMarkersDiv.classList.add('section', 'betweenMarkers')
-
-        colorCode = `colorCoding${code}`
-        code ++
-        if (code == numberofDEperSection) {
-            code = 0
-        }
-        sectionSection.classList.add(`${colorCode}`)
-
-        wholeSection.appendChild(betweenMarkersDiv);
-        for (let k = 0; k < numberofDEperSection; k++) {
-
-            pairClass = `pair${pairNumber}`;
-
-            sectionClass = `section${sectionNumber}`;
-            let fieldset = document.createElement('fieldset');
-            fieldset.innerHTML = (`
-                <div class="pairNumber"><h4> Pair ${pairNumber} </h4></div>
-                <div class="leftANDright">
-
-                    <div class="pairRight"> 
-                        <div class="pairTitle"> 
-                            <h5> Right </h5>  
-                        </div>
-                        <div class="switchBtnDiv">  
-                            <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> 
-                            <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} right" id="checkbox${pairNumber}right" value='noneSelected'> 
-                                <span class="slider round"> </span>
-                                </label> <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
-                                </div>
-                                </div>
-                
-                    <div class="pairLeft">  <div class="pairTitle"> <h5> Left   </h5> </div> <div class="switchBtnDiv"> <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  <label class="switch">   <input type="checkbox" class="YCcheckbox ${sectionClass} ${pairClass} left" id="checkbox${pairNumber}left"> <span class="slider round"> </span></label> <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  </div></div>
-                </div> `)
-            betweenMarkersDiv.appendChild(fieldset);
-                pairNumber++
-        }
-        sectionNumber++
+function disableInputSwitches () {
+    console.log('function disableInputSwitches executed');
+    allSwitches = document.querySelectorAll('input');
+    // console.log('allSwitches: ');
+    // console.log(allSwitches);
+    console.log('allSwitches.length = ' + allSwitches.length);
+    for ( let i = 0; i < allSwitches.length; i ++) {
+        allSwitches[i].disabled = true;
     }
+    enableBtn(createSetUpRowsBtn);
 }
 
 function createUserSelectionArray () {
     console.log('function createUserSelectionArray executed')
+    disableInputSwitches();
     // create an array of selected buttons as objects with properties:
     for (let i = 0; i < allYCcheckboxes.length; i++) {
         checkboxClassList = allYCcheckboxes[i].classList;
         let thisObject = {};
         thisObject['section'] = allYCcheckboxes[i].classList[1];
-        thisObject['pairNumber'] = allYCcheckboxes[i].classList[2];
-        thisObject['direction'] = allYCcheckboxes[i].classList[3];
-        if (checkboxClassList.contains('CCselected')) {
-             thisObject['yarnColor'] = 'CC';
-        } else if (checkboxClassList.contains('MCselected')) {
-            thisObject['yarnColor'] = 'MC';
-        } else {
-            thisObject['yarnColor'] = 'MC';
-        }
-        thisObject['numberID'] = i;
-        userSelectionArray.push(thisObject);
+        for (let i = 0; i < allYCcheckboxes.length; i++) {
+            checkboxClassList = allYCcheckboxes[i].classList;
+            let thisObject = {};
+            thisObject['section'] = allYCcheckboxes[i].classList[1];
+            thisObject['pairNumber'] = allYCcheckboxes[i].classList[2];
+            thisObject['direction'] = allYCcheckboxes[i].classList[3];
+            if (checkboxClassList.contains('CCselected') || checkboxClassList.contains('CC')) {
+                 thisObject['yarnColor'] = 'CC';
+            } else if (checkboxClassList.contains('MCselected')) {
+                thisObject['yarnColor'] = 'MC';
+            } else {
+                thisObject['yarnColor'] = 'MC';
             }
-    console.log('userSelectionArray: ')
-    console.log(userSelectionArray);
-    getUserSelectionBtn.disabled = true;
-    getUserSelectionBtn.classList.add('disabledBtn');
-    createSetUpRow1Array(userSelectionArray);
-    displayValuesBtn.disabled = false;
-    displayValuesBtn.classList.remove('disabledBtn');
-    createChartBtn.disabled = false;
-    createChartBtn.classList.remove('disabledBtn')
-    createChartBtn.addEventListener('click', SVGcondition);
-    return userSelectionArray;
-}
-
-function displaySelectedValues () {
-    console.log('function displaySelectedValues executed');
-    userInputTitle.classList.add('hidden');
-    userInputDiv.classList.add('hidden');
-    outputDiv.classList.remove('hidden');
-    let inputSelectionTitle = document.createElement('div');
-    inputSelectionTitle.innerHTML = `<h2> User selection: </h2>`;
-    inputSelectionTitle.classList.add('inputSelectionTitleDiv');
-    outputDiv.appendChild(inputSelectionTitle);
-    let pNumber = 0;
-    let stNumber = 0
-    let stDirection; 
-    let code = 0;
-    for (let i = 0; i < numberOfSections; i++) {
-
-        let sectionDiv = document.createElement('div');
-        sectionDiv.classList.add('selectionOutputSection');
-
-        colorCode = `colorCoding${code}`
-        code ++
-        if (code == numberofDEperSection) {
-            code = 0
-        }
-        sectionDiv.classList.add(`${colorCode}`)
-
-        outputDiv.appendChild(sectionDiv);
-
-        let sNumber = i + 1;
-        let sectionTitle = document.createElement('h3');
-        sectionTitle.innerHTML = (`Section ${sNumber}`);
-        sectionDiv.appendChild(sectionTitle);
-        let eachSectionDiv = document.createElement('div');
-        eachSectionDiv.classList.add('eachSectionDiv');
-        sectionDiv.appendChild(eachSectionDiv);
-        for (let j = 0; j < numberofDEperSection; j++) {
-            pNumber++
-            let eachPairDiv = document.createElement('div');
-            eachPairDiv.classList.add('eachPairDiv');
-            eachSectionDiv.appendChild(eachPairDiv);
-            let pairNumberOutputTitle = document.createElement('h4');
-            pairNumberOutputTitle.innerHTML = (`   Pair ${pNumber}`);
-            eachPairDiv.appendChild(pairNumberOutputTitle);
-            let leftText = 'Left';
-            let rightText = 'Right';
-            let counter = 'pair' + pNumber
-            let condition = userSelectionArray[stNumber].pairNumber;
-            while (condition == counter) {
-                let pairStitchesDiv = document.createElement('div');
-                pairStitchesDiv.classList.add('pairStitchesDiv');
-                eachPairDiv.appendChild(pairStitchesDiv);
-                if (userSelectionArray[stNumber].direction = 'right') {
-                    let stitchSection = document.createElement('div');
-                    stitchSection.classList.add('stitchSection');
-                    pairStitchesDiv.appendChild(stitchSection);
-                    let cableDirectionANDColor = document.createElement('p')
-                    stDirection = rightText;
-                    cableDirectionANDColor.innerHTML = 
-                    `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-                    stitchSection.appendChild(cableDirectionANDColor);
-                    stNumber++
+            thisObject['numberID'] = i;
+            userSelectionArray.push(thisObject);
                 }
-                if (userSelectionArray[stNumber].direction = 'left') {
-                let stitchSection = document.createElement('div');
-                stitchSection.classList.add('stitchSection');
-                pairStitchesDiv.appendChild(stitchSection);
-
-                let cableDirectionANDColor = document.createElement('p')
-                stDirection = leftText
-                cableDirectionANDColor.innerHTML = 
-                `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-                stitchSection.appendChild(cableDirectionANDColor);
-                stNumber++
-                counter++
-                }                                  
-            }      
-        }
+        console.log('userSelectionArray: ')
+        console.log(userSelectionArray);
+        getUserSelectionBtn.disabled = true;
+        getUserSelectionBtn.classList.add('disabledBtn');
+        // createSetUpRow1Array(userSelectionArray);
+        // displayValuesBtn.disabled = false;
+        // displayValuesBtn.classList.remove('disabledBtn');
+        createChartBtn.disabled = false;
+        createChartBtn.classList.remove('disabledBtn')
+        createChartBtn.addEventListener('click', SVGcondition);
+   
+        return userSelectionArray;
     }
 }
 
-function createSetUpRow1Array (userSelectionArray) {
-    for (let i = 0; i < numberOfSections; i++) {
+// function displaySelectedValues () {
+//     console.log('function displaySelectedValues executed');
+//     userInputTitle.classList.add('hidden');
+//     userInputDiv.classList.add('hidden');
+//     outputDiv.classList.remove('hidden');
+//     let inputSelectionTitle = document.createElement('div');
+//     inputSelectionTitle.innerHTML = `<h2> User selection: </h2>`;
+//     inputSelectionTitle.classList.add('inputSelectionTitleDiv');
+//     outputDiv.appendChild(inputSelectionTitle);
+//     let pNumber = 0;
+//     let stNumber = 0
+//     let stDirection; 
+//     let code = 0;
+//     for (let i = 0; i < numberOfSections; i++) {
+
+//         let sectionDiv = document.createElement('div');
+//         sectionDiv.classList.add('selectionOutputSection');
+
+//         colorCode = `colorCoding${code}`
+//         code ++
+//         if (code == numberofDEperSection) {
+//             code = 0
+//         }
+//         sectionDiv.classList.add(`${colorCode}`)
+
+//         outputDiv.appendChild(sectionDiv);
+
+//         let sNumber = i + 1;
+//         let sectionTitle = document.createElement('h3');
+//         sectionTitle.innerHTML = (`Section ${sNumber}`);
+//         sectionDiv.appendChild(sectionTitle);
+//         let eachSectionDiv = document.createElement('div');
+//         eachSectionDiv.classList.add('eachSectionDiv');
+//         sectionDiv.appendChild(eachSectionDiv);
+//         for (let j = 0; j < numberofDEperSection; j++) {
+//             pNumber++
+//             let eachPairDiv = document.createElement('div');
+//             eachPairDiv.classList.add('eachPairDiv');
+//             eachSectionDiv.appendChild(eachPairDiv);
+//             let pairNumberOutputTitle = document.createElement('h4');
+//             pairNumberOutputTitle.innerHTML = (`   Pair ${pNumber}`);
+//             eachPairDiv.appendChild(pairNumberOutputTitle);
+//             let leftText = 'Left';
+//             let rightText = 'Right';
+//             let counter = 'pair' + pNumber
+//             let condition = userSelectionArray[stNumber].pairNumber;
+//             while (condition == counter) {
+//                 let pairStitchesDiv = document.createElement('div');
+//                 pairStitchesDiv.classList.add('pairStitchesDiv');
+//                 eachPairDiv.appendChild(pairStitchesDiv);
+//                 if (userSelectionArray[stNumber].direction = 'right') {
+//                     let stitchSection = document.createElement('div');
+//                     stitchSection.classList.add('stitchSection');
+//                     pairStitchesDiv.appendChild(stitchSection);
+//                     let cableDirectionANDColor = document.createElement('p')
+//                     stDirection = rightText;
+//                     cableDirectionANDColor.innerHTML = 
+//                     `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
+//                     stitchSection.appendChild(cableDirectionANDColor);
+//                     stNumber++
+//                 }
+//                 if (userSelectionArray[stNumber].direction = 'left') {
+//                 let stitchSection = document.createElement('div');
+//                 stitchSection.classList.add('stitchSection');
+//                 pairStitchesDiv.appendChild(stitchSection);
+
+//                 let cableDirectionANDColor = document.createElement('p')
+//                 stDirection = leftText
+//                 cableDirectionANDColor.innerHTML = 
+//                 `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
+//                 stitchSection.appendChild(cableDirectionANDColor);
+//                 stNumber++
+//                 counter++
+//                 }                                  
+//             }      
+//         }
+//     }
+// }
+
+// function createSetUpRow1Array (userSelectionArray) {
+function createSetUpRow1Array () {
+    console.log('function createSetUpRow1Array executed');;
+        for (let i = 0; i < numberOfSections; i++) {
         for (let j = 0; j < numberofDEperSection; j++) {
             let thisObject = {};
                 thisObject['numberID'] = c;
@@ -544,6 +536,7 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         purlStitchCount = 0
         DE = m1L;
         purlStitchCount++
+        DEstitchCountRow1++
         combination = 'right MC & left CC'
 
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'CC') {
@@ -556,6 +549,7 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         // console.log(`right CC & left MC`);
         purlStitchCount = 0
         DE = m1L;
+        DEstitchCountRow1++
         purlStitchCount++
         combination = 'right CC & left MC'
  
@@ -577,6 +571,8 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
     writeSetUpRow1(allSections1ArrayWritten);
+    continueEditingBtn.disabled = true;
+    continueEditingBtn.classList.add('disabledBtn')
     createSpace();
 } // end of function
 
@@ -772,7 +768,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                     Row1DE = Row1DEobject[0];
                     if (Row1DE !== '') {
                         Row1DE = Row1DEobject[0];
-                        console.log(`j = ${j} yes = ${Row1DEpossibleStitches[j]}`)
+                        // console.log(`j = ${j} yes = ${Row1DEpossibleStitches[j]}`)
                         // console.log(`j = ${j} Row1DE = ${Row1DE}.  setUpRow1Array: i= ${i}.  Section: ${setUpRow1Array[i].section}. Pair: ${setUpRow1Array[i].pairNumber}`);
                         // console.log(`setUpRow2Array: i= ${i}.  Section: ${setUpRow2Array[i].section}. Pair: ${setUpRow2Array[i].pairNumber}  `)`);
                         break;
@@ -792,7 +788,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
             combination = 'both CC';
         } else if (Row1DE == cero_into_two) { // MC & MC for last pair
             Row2DE = sl2;
-            // DEstitchCountRow2 = DEstitchCountRow2 + 2;
+            DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both MC last pair';
         } else if (Row1DE == ktbl1 || Row1DE == m1L) { // MC & CC
             let oldStitchCount = DEstitchCountRow2;
@@ -806,7 +802,8 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                                     DEstitchCountRow2++
                                     if (Row1DE == ktbl1) {
                                         combination = 'rigth MC & left CC';
-                                        break;                                    } else if (Row1DE == m1L) {
+                                        break;                                    
+                                    } else if (Row1DE == m1L) {
                                         combination = "rigth MC & left CC last pair"
                                         break;
                                     }
@@ -859,13 +856,13 @@ function createSetUpRow2Array (setUpRow1Array) {
         thisObject['colorCode'] = colorCode;
         allPairsOfSection_SetUpRow2(i, thisObject)
         if (i == numberofDEperSection - 1) {
-            console.log('setUpRow2Array:');
-            console.log(setUpRow2Array);
+            // console.log('setUpRow2Array:');
+            // console.log(setUpRow2Array);
             c++
         }
     } // i loop
-    console.log('setUpRow2Array:');
-    console.log(setUpRow2Array);
+    // console.log('setUpRow2Array:');
+    // console.log(setUpRow2Array);
     wovenPlacematSetUpRow2(setUpRow2Array);
 }
 
@@ -968,6 +965,7 @@ function writeSetUpRow2 () {
     setUpRow2Div.appendChild(setUpRow2paragraph);
     continueEditingBtn.disabled = false;
     continueEditingBtn.classList.remove('disabledBtn');
+    continueEditingBtn.classList.remove('hidden');
 }
 
 function createSpace () {
@@ -977,8 +975,168 @@ function createSpace () {
     divToCreateSpace.style.height = `${optimalHeight}px`;
 }
 
+// continue editing colors section:
+
+function continueEditingColors () {
+    console.log('function continueEditingColors executed');
+    disableBtn(continueEditingBtn);
+    enableBtn(newUserSelectionBtn);
+    for ( let i = 0; i < allSwitches.length; i ++) {
+        allSwitches[i].disabled = false;
+    }
+    disableBtn(createSetUpRowsBtn);
+    disableBtn(createChartBtn);
+    // console.log('userSelectionArray:');
+    // console.log(userSelectionArray);
+    createNewInputSection ();
+
+}
+
+function createNewInputSection () {
+    console.log('function createNEWnputSection executed');
+    // userInputTitle = document.createElement('h2');
+    // userInputTitle.innerHTML = 'User Input:';
+    // begOfPage.appendChild(userInputTitle);
+        console.log('userSelectionArray: ')
+        console.log(userSelectionArray);
+        storeOldUserSelectionArray();
+    userInputDiv.innerHTML = '';
+    let code = 0;
+    let pairNumber = 1;
+    let sectionNumber = 1
+    let counter = 0;
+    for (let i = 0; i < numberOfSections; i++) {
+        let wholeSection = document.createElement('div');
+        userInputDiv.appendChild(wholeSection);
+        let sectionSection = document.createElement('div');
+        sectionSection.classList.add ('sectionTitle');
+
+        sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
+        wholeSection.appendChild(sectionSection);
+        betweenMarkersDiv = document.createElement('div');
+        betweenMarkersDiv.innerHTML = '';
+        betweenMarkersDiv.classList.add('section', 'betweenMarkers')
+
+        colorCode = `colorCoding${code}`
+        code ++
+        if (code == numberofDEperSection) {
+            code = 0
+        }
+        sectionSection.classList.add(`${colorCode}`)
+
+        wholeSection.appendChild(betweenMarkersDiv);
+        for (let k = 0; k < numberofDEperSection; k++) {
+
+            pairClass = `pair${pairNumber}`;
+
+            sectionClass = `section${sectionNumber}`;
+            let fieldset = document.createElement('fieldset');
+            fieldset.innerHTML = (`
+                <div class="pairNumber"><h4> Pair ${pairNumber} </h4></div>
+                    <div class="leftANDright">
+
+                        <div class="pairRight"> 
+                            <div class="pairTitle"> 
+                                <h5> Right </h5>  
+                            </div>
+                            <div class="switchBtnDiv">  
+                                <p class="YCselection ${sectionClass} ${pairClass} right MC"> MC </p> 
+                                <label class="switch">   
+                                    <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} right ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}right_new" value="${userSelectionArray[counter].yarnColor}selected"> 
+                                    <span class="slider round"> </span>
+                                </label> 
+                                    <p class="YCselection ${sectionClass} ${pairClass} right CC"> CC </p>
+                            </div>
+                        </div>
+                    
+                        <div class="pairLeft">  
+                            <div class="pairTitle"> 
+                            <h5> Left   </h5> 
+                        </div> 
+                        <div class="switchBtnDiv"> 
+                            <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  
+                            <label class="switch">   
+                                <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}left_new" value="${userSelectionArray[counter+1].yarnColor}selected"> 
+                                <span class="slider round"> </span>
+                            </label> 
+                                <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  
+                        </div>
+                    </div>
+                
+                </div> `)
+            betweenMarkersDiv.appendChild(fieldset);
+                pairNumber++
+                counter = counter + 2;
+        } // k loop (pairs of each section)
+        sectionNumber++
+    } // i loop (sections)
+        newYCcheckboxes = document.querySelectorAll('.newCheckbox')
+        for (let i = 0; i < newYCcheckboxes.length; i++) {
+            let thisCheckbox = newYCcheckboxes[i];
+             newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
+         }
+}
+
+function storeOldUserSelectionArray () {
+    console.log('function storeOldUserSelectionArray executed');
+    for (let i = 0; i < userSelectionArray.length; i++) {
+        let thisObject = {};
+        thisObject['section'] = userSelectionArray[i].section;
+        thisObject['pairNumber'] = userSelectionArray[i].pairNumber;
+        thisObject['direction'] = userSelectionArray[i].direction;
+        // thisObject['oldSelection'] = userSelectionArray[i].yarnColor;
+        thisObject['oldSelection'] = `${userSelectionArray[i].yarnColor}selected`;
+        // thisObject['newSelection'] = x
+        thisObject['numberID'] = i;
+        oldUserSelectionArray.push(thisObject);
+    }
+    console.log('oldUserSelectionArray: ');
+    console.log(oldUserSelectionArray);
+}
+
+function createNewUserSelectionArrayForOutput () {
+    console.log('function createNewUserSelectionArrayForOutput executed');
+    // allYCcheckboxes = newYCcheckboxes;
+    for (let i = 0; i < newYCcheckboxes.length; i++) {
+        let checkboxClassList = newYCcheckboxes[i].classList;
+        let thisObject = {};
+        thisObject['numberID'] = i;
+        thisObject['section'] = oldUserSelectionArray[i].section;
+        thisObject['pairNumber'] = oldUserSelectionArray[i].pairNumber;
+        thisObject['direction'] = oldUserSelectionArray[i].direction;
+        // if (oldUserSelectionArray[i].contains('oldSelection')) {
+        //     thisObject['oldSelection'] = oldUserSelectionArray[i].oldSelection;
+        // }
+
+        if (checkboxClassList.contains('CCselected')) {
+        //  thisObject['newYarnColor'] = 'CC';
+            thisObject['newSelection'] = 'CCselected';
+            thisObject['yarnColor'] = 'CC';
+        } else if (checkboxClassList.contains('MCselected') || checkboxClassList.contains('noneSelected') || allYCcheckboxes[i].value == 'MCselected') {
+        //  thisObject['newYarnColor'] = 'MC';
+            thisObject['newSelection'] = 'MCselected';
+            thisObject['yarnColor'] = 'MC';
+        } else {
+            console.log('error')
+        }
+        newUserSelectionArray.push(thisObject);
+    } // i loop
+    console.log('old userSelectionArray: ');
+    console.log(oldUserSelectionArray);
+    console.log('new userSelectionArray:');
+    console.log(newUserSelectionArray);
+    userSelectionArray = newUserSelectionArray;
+    console.log('userSelectionArray = newUserSelectionArray: ')
+    console.log(userSelectionArray);
+    enableBtn(createSetUpRowsBtn);
+}
+
 function  SVGcondition () {
     console.log('function SVGcondition executed');
+    for ( let i = 0; i < allSwitches.length; i ++) {
+        allSwitches[i].disabled = true;
+    }
+    continueEditingBtn.classList.remove('hidden');
     // createChartBtn.disabled = true;
     // createChartBtn.classList.add('disabledBtn');
 
@@ -1002,6 +1160,8 @@ function createSVG (NumberCablePairs) {
     initialCoordinates (scalar);
     startCables (); 
     SVGinnerHTML ();
+    continueEditingBtn.disabled = false;
+    continueEditingBtn.classList.remove('disabledBtn');
 }
 
 function initialCoordinates (scalar) {
