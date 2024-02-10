@@ -531,6 +531,11 @@ fieldset {
     flex-wrap: wrap;
 }
 
+#svgChartDiv {
+    display: flex;
+    justify-content: center;
+}
+
 .SVGdiv {
     min-height: 100px;
     background-color: antiquewhite;
