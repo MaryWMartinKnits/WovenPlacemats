@@ -117,6 +117,7 @@ let NextX;
 let NextY;
 let neededHeight_Chart
 let cablesThatChangedDirectionsArray = [];
+let SVGinDiv;
 
 
 // choosing colors:
@@ -1168,141 +1169,191 @@ function  SVGcondition () {
 
 function createSVG (NumberCablePairs) {
     console.log('function createSVG executed')
-    let scalar = 100;
+    // let scalar = 100;
+    let scalar = window.innerWidth / NumberCablePairs;
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
     NumberOfCables = NumberCablePairs * 2; // = 56
-    svgHeight = scalar * NumVerticalRepeats;
-    svgWidth =  scalar * NumberCablePairs;
+        svgWidth =  scalar * NumberCablePairs;
+        svgHeight = scalar * NumVerticalRepeats;
+        // svgHeight = window.innerWidth / 2; //
+        // svgWidth =  window.innerWidth; //
+        console.log(`svgWidth = ${svgWidth}. svgHeight = ${svgHeight}. Scalar = ${scalar}`)
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
     initialCoordinates (scalar);
-    startCables (); 
-    SVGinnerHTML ();
+    let counter = 0; 
+    //  startCables (); 
+    SVGlines (counter);
     if (newUserSelectionArray.length == 0) {
         enableBtn(continueEditingBtn);
     }
     disableInputSwitches();
 }
 
+
+
 function initialCoordinates (scalar) {
-    console.log('function initialCoordinates executed')
-    console.log('scalar = ' + scalar);
-    PairNumber = 1
-    for (let i = 0; i < NumberOfCables ; i++) { // 56
-        let thisObject = {};
-        thisObject['x1'] = scalar * PairNumber - (scalar / 2); // The initial position of each pair is X= width - [(PairNum - .5) * 100]
-        thisObject['y1'] = svgHeight;
-        // thisObject['y1'] = 0;
-        thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
-        if (userSelectionArray[i].direction == 'right') {
-            RightMoving = true;
-        } else if (userSelectionArray[i].direction == 'left') {
-            RightMoving = false;
-        }
-        thisObject['rightMoving'] = RightMoving;
-        cablesArray.push(thisObject);
+    console.log(`function initialCoordinates executed with scalar = ${scalar}`)
+    console.log('scalar = ' + scalar);     
+    // scalar = svgWidth / pairNumber;
+    // console.log('scalar = ' + scalar);
+    creatingInitialCoordinatesArray (scalar);
+    cablesTrayectory ();
+    // leftLeaningCablesThatHitLeftEdge(scalar);
+//     leftLeaningCablesThatHitTopEdge(scalar);
+}
+
+function creatingInitialCoordinatesArray (scalar) {
+    console.log(`function creatingInititalCoordinatesArray executed with scalar = ${scalar}.`)
+    PairNumber = 0;
+    for (let i = 0; i < NumberOfCables; i++) {
         if (i % 2 == 0) {
             PairNumber++
         }
-    }
-}
-
-
-function startCables () {
-    console.log('function startCables executed')
-    let newDirection;
-    for (let i = 0; i < NumberOfCables; i++) {
-        let CurrentX = cablesArray[i].x1;
-        let CurrentY = cablesArray[i].y1;
-        // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
-        
-        if (RightMoving) { // RIGHT moving cable: will travel right until it reaches either the right edge or the top edge and will stop.
-            if ((svgWidth - CurrentX) < CurrentY) {  //it has hit the right edge.
-            // if ((svgWidth - CurrentX) < CurrentY && (CurrentY < svgHeight)) {  //it has hit the right edge (and not the top edge).
-                NextX = svgWidth;
-                NextY = CurrentY + (svgWidth - CurrentX);
-                // RightMoving = false;
-                cablesArray[i]['x2'] = NextX;
-                cablesArray[i]['y2'] = NextY;
-                newDirection = false;
-            // } else if ((CurrentY >= svgHeight)) { // condition for right moving cable stopping at the top edge??
-            } else if (CurrentY < svgHeight) {
-                NextX = CurrentX + CurrentY;
-                NextY = 0;
-                cablesArray[i]['x2'] = NextX;
-                cablesArray[i]['y2'] = NextY;
-            } 
-        } else if (!RightMoving) { // LEFT moving cable:
-            // if (CurrentX < CurrentY && (CurrentY < svgHeight)) { // left cable has hit the left edge.
-            if (CurrentX < CurrentY) { // left cable has hit the left edge.
-                    NextX = 0;
-                NextY = CurrentY-CurrentX;
-                // RightMoving = true;
-                cablesArray[i]['x2'] = NextX;
-                cablesArray[i]['y2'] = NextY;
-                newDirection = true;
-            } else if (CurrentY < svgHeight) { // has hit the top edge. Condition??
-                NextY = 0;
-                NextX = CurrentX-CurrentY;
-                cablesArray[i]['x2'] = NextX;
-                cablesArray[i]['y2'] = NextY;
-            }
+        let thisObject = {};
+        thisObject['x1'] = svgWidth - ((PairNumber - 1) * scalar);
+        thisObject['y1'] = svgHeight;
+        thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
+         if (userSelectionArray[i].direction == 'right') {
+            RightMoving = true;
+            thisObject['leans'] = 'right'
+         } else if (userSelectionArray[i].direction == 'left') {
+            RightMoving = false;
+            thisObject['leans'] = 'left'
         }
-
-        if (newDirection) { // new direction is right
-            if (CurrentY > 0) { // condition for right moving cable stopping at the top edge??
-                CurrentX = cablesArray[i].x2;
-                CurrentY = cablesArray[i].y2;
-                // cablesThatChangedDirectionsArray[i]['x1'] = CurrentX;
-                // cablesThatChangedDirectionsArray[i]['y1'] = CurrentY;
-                NextX = CurrentX + CurrentY;
-                NextY = 0;
-                // cablesThatChangedDirectionsArray[i]['newDirection'] = newDirection;
-
-                // cablesThatChangedDirectionsArray[i]['x2'] = NextX;
-                // cablesThatChangedDirectionsArray[i]['y2'] = NextY;
-                cablesArray[i]['x3'] = NextX;
-                cablesArray[i]['y3'] = NextY;
-            } else {
-                // cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
-                console.log('NO')
-            }
-        } else if (!newDirection) { // new direction is left.
-            if (CurrentY > 0) { // left cable has hit the top edge. Condition??
-                CurrentX = cablesArray[i].x2;
-                CurrentY = cablesArray[i].y2;
-                // cablesThatChangedDirectionsArray[i]['x1'] = CurrentX;
-                // cablesThatChangedDirectionsArray[i]['y1'] = CurrentY;
-                NextY = 0;
-                NextX = CurrentX-CurrentY;
-                // cablesThatChangedDirectionsArray[i]['newDirection'] = newDirection;
-                
-                // cablesThatChangedDirectionsArray[i]['x2'] = NextY;
-                // cablesThatChangedDirectionsArray[i]['y2'] = NextY;
-                cablesArray[i]['x3'] = NextX;
-                cablesArray[i]['y3'] = NextY;
-            } else {
-                cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
-            }
-        }
-
-        if (cablesArray[i].selectedColour == 'MC') {
-            cablesArray[i]['Colour'] = 'blue';
-        } else if (cablesArray[i].selectedColour == 'CC') {
-            cablesArray[i]['Colour'] = 'red';
-        }
-        cablesArray[i]['line1'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
-        cablesArray[i]['line2'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
-       
-        // cablesThatChangedDirectionsArray[i]['line'] = `<line x1=${cablesThatChangedDirectionsArray[i].x1} y1=${cablesThatChangedDirectionsArrayy[i].y1} x2=${cablesThatChangedDirectionsArray[i].x2} y2=${cablesThatChangedDirectionsArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:2" />`;
-       
-    } // for i loop
-    console.log('cablesArray:');
+        thisObject['rithMoving'] = RightMoving;
+        thisObject['i_pairN'] = PairNumber;
+        cablesArray.push(thisObject)
+    } // i loop
+    console.log('cablesArray: ');
     console.log(cablesArray);
 }
 
-function SVGinnerHTML () {
-    console.log('function SVGinnerHTML executed');
+function cablesTrayectory () {
+    console.log('function cablesTrayectory executed');
+    let newDirection;
+    for (let i = 0; i < NumberOfCables; i++) {
+        let StartingX = cablesArray[i].x1;
+        let StartingY = cablesArray[i].y1;
+                     // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
+        if (RightMoving) { // true -> RIGHT moving cable
+            if ((svgWidth - StartingX) < StartingY) { // the cable has hit the right edge.
+                console.log(`this rigth cable has hit the right edge: ${cablesArray[i]}`)
+                cablesArray[i]['group'] = 'righttCable hits rightEdge';
+                newDirection = 'left';
+            } else if (true) { // the rigth cable has hit the top edge.
+                console.log(`this right cable has hit the top: ${cablesArray[i]}`)
+                cablesArray[i]['group'] = 'rigthCable hits top';
+                NextY = 0;
+                newDirection = 'none';
+            }
+        } else if (!RightMoving) { // false -> LEFT moving cable
+            if (StartingX < StartingY) { // the cable has hit the left edge.
+                console.log(`this left cable has hit the left edge: ${cablesArray[i]}`)
+                NextX = 0;
+                NextY = StartingY - StartingX;
+                cablesArray[i]['group'] = 'leftCable hits leftEdge';
+                newDirection = 'right';
+            } else if (true) { // the left cable has hit the top edge.
+                console.log(`this left cable has hit the top: ${cablesArray[i]}`)
+                cablesArray[i]['group'] = 'leftCable hits top' 
+                NextY = 0;
+                NextX = StartingX - StartingY
+                newDirection = 'none';            
+            }
+        }
+        cablesArray[i]['x2'] = NextX;
+        cablesArray[i]['y2'] = NextY;
+        cablesArray[i]['newDirection'] = newDirection;
+
+
+    }
+    
+}
+
+
+
+
+ function startCables () {
+     console.log('function startCables executed')
+     let newDirection;
+     // for (let i = 0; i < cablesArray.length; i++) {
+     for (let i = 0; i < NumberOfCables; i++) {
+         let CurrentX = cablesArray[i].x1;
+         let CurrentY = cablesArray[i].y1;
+         // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
+        
+         if (RightMoving) { // RIGHT moving cable: will travel right until it reaches either the right edge or the top edge and will stop.
+             if ((svgWidth - CurrentX) < CurrentY) {  //it has hit the right edge.
+             // if ((svgWidth - CurrentX) < CurrentY && (CurrentY < svgHeight)) {  //it has hit the right edge (and not the top edge).
+                 NextX = svgWidth;
+                 NextY = CurrentY + (svgWidth - CurrentX);
+                 // RightMoving = false;
+                 cablesArray[i]['x2'] = NextX;
+                 cablesArray[i]['y2'] = NextY;
+                 newDirection = false;
+             // } else if ((CurrentY >= svgHeight)) { // condition for right moving cable stopping at the top edge??
+             } else if (CurrentY < svgHeight) {
+                 NextX = CurrentX + CurrentY;
+                 NextY = 0;
+                 cablesArray[i]['x2'] = NextX;
+                 cablesArray[i]['y2'] = NextY;
+             } 
+         } else if (!RightMoving) { // LEFT moving cable:
+             // if (CurrentX < CurrentY && (CurrentY < svgHeight)) { // left cable has hit the left edge.
+             if (CurrentX < CurrentY) { // left cable has hit the left edge.
+                     NextX = 0;
+                 NextY = CurrentY-CurrentX;
+                 // RightMoving = true;
+                 cablesArray[i]['x2'] = NextX;
+                 cablesArray[i]['y2'] = NextY;
+                 newDirection = true;
+             } else if (CurrentY < svgHeight) { // has hit the top edge. Condition??
+                 NextY = 0;
+                 NextX = CurrentX-CurrentY;
+                 cablesArray[i]['x2'] = NextX;
+                 cablesArray[i]['y2'] = NextY;
+             }
+         }
+
+        if (newDirection) { // new direction is right
+             if (CurrentY > 0) { // condition for right moving cable stopping at the top edge??
+                 CurrentX = cablesArray[i].x2;
+                 CurrentY = cablesArray[i].y2;
+                 NextX = CurrentX + CurrentY;
+                 NextY = 0;
+                 cablesArray[i]['x3'] = NextX;
+                 cablesArray[i]['y3'] = NextY;
+             } else {
+                 console.log('NO')
+             }
+         } else if (!newDirection) { // new direction is left.
+             if (CurrentY > 0) { // left cable has hit the top edge. Condition??
+                 CurrentX = cablesArray[i].x2;
+                 CurrentY = cablesArray[i].y2;
+                 NextY = 0;
+                 NextX = CurrentX-CurrentY;
+                 cablesArray[i]['x3'] = NextX;
+                 cablesArray[i]['y3'] = NextY;
+             } else {
+                 cablesThatChangedDirectionsArray[i]['notNewLine'] = 'NO'
+             }
+         }
+
+         if (cablesArray[i].selectedColour == 'MC') {
+             cablesArray[i]['Colour'] = 'black';
+         } else if (cablesArray[i].selectedColour == 'CC') {
+             cablesArray[i]['Colour'] = 'orange';
+         }
+         cablesArray[i]['line1'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${cablesArray[i].Colour};stroke-width:4" />`;
+         cablesArray[i]['line2'] = `<line class="${cablesArray[i].selectedColour}line" x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${cablesArray[i].Colour};stroke-width:4" />`;       
+     } // for i loop
+     console.log('cablesArray:');
+     console.log(cablesArray);
+ }
+
+function SVGlines (counter) {
+    console.log('function SVGlines executed');
     let allLines = '';
     let line1;
     let line2;
@@ -1324,14 +1375,48 @@ function SVGinnerHTML () {
             }
         }
     } // i loop
-        let SVGinDiv = document.createElement('div');
-        SVGinDiv.classList.add('SVGinDiv');
-        SVGinDiv.innerHTML = `<svg class="SVGplacemat" style="background-color:white; height:1400px; width: 2800px"> ${allLines}  </svg>`
-        svgChartDiv.appendChild(SVGinDiv);
-    console.log('allLines: ');
-    // console.log(allLines);
-    console.log('svgChartDivHeight: ' + neededHeight_Chart)
+
+    displayChart(allLines, counter);
 }
+
+function displayChart (allLines, counter) {
+    if (counter == 0) {
+        SVGinDiv = document.createElement('div');
+        SVGinDiv.classList.add('SVGinDiv');
+        svgChartDiv.appendChild(SVGinDiv);
+        counter++
+    }
+    SVGinDiv.innerHTML = '';
+    // SVGinDiv.innerHTML = `<svg class="SVGplacemat" style="background-color:white; height:1400px; width: 2800px"> ${allLines}  </svg>`
+    SVGinDiv.innerHTML = `<svg class="SVGplacemat" style="background-color:white; height:${svgHeight}; width: ${svgWidth}"> ${allLines}  </svg>`
+
+    // svgChartDiv.appendChild(SVGinDiv);
+    // console.log('allLines: ');
+    // // console.log(allLines);
+    // console.log('svgChartDivHeight: ' + neededHeight_Chart)
+}
+
+// function leftLeaningCablesThatHitTopEdge (scalar) {
+//     PairNumber = 1
+//     for (let i = NumberOfCables - 1; i >= 0 ; i--) { // 56
+//         let thisObject = {};
+//         thisObject['x1'] = scalar * PairNumber - (scalar / 2); // The initial position of each pair is X= width - [(PairNum - .5) * 100]
+//         thisObject['y1'] = svgHeight;
+//         // thisObject['y1'] = 0;
+//         thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
+//         if (userSelectionArray[i].direction == 'right') {
+//             RightMoving = true;
+//         } else if (userSelectionArray[i].direction == 'left') { // left cables
+//             RightMoving = false;
+//         }
+//         thisObject['rightMoving'] = RightMoving; // false
+//         thisObject['group'] = 'left cable hits top edge';
+//         cablesArray.push(thisObject);
+//         if (i % 2 == 0) {
+//             PairNumber++
+//         }
+//     }
+// }
 
 
 
