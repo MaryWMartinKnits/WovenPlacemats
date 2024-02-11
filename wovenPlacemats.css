@@ -247,6 +247,9 @@ fieldset {
     border-radius: 50%;
   }
 
+  .disabledSwitch {
+    cursor: no-drop;
+  }
 
   /* output section */
 
