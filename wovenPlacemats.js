@@ -1198,6 +1198,7 @@ function initialCoordinates (scalar) {
 
 function creatingInitialCoordinatesArray (scalar) {
     console.log(`function creatingInititalCoordinatesArray executed with scalar = ${scalar}.`)
+    cablesArray = [];
     PairNumber = 0;
     for (let i = 0; i < NumberOfCables; i++) {
         if (i % 2 == 0) {
@@ -1251,7 +1252,7 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
             NextY = StartingX - StartingY; //? should be < svgHeight
             newDirection = 'left';
         } else { // the rigth cable has hit the top edge.
-            console.log(`i: ${i}. this right cable has hit the top: ${cablesArray[i]}`)
+            // console.log(`i: ${i}. this right cable has hit the top: ${cablesArray[i]}`)
             cablesArray[i]['group1'] = 'rigthCable hits top';
             NextX = StartingX + StartingY;
             NextY = 0;
@@ -1313,14 +1314,19 @@ function createLines () {
         let allRightLines2 = '';
         let allLines2 = '';
         for (let i = 0; i < cablesArray.length; i++) {
+            if (cablesArray[i].selectedColour == 'MC') {
+                c = 'black'
+            } else if (cablesArray[i].selectedColour == 'CC') {
+                c = 'red';
+            }
             if (i % 2 == 0) {
-                c = 'red'; // right leaning cable that hits the top
+                // c = 'red'; // right leaning cable that hits the top
                 line1right = `
                 <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${c};stroke-width:2" /> 
                 `
                 allRightLines1 = allRightLines1 + line1right;
             } else {
-                c = 'blue'; // left leaning cable that hits the top
+                // c = 'blue'; // left leaning cable that hits the top
                 line1left = `
                 <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${c};stroke-width:2" /> 
                 `
@@ -1333,14 +1339,14 @@ function createLines () {
             // allLines1 = allLines1 + '' + line1
             if (cablesArray[i].newDirection !== 'none') {
                 if (i % 2 == 0) {
-                    c = 'orange'; // right leaning cable that hits the top
+                    // c = 'orange'; // right leaning cable that hits the top
                     line2right = `
                         <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${c};stroke-width:2" /> 
                         `
                     allRightLines2 = allRightLines2 + line2right;
     
                 } else {
-                    c = 'green'; // left leaning cable that hits the top
+                    // c = 'green'; // left leaning cable that hits the top
                     line2left = `
                         <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${c};stroke-width:2" /> 
                         `
@@ -1350,13 +1356,14 @@ function createLines () {
                 cablesArray[i]['color2'] = c;
             }
         }
-        allLines1 = allLeftLines1 + allRightLines1;
-        allLines2 = allLeftLines2 + allRightLines2;;
+    allLines1 = allLeftLines1 + allRightLines1;
+    allLines2 = allLeftLines2 + allRightLines2;;
+    svgChartDiv.innerHTML = ''
     SVGinDiv = document.createElement('div');
     SVGinDiv.innerHTML = ''
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = 
-    `<svg class="SVGplacemat" style="background-color:antiquewhite; border:1px solid gray; height:${svgHeight}; width: ${svgWidth}"> 
+    `<svg class="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgChartDiv.appendChild(SVGinDiv);
