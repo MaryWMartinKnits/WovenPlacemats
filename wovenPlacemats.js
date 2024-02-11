@@ -1328,9 +1328,9 @@ function createLines () {
         let color;
         for (let i = 0; i < cablesArray.length; i++) {
             if (cablesArray[i].selectedColour == 'MC') {
-                color = 'black'
+                color = 'var(--color4)'
             } else if (cablesArray[i].selectedColour == 'CC') {
-                color = 'red';
+                color = 'orange';
             }
             if (i % 2 == 0) {
                 // c = 'red'; // right leaning cable that hits the top
