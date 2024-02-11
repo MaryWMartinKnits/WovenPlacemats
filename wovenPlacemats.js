@@ -123,6 +123,7 @@ let neededHeight_Chart
 let cablesThatChangedDirectionsArray = [];
 let SVGinDiv;
 let newDirection;
+let svgPlacemat;
 
 
 
@@ -133,7 +134,6 @@ let allMClines;
 let allCClines;
 let pickedMC;
 let pickedCC;
-
 //
 
 window.onload = init();
@@ -164,11 +164,15 @@ function getDOMelements () {
     divToCreateSpace = document.querySelector('.space');
     let userInputDiv = document.querySelector('#userInputDiv');
     let svgChartDiv = document.querySelector('#svgChartDiv');
+    svgPlacemat = document.querySelector('#svgPlacemat');
+    MCpickerBtn = document.querySelector('#colorPickerMC');
+    CCpickerBtn = document.querySelector('#colorPickerCC');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
 
     // choosing colors:
+    chooseLineColor();
 
 }
 
@@ -283,6 +287,8 @@ function addEventListeners () {
     // newUserSelectionBtn.addEventListener('click', createNewInputSection);
     // newUserSelectionBtn.addEventListener('click', createNewUserSelectionArrayForOutput);
     createChartBtn.addEventListener('click', SVGcondition);
+    MCpickerBtn.addEventListener('change', changeLineMC);
+    CCpickerBtn.addEventListener('change', changeLineCC);
 
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
@@ -1328,9 +1334,9 @@ function createLines () {
         let color;
         for (let i = 0; i < cablesArray.length; i++) {
             if (cablesArray[i].selectedColour == 'MC') {
-                color = 'var(--color4)'
+                color = pickedMC;
             } else if (cablesArray[i].selectedColour == 'CC') {
-                color = 'orange';
+                color = pickedCC;
             }
             if (i % 2 == 0) {
                 // c = 'red'; // right leaning cable that hits the top
@@ -1371,57 +1377,62 @@ function createLines () {
         }
     allLines1 = allLeftLines1 + allRightLines1;
     allLines2 = allLeftLines2 + allRightLines2;;
-    svgChartDiv.innerHTML = ''
+    svgPlacemat.innerHTML = ''
     SVGinDiv = document.createElement('div');
     SVGinDiv.innerHTML = ''
     SVGinDiv.classList.add('chartDiv');
+    SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
     `<svg class="SVGplacemat" style="background-color:var(--color6); border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
-    svgChartDiv.appendChild(SVGinDiv);
+    svgPlacemat.appendChild(SVGinDiv);
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
     let svgSize = document.createElement('p');
     svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px)`);
-    svgChartDiv.appendChild(svgSize);
+    svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     // disableBtn(createChartBtn);
     hideBtn(createChartBtn);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // picking MC and CC
 
+function chooseLineColor () {
+    console.log('function chooseLineColor executed');
+    pickedMC = '#5F5FA5'; //var(--color4);
+    pickedCC = '#ffa500'; // orange
+    MCpickerBtn.value = pickedMC;
+    CCpickerBtn.value = pickedCC;
+    console.log(`pickedMC: ${pickedMC} / pickedCC: ${pickedCC}`);
+}
 
-//
+function changeLineMC () {
+    console.log('function changeLineMC executed');
+    pickedMC = MCpickerBtn.value;
+    console.log(`MC = ${pickedMC}`);
+    updatePickedColors(pickedMC, pickedCC);
+}
 
-// function updatePickedColors (pickedMC, pickedCC) {
-//     console.log('updatePickedColors function executed')  
-
-//     for (let i = 0; i < allMClines; i++) {
-//         allMClines[i].style.stroke = `${pickedMC}`
-//     }
-//     for (let i = 0; i < allCClines; i++) {
-//         allCClines[i].style.stroke = `${pickedCC}`
-//     }
-//     console.log(`MC: ${pickedMC}. CC: ${pickedCC}`);
-    
+function changeLineCC () {
+    console.log('function changeLineCC executed');
+    pickedCC = CCpickerBtn.value;
+    console.log(`CC = ${pickedCC}`);
+    updatePickedColors(pickedMC, pickedCC);
+}
 
 
-// }
+ function updatePickedColors (pickedMC, pickedCC) {
+     console.log('function updatePickedColors executed')  
+     for (let i = 0; i < allMClines; i++) {
+         allMClines[i].style.stroke = `${pickedMC}`
+     }
+     for (let i = 0; i < allCClines; i++) {
+         allCClines[i].style.stroke = `${pickedCC}`
+     }
+     console.log(`MC: ${pickedMC}. CC: ${pickedCC}`);
+ }
 
 
 // function giveLinesChosenColor() {
