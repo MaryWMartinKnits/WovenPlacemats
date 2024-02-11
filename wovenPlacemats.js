@@ -162,11 +162,6 @@ function getDOMelements () {
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-    // YCselectionButtons = document.querySelectorAll('.selected');
-
-    // displayValuesBtn.disabled = true;
-    // displayValuesBtn.classList.add('disabledBtn');
-
 
     // choosing colors:
 
@@ -270,8 +265,6 @@ function addEventListeners () {
     getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
     // displayValuesBtn.addEventListener('click', displaySelectedValues);
     continueEditingBtn.addEventListener('click', continueEditingColors);
-        // createChartBtn.addEventListener('click', SVGcondition); //
-    // createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array(userSelectionArray))
     createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
     // newUserSelectionBtn.addEventListener('click', createNewInputSection);
     newUserSelectionBtn.addEventListener('click', createNewUserSelectionArrayForOutput);
@@ -353,7 +346,6 @@ function createUserSelectionArray () {
         console.log(userSelectionArray);
         getUserSelectionBtn.disabled = true;
         getUserSelectionBtn.classList.add('disabledBtn');
-        // createSetUpRow1Array(userSelectionArray);
         // displayValuesBtn.disabled = false;
         // displayValuesBtn.classList.remove('disabledBtn');
         createChartBtn.disabled = false;
@@ -443,10 +435,9 @@ function createUserSelectionArray () {
 //     }
 // }
 
-// function createSetUpRow1Array (userSelectionArray) {
 function createSetUpRow1Array () {
     console.log('function createSetUpRow1Array executed');;
-        for (let i = 0; i < numberOfSections; i++) {
+    for (let i = 0; i < numberOfSections; i++) {
         for (let j = 0; j < numberofDEperSection; j++) {
             let thisObject = {};
                 thisObject['numberID'] = c;
@@ -750,7 +741,6 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     totalStCountRow1 = originalStitchCount + DEstitchCountRow1;
     writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
     // writtenStitchCount1 = `(${totalStCountRow1} sts).`
-
     for (let i = 0; i < middleSections1ArrayWritten.length; i++) {
         writtenSection1All = writtenSection1All + middleSections1ArrayWritten[i]
     }
@@ -772,21 +762,15 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     Row1DE = '';
     let Row1DEpossibleStitches = [kfb, purl, ktbl1, cero_into_two, m1L];
         for (let j = 0; j < Row1DEpossibleStitches.length; j++) {
-            // do {
                 Row1DEobject = Row1DEinstructions.match(Row1DEpossibleStitches[j]);
                 if (Row1DEobject !== null) {
                     Row1DE = Row1DEobject[0];
                     if (Row1DE !== '') {
                         Row1DE = Row1DEobject[0];
-                        // console.log(`j = ${j} yes = ${Row1DEpossibleStitches[j]}`)
-                        // console.log(`j = ${j} Row1DE = ${Row1DE}.  setUpRow1Array: i= ${i}.  Section: ${setUpRow1Array[i].section}. Pair: ${setUpRow1Array[i].pairNumber}`);
-                        // console.log(`setUpRow2Array: i= ${i}.  Section: ${setUpRow2Array[i].section}. Pair: ${setUpRow2Array[i].pairNumber}  `)`);
                         break;
                     }
                 }
-            // } while (Row1DE == '')
         } // j loop
-        console.log('out of little while loop. j')
 
         combination = '';
         if (Row1DE == kfb) { // MC & MC
@@ -1313,27 +1297,28 @@ function createLines () {
         let allLeftLines2 = '';
         let allRightLines2 = '';
         let allLines2 = '';
+        let color;
         for (let i = 0; i < cablesArray.length; i++) {
             if (cablesArray[i].selectedColour == 'MC') {
-                c = 'black'
+                color = 'black'
             } else if (cablesArray[i].selectedColour == 'CC') {
-                c = 'red';
+                color = 'red';
             }
             if (i % 2 == 0) {
                 // c = 'red'; // right leaning cable that hits the top
                 line1right = `
-                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${c};stroke-width:2" /> 
+                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:2" /> 
                 `
                 allRightLines1 = allRightLines1 + line1right;
             } else {
                 // c = 'blue'; // left leaning cable that hits the top
                 line1left = `
-                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${c};stroke-width:2" /> 
+                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:2" /> 
                 `
                 allLeftLines1 = allLeftLines1 + line1left;
             }
-            cablesArray[i]['line1'] = `x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2}, ${c}`
-            cablesArray[i]['color1'] = c;
+            cablesArray[i]['line1'] = `x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2}, ${color}`
+            cablesArray[i]['color1'] = color;
             
 
             // allLines1 = allLines1 + '' + line1
@@ -1341,19 +1326,19 @@ function createLines () {
                 if (i % 2 == 0) {
                     // c = 'orange'; // right leaning cable that hits the top
                     line2right = `
-                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${c};stroke-width:2" /> 
+                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:2" /> 
                         `
                     allRightLines2 = allRightLines2 + line2right;
     
                 } else {
                     // c = 'green'; // left leaning cable that hits the top
                     line2left = `
-                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${c};stroke-width:2" /> 
+                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:2" /> 
                         `
                     allLeftLines2 = allLeftLines2 + line2left;
                 }
-                cablesArray[i]['line2'] = `x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3}, ${c}`
-                cablesArray[i]['color2'] = c;
+                cablesArray[i]['line2'] = `x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3}, ${color}`
+                cablesArray[i]['color2'] = color;
             }
         }
     allLines1 = allLeftLines1 + allRightLines1;
@@ -1363,7 +1348,7 @@ function createLines () {
     SVGinDiv.innerHTML = ''
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = 
-    `<svg class="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    `<svg class="SVGplacemat" style="background-color:var(--color6); border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgChartDiv.appendChild(SVGinDiv);
