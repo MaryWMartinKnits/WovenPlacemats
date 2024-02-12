@@ -1086,7 +1086,7 @@ function createNewInputSection () {
                         <div class="switchBtnDiv"> 
                             <p class="YCselection ${sectionClass} ${pairClass} left MC"> MC </p>  
                             <label class="switch">   
-                                <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter].yarnColor}selected" id="checkbox${pairNumber}left_new" value="${userSelectionArray[counter+1].yarnColor}selected"> 
+                                <input type="checkbox" class="YCcheckbox newCheckbox ${sectionClass} ${pairClass} left ${userSelectionArray[counter+1].yarnColor}selected" id="checkbox${pairNumber}left_new" value="${userSelectionArray[counter+1].yarnColor}selected"> 
                                 <span class="slider round"> </span>
                             </label> 
                                 <p class="YCselection ${sectionClass} ${pairClass} left CC"> CC </p>  
