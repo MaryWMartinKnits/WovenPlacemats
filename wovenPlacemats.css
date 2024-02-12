@@ -270,10 +270,6 @@ fieldset {
     display: block;
 }
 
-.exit {
-    cursor:cell;
-}
-
   /* Responsive Design: */
 
 /* Smartphone */
@@ -619,3 +615,4 @@ fieldset {
   
   ::-moz-focus-inner{
     padding: 0;
+  }

@@ -95,9 +95,6 @@ let colorCode;
 let combination = '';
 let createChartBtn;
 let createSetUpRowsBtn;
-let block;
-let exitSetUpRows;
-let showSetUpRows;
 
 // continue editing colors:
 let continueEditingBtn;
@@ -170,8 +167,6 @@ function getDOMelements () {
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
-    exitSetUpRows = document.querySelector('#exitSetUpRows');
-    showSetUpRows = document.querySelector('#showSetUpRows');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
@@ -293,8 +288,6 @@ function addEventListeners () {
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
-    exitSetUpRows.addEventListener('click', hideBlock(setUpRowsDiv));
-    showSetUpRows.addEventListener('click', showBlock(setUpRowsDiv))
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -806,15 +799,6 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     createSetUpRow2Array(setUpRow1Array) //
 }
 
-function hideBlock (block) {
-    block.classList.add('hidden');
-    showSetUpRows.classList.remove('hidden');
-}
-
-function showBlock (block) {
-    block.classList.remove('hidden');
-}
-
 function allPairsOfSection_SetUpRow2 (i, thisObject) {
     console.log('function allPairsOfSection_SetUpRow2 executed'); 
     Row1DEinstructions = setUpRow1Array[i].DE;
@@ -1014,8 +998,6 @@ function writeSetUpRow2 () {
         setUpRow2paragraph.innerHTML = '';
         setUpRow2paragraph.innerHTML = SetUpRow2;
     }    
-    exitSetUpRows.classList.remove('hidden');
-    showSetUpRows.classList.add('hidden');
     hideBtn(continueEditingBtn);
     disableInputSwitches();
     // disableBtn(createSetUpRowsBtn);
