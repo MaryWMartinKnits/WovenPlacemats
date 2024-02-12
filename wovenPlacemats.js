@@ -24,9 +24,8 @@ let middleSections2Array = [];
 let middleSections2 = '';
 let SetUpRow1 = '';
 let SetUpRow2 = ''
-let placeMarker = ' <strong> pm, </strong> ';
 let slipMarker = ' <strong> sm, </strong> ';
-let beg1 = `<strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, ${placeMarker} `; //  change beeggining of pattern for however the set up row starts
+let beg1 = `<strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, ${slipMarker} `; //  change beeggining of pattern for however the set up row starts
 let end1 = ' p1, ktbl1, p2. Cut yarn.  Slide work. ';
 let beg2 = `<strong> Set up row 2 (with CC): </strong> K2, sl1, k1, ${slipMarker} `;
 let end2 = ' k1, sl1, k2. Cut yarn.  Slide work.';
@@ -587,7 +586,7 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
         middleSections1Array.push(thisObject);
         write1 = '';
         for (let i = 0; i < middleSections1Array.length; i++) {
-            allSections1ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
+            allSections1ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${slipMarker}`
         }
         return allSections1ArrayWritten;
 }
