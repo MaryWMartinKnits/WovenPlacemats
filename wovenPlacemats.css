@@ -541,7 +541,10 @@ fieldset {
 #svgChartDiv {
     text-align: center;
     margin: 0.5rem 0;
-    /* background-color: antiquewhite; */
+}
+
+.SVGdiv {
+    min-height: 100px;
 }
 
 /* choosing line colors: */
@@ -616,6 +619,3 @@ fieldset {
   
   ::-moz-focus-inner{
     padding: 0;
-  }
-
-
