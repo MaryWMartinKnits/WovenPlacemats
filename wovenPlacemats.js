@@ -95,6 +95,9 @@ let colorCode;
 let combination = '';
 let createChartBtn;
 let createSetUpRowsBtn;
+let block;
+let exitSetUpRows;
+let showSetUpRows;
 
 // continue editing colors:
 let continueEditingBtn;
@@ -167,10 +170,11 @@ function getDOMelements () {
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
+    exitSetUpRows = document.querySelector('#exitSetUpRows');
+    showSetUpRows = document.querySelector('#showSetUpRows');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-
     // choosing colors:
     chooseLineColor();
 
@@ -289,7 +293,8 @@ function addEventListeners () {
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
-
+    exitSetUpRows.addEventListener('click', hideBlock(setUpRowsDiv));
+    showSetUpRows.addEventListener('click', showBlock(setUpRowsDiv))
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -797,9 +802,17 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
         setUpRow1paragraph.innerHTML = '';
         setUpRow1paragraph.innerHTML = SetUpRow1;
     }
-    
     window.addEventListener('resize', createSpace);
     createSetUpRow2Array(setUpRow1Array) //
+}
+
+function hideBlock (block) {
+    block.classList.add('hidden');
+    showSetUpRows.classList.remove('hidden');
+}
+
+function showBlock (block) {
+    block.classList.remove('hidden');
 }
 
 function allPairsOfSection_SetUpRow2 (i, thisObject) {
@@ -989,10 +1002,7 @@ function writeSetUpRow2 () {
     for (let j = 0; j < allSections2ArrayWritten.length; j++) {
         writtenSection2All = writtenSection2All + allSections2ArrayWritten[j];
     }
-    
-    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;
-    
-    
+    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;    
     if (setUpRow2paragraph == undefined) {
         setUpRow2paragraph = document.createElement('p');
         setUpRow2paragraph.classList.add('setUpRow2paragraph');
@@ -1003,8 +1013,9 @@ function writeSetUpRow2 () {
     } else {
         setUpRow2paragraph.innerHTML = '';
         setUpRow2paragraph.innerHTML = SetUpRow2;
-    }
-    
+    }    
+    exitSetUpRows.classList.remove('hidden');
+    showSetUpRows.classList.add('hidden');
     hideBtn(continueEditingBtn);
     disableInputSwitches();
     // disableBtn(createSetUpRowsBtn);
