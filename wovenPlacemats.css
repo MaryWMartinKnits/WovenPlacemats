@@ -280,31 +280,22 @@ fieldset {
     }
     .selectionOutputSection {
         display: block;
-        /* border:1px solid yellow; */
     }
     .selectionOutputSection h4, .selectionOutputSection h3 {
         padding: 0.5rem 0 0.2rem 0;
         text-indent: 1rem;
-        /* background-color: olive; */
     }
     .eachSectionDiv {
         display: block;
-        /* border: 1px solid yellow; */
         padding: 0.5rem;
     }
     
-    /* .eachPairDiv {
-         border: 1px solid blue; 
-    } */
-    
     .pairStitchesDiv {
         display: block;
-        /* border: 1px solid orange; */
     }
     
     .pairStitchesDiv p {
         display: block;
-        /* border: 1px solid green */
     }
 }
 
@@ -395,7 +386,6 @@ fieldset {
 
     .selectionOutputSection {
         display: block;
-        /* border: 2px solid var(--color6); */
     }
     .eachSectionDiv {
         display: flex;
@@ -438,7 +428,6 @@ fieldset {
       }
       h4 {
         font-size: 1.3rem;
-        /* text-indent: 1rem; */
 
       }
       .YCselection {
@@ -543,7 +532,6 @@ fieldset {
 .SVGdiv {
     min-height: 100px;
 }
-
 /* choosing line colors: */
 
 #colorPickerDiv {
@@ -572,12 +560,10 @@ fieldset {
   
   .swatch .swatchInfo{
     padding: 0.1em;
-    /* color: var(--color2); */
   }
   
   .swatch h3{
     margin: 0;
-    /* text-transform: uppercase; */
     columns: var(--color2);
   }
   
