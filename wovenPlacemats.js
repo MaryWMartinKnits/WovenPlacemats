@@ -18,7 +18,6 @@ let sectionNumber = 1;
 let sectionClass = `section${sectionNumber}`;
 let pairClass = `pair${pairNumber}`;
 let betweenMarkersDiv = document.createElement('div');
-let outputDiv;
 let middleSections1Array = [];
 let middleSections1 = '';
 let middleSections2Array = [];
@@ -124,7 +123,6 @@ function init() {
 function getDOMelements () {
     console.log('function getDOMelements executed');
     begOfPage = document.querySelector('#begOfPage')
-    outputDiv = document.querySelector('#outputDiv')
     createSetUpRowsBtn = document.querySelector('#createSetUpRowsBtn');
     windowWidth = document.querySelector('#window-width');
     setUpRowsDiv = document.querySelector('#setUpRows');
