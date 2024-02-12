@@ -47,30 +47,40 @@
                 <button id="readUserSelectionBtn"> Get user selection </button>
                 <!-- <button id="displayValues"> Display user input(HTML) </button> -->
                 <button id="createChartBtn">Create chart</button>
-                <button id="continueEditingBtn">Continue editing cable colours</button>
+                <button id="continueEditingBtn">Continue editing colours</button>
                 <button id="newUserSelectionBtn">Get new selection</button>
                 <button id="createSetUpRowsBtn">Create Set Up Rows</button>
             </div>
         </div>
 
-        <div id="setUpRows"></div>
+        <div id="setUpRows">
+        </div>
 
         <div id="svgChartDiv" >
             <div id="svgPlacemat">
             </div> 
             <div id="colorPickerDiv">
-                <!-- <h3>Pick the MC</h3> -->
-                <label for="colorPickerMC"> Pick the MC: 
-                    <input type="color" id="colorPickerMC" value="#5F5FA5"> <!-- var(--color4) -->
-                </label>
-                <!-- <h3>Pick the CC</h3> -->
-                <label for="colorPickerCC"> Pick the CC: 
-                    <input type="color" id="colorPickerCC" value="#ffa500">  <!-- orange> -->
-                </label>
+                <div id="colorSwatches">
+                    <div class="swatch">
+                        <label for="colorPickerMC">
+                            <input type="color" id="colorPickerMC" value="#5F5FA5"> <!-- var(--color4) -->
+                        </label>
+                        <div class="swatchInfo">
+                            <h3>Pick MC</h3>
+                        </div>
+                        
+                    </div>
+                    <div class="swatch">
+                        <label for="colorPickerCC"> 
+                            <input type="color" id="colorPickerCC" value="#ffa500">  <!-- orange> -->
+                        </label>
+                        <div class="swatchInfo">
+                            <h3>Pick CC</h3>
+                        </div>
+                    </div>
+                </div>
             </div>   
-        
         </div>
-
         <div class="space"></div>
 
         <script src="wovenPlacemats.js"></script>

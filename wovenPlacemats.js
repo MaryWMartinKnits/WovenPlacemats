@@ -170,7 +170,6 @@ function getDOMelements () {
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-
     // choosing colors:
     chooseLineColor();
 
@@ -289,7 +288,6 @@ function addEventListeners () {
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
-
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -797,7 +795,6 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
         setUpRow1paragraph.innerHTML = '';
         setUpRow1paragraph.innerHTML = SetUpRow1;
     }
-    
     window.addEventListener('resize', createSpace);
     createSetUpRow2Array(setUpRow1Array) //
 }
@@ -989,10 +986,7 @@ function writeSetUpRow2 () {
     for (let j = 0; j < allSections2ArrayWritten.length; j++) {
         writtenSection2All = writtenSection2All + allSections2ArrayWritten[j];
     }
-    
-    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;
-    
-    
+    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;    
     if (setUpRow2paragraph == undefined) {
         setUpRow2paragraph = document.createElement('p');
         setUpRow2paragraph.classList.add('setUpRow2paragraph');
@@ -1003,8 +997,7 @@ function writeSetUpRow2 () {
     } else {
         setUpRow2paragraph.innerHTML = '';
         setUpRow2paragraph.innerHTML = SetUpRow2;
-    }
-    
+    }    
     hideBtn(continueEditingBtn);
     disableInputSwitches();
     // disableBtn(createSetUpRowsBtn);
