@@ -1,21 +1,13 @@
 "use strict";
 
 // declaring variables:
-
 let windowWidth;
-let screenDisplay;
 let begOfPage;
 let userInputTitle;
-
-
-let allYCbuttons = [];
-// let YCselectionButtons = [];
 let allYCcheckboxes
 let firedCheckboxID;
 let checkboxClassList;
-let getUserSelectionBtn;
 let userSelectionArray = [];
-// let displayValuesBtn;
 let setUpRowsDiv;
 let DE = '';
 let pairNumber = 1;
@@ -26,27 +18,23 @@ let sectionNumber = 1;
 let sectionClass = `section${sectionNumber}`;
 let pairClass = `pair${pairNumber}`;
 let betweenMarkersDiv = document.createElement('div');
-
-let outputDiv;
-let getSetUpRowsBtn;
-let algorithmBtn;
 let middleSections1Array = [];
 let middleSections1 = '';
 let middleSections2Array = [];
 let middleSections2 = '';
 let SetUpRow1 = '';
 let SetUpRow2 = ''
-let beg1 = ' <strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, <strong> pm, </strong> '; //  change beeggining of pattern for however the set up row starts
-let end1 = ' p1, ktbl1, p2. Cut yarn.  Slide work. ';
-let beg2 = ' <strong> Set up row 2 (with CC): </strong> K2, sl1, k1, <strong> pm, </strong> ';
-let end2 = ' k1, sl1, k2. Cut yarn.  Slide work.';
 let placeMarker = ' <strong> pm, </strong> ';
 let slipMarker = ' <strong> sm, </strong> ';
+let beg1 = `<strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, ${placeMarker} `; //  change beeggining of pattern for however the set up row starts
+let end1 = ' p1, ktbl1, p2. Cut yarn.  Slide work. ';
+let beg2 = `<strong> Set up row 2 (with CC): </strong> K2, sl1, k1, ${slipMarker} `;
+let end2 = ' k1, sl1, k2. Cut yarn.  Slide work.';
 let DEstitchCountRow1 = 0;
 let DEstitchCountRow2 = 0;
 let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 4 + 11*7 + 4.
 let kfb = ' kfb';
-let p2 = ' p2'
+// let p2 = ' p2'
 let cero_into_two = ' 0-into-2';
 let ktbl1 = ' ktbl1';
 let m1L = ' m1L';
@@ -62,17 +50,12 @@ let optimalHeight;
 let setUpRow1Div;
 let setUpRow2Div
 let writtenStitchCount1;
-let firstStitch;
-let secondStitch;
-let thirdStitch;
-let fourthStitch;
-let newMiddleSections1;
 let c = 0
 let setUpRow1Array = []
 let ExtraPurlStsInvolved;
 let beforePurlSts = false;
 let afterPurlSts;
-let write = '';
+let write1 = '';
 let write2 = '';
 let allSections1ArrayWritten = [];
 let allSections2ArrayWritten = [];
@@ -81,11 +64,9 @@ let writtenSection1All = '';
 let writtenSection2All = '';
 let setUpRow1paragraph;
 let setUpRow2paragraph;
-
 let setUpRow2Array = [];
 let Row2DE = ''
 let sl2 = ' sl2'
-let setUpRow1and2array = []
 let totalStCountRow1;
 let totalStCountRow2;
 let writtenStitchCount2;
@@ -101,8 +82,6 @@ let continueEditingBtn;
 let oldUserSelectionArray = [];
 let newUserSelectionArray = [];
 let allSwitches;
-let newUserSelectionBtn;
-let checkboxPreviousSelectionArray = [];
 let newYCcheckboxes;
 let editingCounter = 0;
 let allLabels;
@@ -120,13 +99,10 @@ let RightMoving; // boolean variable;
 let NextX;
 let NextY;
 let neededHeight_Chart
-let cablesThatChangedDirectionsArray = [];
 let SVGinDiv;
 let newDirection;
 let svgPlacemat;
 let thickness;
-
-
 
 // choosing colors:
 let MCpickerBtn;
@@ -147,19 +123,12 @@ function init() {
 function getDOMelements () {
     console.log('function getDOMelements executed');
     begOfPage = document.querySelector('#begOfPage')
-    outputDiv = document.querySelector('#outputDiv')
-    getUserSelectionBtn = document.querySelector('#readUserSelectionBtn')
-    hideBtn(getUserSelectionBtn);
-    // displayValuesBtn = document.querySelector('#displayValues');
     createSetUpRowsBtn = document.querySelector('#createSetUpRowsBtn');
     windowWidth = document.querySelector('#window-width');
-    algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
     continueEditingBtn = document.querySelector('#continueEditingBtn');
     hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
-    newUserSelectionBtn = document.querySelector('#newUserSelectionBtn')
-    hideBtn(newUserSelectionBtn);
     divToCreateSpace = document.querySelector('.space');
     let userInputDiv = document.querySelector('#userInputDiv');
     let svgChartDiv = document.querySelector('#svgChartDiv');
@@ -169,48 +138,25 @@ function getDOMelements () {
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
-    // choosing colors:
     chooseLineColor();
-
 }
 
 function disableBtn (button) {
     button.disable = true;
     button.classList.add('disabledBtn');
-    // console.log(`disabled: ${button.id} button.`);
-
 }
 
 function hideBtn (button) {
     button.disabled = true;
     button.classList.add('disablesBtn');
     button.classList.add('hidden');
-    // console.log(`hidden: ${button.id} button.`);
 }
 
 function enableBtn (button) {
     button.disabled = false;
     button.classList.remove('disabledBtn');
     button.classList.remove('hidden');
-    // console.log(`active: ${button.id} button.`);
-
 }
-
-// function displayWindowWidth () {
-//     if (window.innerWidth > 1028) {
-//         screenDisplay = "BIG screen";
-//     } else if (window.innerWidth > 976) {
-//         screenDisplay = 'Desktop';
-//     } else if (window.innerWidth > 776) {
-//     // } else if (window.innerWidth > 746) {
-//         screenDisplay = 'BIG Tablet'
-//     }  else if (window.innerWidth > 500) {
-//     screenDisplay = 'small Tablet'
-//     }  else {
-//         screenDisplay = 'Smartphone'
-//     }
-//     windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
-// }
 
 function createInputSection () {
     console.log('function createInputSection executed');
@@ -224,25 +170,20 @@ function createInputSection () {
         userInputDiv.appendChild(wholeSection);
         let sectionSection = document.createElement('div');
         sectionSection.classList.add ('sectionTitle');
-
         sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
         wholeSection.appendChild(sectionSection);
         betweenMarkersDiv = document.createElement('div');
         betweenMarkersDiv.innerHTML = '';
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
-
         colorCode = `colorCoding${code}`
         code ++
         if (code == numberofDEperSection) {
             code = 0
         }
         sectionSection.classList.add(`${colorCode}`)
-
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
-        //    console.log(pairNumber)
             pairClass = `pair${pairNumber}`;
-            // console.log(pairClass);
             sectionClass = `section${sectionNumber}`;
             let fieldset = document.createElement('fieldset');
             fieldset.innerHTML = (`
@@ -266,7 +207,6 @@ function createYCselectionButtons () {
             allYCcheckboxes[i].classList.add(`${userSelectionArray[i].yarnColor}`) //
             allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(allYCcheckboxes[i])})
         }
-
     } else if (userSelectionArray.length > numberOfDE * 2) {
         userSelectionArray = [];
         createUserSelectionArray()
@@ -275,14 +215,8 @@ function createYCselectionButtons () {
 
 function addEventListeners () {
     console.log('function addEventListeners executed');
-    // window.addEventListener('resize', displayWindowWidth);
-    // getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
-    // displayValuesBtn.addEventListener('click', displaySelectedValues);
     continueEditingBtn.addEventListener('click', continueEditingColors);
     createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
-    // createSetUpRowsBtn.addEventListener('click', createUserSelectionArray);
-    // newUserSelectionBtn.addEventListener('click', createNewInputSection);
-    // newUserSelectionBtn.addEventListener('click', createNewUserSelectionArrayForOutput);
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
@@ -291,7 +225,6 @@ function addEventListeners () {
         thisCheckbox = allYCcheckboxes[i];
          allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
      }
-
 }
 
 function changeColorSelection (checkedYC) {
@@ -312,9 +245,6 @@ function changeColorSelection (checkedYC) {
         checkedYC.classList.remove('noneSelected');
         checkedYC.classList.remove('on');
     }
-    // console.log(checkedYC.value);
-    // console.log('checkedYC.classList:')
-    // console.log(checkedYC.classList)
 }
 
 function disableInputSwitches () {
@@ -329,7 +259,6 @@ function disableInputSwitches () {
     }
     for (let j = 0; j < allFieldsets.length; j++) {
         allFieldsets[j].classList.add('disabledSwitch');
-
     }
 }
 
@@ -338,7 +267,6 @@ function enableInputSwitches () {
     allSwitches = document.querySelectorAll('input');
     allLabels = document.querySelectorAll('label');
     allFieldsets = document.querySelectorAll('fieldset');
-    // console.log('allSwitches.length = ' + allSwitches.length);
     for ( let i = 0; i < allSwitches.length; i ++) {
         allSwitches[i].disabled = false;
         allSwitches[i].classList.remove('disabledSwitch');
@@ -378,94 +306,10 @@ function createUserSelectionArray () {
             thisObject['numberID'] = i;
             userSelectionArray.push(thisObject);
         }   // i loop
-        // disableBtn(displayValuesBtn);
-        // enableBtn(createChartBtn)
-        // createChartBtn.addEventListener('click', SVGcondition);
-        // } // j loop
     } // if
     console.log('userSelectionArray: ')
     console.log(userSelectionArray);
-    disableBtn(getUserSelectionBtn);
 }
-
-// function displaySelectedValues () {
-//     console.log('function displaySelectedValues executed');
-//     userInputTitle.classList.add('hidden');
-//     userInputDiv.classList.add('hidden');
-//     outputDiv.classList.remove('hidden');
-//     let inputSelectionTitle = document.createElement('div');
-//     inputSelectionTitle.innerHTML = `<h2> User selection: </h2>`;
-//     inputSelectionTitle.classList.add('inputSelectionTitleDiv');
-//     outputDiv.appendChild(inputSelectionTitle);
-//     let pNumber = 0;
-//     let stNumber = 0
-//     let stDirection; 
-//     let code = 0;
-//     for (let i = 0; i < numberOfSections; i++) {
-
-//         let sectionDiv = document.createElement('div');
-//         sectionDiv.classList.add('selectionOutputSection');
-
-//         colorCode = `colorCoding${code}`
-//         code ++
-//         if (code == numberofDEperSection) {
-//             code = 0
-//         }
-//         sectionDiv.classList.add(`${colorCode}`)
-
-//         outputDiv.appendChild(sectionDiv);
-
-//         let sNumber = i + 1;
-//         let sectionTitle = document.createElement('h3');
-//         sectionTitle.innerHTML = (`Section ${sNumber}`);
-//         sectionDiv.appendChild(sectionTitle);
-//         let eachSectionDiv = document.createElement('div');
-//         eachSectionDiv.classList.add('eachSectionDiv');
-//         sectionDiv.appendChild(eachSectionDiv);
-//         for (let j = 0; j < numberofDEperSection; j++) {
-//             pNumber++
-//             let eachPairDiv = document.createElement('div');
-//             eachPairDiv.classList.add('eachPairDiv');
-//             eachSectionDiv.appendChild(eachPairDiv);
-//             let pairNumberOutputTitle = document.createElement('h4');
-//             pairNumberOutputTitle.innerHTML = (`   Pair ${pNumber}`);
-//             eachPairDiv.appendChild(pairNumberOutputTitle);
-//             let leftText = 'Left';
-//             let rightText = 'Right';
-//             let counter = 'pair' + pNumber
-//             let condition = userSelectionArray[stNumber].pairNumber;
-//             while (condition == counter) {
-//                 let pairStitchesDiv = document.createElement('div');
-//                 pairStitchesDiv.classList.add('pairStitchesDiv');
-//                 eachPairDiv.appendChild(pairStitchesDiv);
-//                 if (userSelectionArray[stNumber].direction = 'right') {
-//                     let stitchSection = document.createElement('div');
-//                     stitchSection.classList.add('stitchSection');
-//                     pairStitchesDiv.appendChild(stitchSection);
-//                     let cableDirectionANDColor = document.createElement('p')
-//                     stDirection = rightText;
-//                     cableDirectionANDColor.innerHTML = 
-//                     `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-//                     stitchSection.appendChild(cableDirectionANDColor);
-//                     stNumber++
-//                 }
-//                 if (userSelectionArray[stNumber].direction = 'left') {
-//                 let stitchSection = document.createElement('div');
-//                 stitchSection.classList.add('stitchSection');
-//                 pairStitchesDiv.appendChild(stitchSection);
-
-//                 let cableDirectionANDColor = document.createElement('p')
-//                 stDirection = leftText
-//                 cableDirectionANDColor.innerHTML = 
-//                 `<strong>${stDirection}</strong> design stitch is <strong>${userSelectionArray[stNumber].yarnColor}</strong>` ;
-//                 stitchSection.appendChild(cableDirectionANDColor);
-//                 stNumber++
-//                 counter++
-//                 }                                  
-//             }      
-//         }
-//     }
-// }
 
 function createSetUpRow1Array () {
     createUserSelectionArray();
@@ -565,14 +409,12 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         DEstitchCountRow1 = DEstitchCountRow1 + 2
         purlStitchCount++
         combination = 'right MC & left MC'
-
     } else if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
         purlStitchCount = 0
         DE = m1L;
         purlStitchCount++
         DEstitchCountRow1++
         combination = 'right MC & left CC'
-
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'CC') {
         purlStitchCount++
         DE = ''
@@ -584,14 +426,13 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         DEstitchCountRow1++
         purlStitchCount++
         combination = 'right CC & left MC'
- 
     }
     thisObject['DE'] = DE;
     thisObject['purlStitchCount'] = purlStitchCount;
     thisObject['keepPurling'] = keepPurling;
     thisObject['combination'] = combination;
     combination = ''
-    purlStitchCount = 1; //every new ection will starts with p1
+    purlStitchCount = 1; //every new section will starts with p1
     setUpRow1Array.push(thisObject);
     return purlStitchCount;
 
@@ -604,16 +445,13 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     LASTsection_SetUpRow1(setUpRow1Array);
     writeSetUpRow1(allSections1ArrayWritten);
     disableBtn(continueEditingBtn);
-    // disableInputSwitches()
     createSpace();
-} // end of function
+} 
 
 function FIRSTsection_SetUpRow1 (setUpRow1Array) {
     console.log('function writeFIRSTsection_SetUpRow1 executed');
     beforePurlSts = false;
     for (let i = 0; i < numberofDEperSection; i++) {
-        // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
-            // let thisObject = {};
             ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
             if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) {
                 afterPurlSts = setUpRow1Array[i+1].keepPurling;
@@ -635,9 +473,7 @@ function FIRSTsection_SetUpRow1 (setUpRow1Array) {
 function MiddleSections_SetUpRow1 (setUpRow1Array) {
     console.log('function writeMiddleSections_SetUpRow1 executed');
     for (let i = 4; i < setUpRow1Array.length - 4; i++) {
-        // console.log(`i: ${i}.  Section: ${setUpRow1Array[i].section}`)
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
-
         if (setUpRow1Array[i].section == setUpRow1Array[i+1].section) { // Exception: the last st of the section cannot have extra purling sts after.
             afterPurlSts = setUpRow1Array[i+1].keepPurling;
         } else {
@@ -657,21 +493,17 @@ function LASTsection_SetUpRow1 (setUpRow1Array) {
     console.log('function writeLASTsection_SetUpRow1 executed');
     for (let i = setUpRow1Array.length - 4; i < setUpRow1Array.length; i++) {
         ExtraPurlStsInvolved = setUpRow1Array[i].keepPurling;
-
         if (setUpRow1Array[i].section !== setUpRow1Array[i-1].section) {
-            // console.log(`i: ${i} -> if: FIRST pair`);
-            beforePurlSts = false; //
-            afterPurlSts = setUpRow1Array[i+1].keepPurling; //
+            beforePurlSts = false; 
+            afterPurlSts = setUpRow1Array[i+1].keepPurling; 
             determineStitchPatternForFIRSTpair(i, setUpRow1Array)
         } else if (setUpRow1Array[i].section == setUpRow1Array[i-1].section && setUpRow1Array[i].section !== setUpRow1Array[i-(numberofDEperSection-1)].section) {
-            // console.log(`i: ${i} -> else if: middle pairs`);
-            beforePurlSts = setUpRow1Array[i-1].keepPurling; //
-            afterPurlSts = setUpRow1Array[i+1].keepPurling; //
+            beforePurlSts = setUpRow1Array[i-1].keepPurling; 
+            afterPurlSts = setUpRow1Array[i+1].keepPurling; 
             determineStitchPatternForMIDDLEpairs(i, setUpRow1Array);
         } else if (setUpRow1Array[i].section == setUpRow1Array[i-(numberofDEperSection-1)].section) {
             beforePurlSts = setUpRow1Array[i-1].keepPurling; //
-            afterPurlSts = false; //last pair of the section, there are no afterPurl sts.
-            // console.log(`i: ${i} -> if: LAST PAIR`);
+            afterPurlSts = false; //last pair of the section -> there are no afterPurl sts.
             determineStitchPatternForLASTpair(i, setUpRow1Array)
         }
     } // i loop
@@ -683,20 +515,19 @@ function determineStitchPatternForFIRSTpair (i, setUpRow1Array) {
     if (!beforePurlSts) {
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
             if (afterPurlSts) {
-                write = write;
+                write1 = write1;
             }else if (!afterPurlSts) {
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
+                write1 = `${write1} p${setUpRow1Array[i].purlStitchCount}, `; 
             }
-
         } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
             if (afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, `;
+                write1 = `${write1} ${setUpRow1Array[i].DE}, `;
             }else if (!afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `;
+                write1 = `${write1} ${setUpRow1Array[i].DE}, p2, `;
             }
         }
     }
-    return write;
+    return write1;
 }
 
 function determineStitchPatternForMIDDLEpairs (i, setUpRow1Array) {
@@ -704,36 +535,33 @@ function determineStitchPatternForMIDDLEpairs (i, setUpRow1Array) {
     if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
             if (afterPurlSts) {
-                write = write;
+                write1 = write1;
             } else if (!afterPurlSts) {
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `;
+                write1 = `${write1} p${setUpRow1Array[i].purlStitchCount}, `;
             }
-
         } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
             if (afterPurlSts) {
-                // write = `${write} p${setUpRow1Array[i].purlStitchCount}, `;
-                write = `${write} ${setUpRow1Array[i].DE}, `
+                write1 = `${write1} ${setUpRow1Array[i].DE}, `
             }else if (!afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `; //middle pairs end on p2
+                write1 = `${write1} ${setUpRow1Array[i].DE}, p2, `; //middle pairs end on p2
             }
         }
     } else if (!beforePurlSts) { // false, there's not a previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
             if (afterPurlSts) {
-                write = write;
+                write1 = write1;
             }else if (!afterPurlSts) {
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
+                write1 = `${write1} p${setUpRow1Array[i].purlStitchCount}, `; 
             }
-
         } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
             if (afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, `;
+                write1 = `${write1} ${setUpRow1Array[i].DE}, `;
             }else if (!afterPurlSts) {
-                write = `${write} ${setUpRow1Array[i].DE}, p2, `; //middle pairs end on p2
+                write1 = `${write1} ${setUpRow1Array[i].DE}, p2, `; //middle pairs end on p2
             }
         }
     }
-    return write;
+    return write1;
 }
 
 function determineStitchPatternForLASTpair (i, setUpRow1Array) {
@@ -741,26 +569,23 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
     afterPurlSts = false;
     if (beforePurlSts ) { // true -> what to do if there's s previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-                write = `${write} p${setUpRow1Array[i].purlStitchCount},`;
-
+                write1 = `${write1} p${setUpRow1Array[i].purlStitchCount},`;
         } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-                write = `${write} ${setUpRow1Array[i].DE}, p1, `; //!!!!
+                write1 = `${write1} ${setUpRow1Array[i].DE}, p1, `; //!!!!
         }
     } else if (!beforePurlSts) { // false, there's not a previous purl st count.
         if (ExtraPurlStsInvolved) { // true -> what to do if this is a purl DE stitch.
-                write = `${write} p${setUpRow1Array[i].purlStitchCount}, `; 
-
+                write1 = `${write1} p${setUpRow1Array[i].purlStitchCount}, `; 
         } else if (!ExtraPurlStsInvolved) { // false -> this is not a purl DE stitch.
-                write = `${write} ${setUpRow1Array[i].DE}, p1, `;
+                write1 = `${write1} ${setUpRow1Array[i].DE}, p1, `;
         }
     }
         let thisObject = {};
         let setUpRow1StSection = setUpRow1Array[i].section;
         thisObject['section'] = setUpRow1StSection;
-        thisObject['writtenInstructions'] = write;
+        thisObject['writtenInstructions'] = write1;
         middleSections1Array.push(thisObject);
-        write = '';
-        
+        write1 = '';
         for (let i = 0; i < middleSections1Array.length; i++) {
             allSections1ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections1Array[i].writtenInstructions} </span> ${placeMarker}`
         }
@@ -801,16 +626,15 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     Row1DE = '';
     let Row1DEpossibleStitches = [kfb, purl, ktbl1, cero_into_two, m1L];
         for (let j = 0; j < Row1DEpossibleStitches.length; j++) {
-                Row1DEobject = Row1DEinstructions.match(Row1DEpossibleStitches[j]);
-                if (Row1DEobject !== null) {
+            Row1DEobject = Row1DEinstructions.match(Row1DEpossibleStitches[j]);
+            if (Row1DEobject !== null) {
+                Row1DE = Row1DEobject[0];
+                if (Row1DE !== '') {
                     Row1DE = Row1DEobject[0];
-                    if (Row1DE !== '') {
-                        Row1DE = Row1DEobject[0];
-                        break;
-                    }
+                    break;
                 }
+            }
         } // j loop
-
         combination = '';
         if (Row1DE == kfb) { // MC & MC
             Row2DE = sl2;
@@ -821,7 +645,6 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
             combination = 'both CC';
         } else if (Row1DE == cero_into_two) { // MC & MC for last pair
             Row2DE = sl2;
-            // DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both MC last pair';
         } else if (Row1DE == ktbl1 || Row1DE == m1L) { // MC & CC
             let oldStitchCount = DEstitchCountRow2;
@@ -856,8 +679,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                     
                 } // k loop
             }
-            
-        } else  { // Row1DE == ''
+        } else { // Row1DE == ''
             Row2DE = cero_into_two;
             DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both CC last pair';
@@ -865,13 +687,9 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
     thisObject['Row1DE'] = Row1DE; 
     thisObject['Row2DE'] = Row2DE;
     thisObject['DEstitchCountRow2'] = DEstitchCountRow2;
-    // thisObject['combination'] = combination;
     setUpRow2Array.push(thisObject);
-    // console.log(`${setUpRow1Array[i].section} ${setUpRow1Array[i].pairNumber}: Row1DE = ${Row1DE}. Row2DE = ${Row2DE}. Combination: ${combination}`)
-    // combination = ''
     Row1DE = '';
     Row2DE = '';
-    // return thisObject;
 }
 
 function createSetUpRow2Array (setUpRow1Array) {
@@ -900,7 +718,7 @@ function wovenPlacematSetUpRow2 (setUpRow2Array) {
     middleSections_SetUpRow2(setUpRow2Array);
     LASTsection_SetUpRow2(setUpRow2Array);
     writeSetUpRow2(allSections2ArrayWritten);
-} // end of function
+} 
 
 function FIRSTsection_SetUpRow2 (setUpRow2Array) {
     for (let i = 0; i < numberofDEperSection; i++) {
@@ -950,23 +768,17 @@ function determineStitchPatternForMIDDLEpairsRow2 (i, setUpRow2Array) {
 
 function determineStitchPatternForLASTpairRow2 (i, setUpRow2Array) {
     write2 = `${write2}  ${setUpRow2Array[i].Row2DE}, ${k1},`
-
     let thisObject = {};
         let setUpRow2StSection = setUpRow2Array[i].section;
         thisObject['section'] = setUpRow2StSection;
         thisObject['writtenInstructions'] = write2;
         middleSections2Array.push(thisObject);
-
         write2 = '';
-
     for (let i = 0; i < middleSections2Array.length; i++) {
-        allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${placeMarker}`
+        allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${slipMarker}`
     }
     return allSections2ArrayWritten;
 }
-
-
-
 
 function writeSetUpRow2 () {
     console.log('function writeSetUpRow2 executed');
@@ -975,7 +787,7 @@ function writeSetUpRow2 () {
     writtenStitchCount2 = `(${totalStCountRow1} sts + ${DEstitchCountRow2} increased sts = ${totalStCountRow2} total sts).` // erase after checking accuracy.
     SetUpRow2 = '';
     for (let i = 0; i < middleSections2Array.length; i++) {
-        allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${placeMarker}`
+        allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${slipMarker}`
     }
     writtenSection2All = '';
     for (let j = 0; j < allSections2ArrayWritten.length; j++) {
@@ -995,7 +807,6 @@ function writeSetUpRow2 () {
     }    
     hideBtn(continueEditingBtn);
     disableInputSwitches();
-    // disableBtn(createSetUpRowsBtn);
     hideBtn(createSetUpRowsBtn);
     hideBtn(createChartBtn);
 }
@@ -1021,7 +832,6 @@ function continueEditingColors () {
     enableBtn(createSetUpRowsBtn);
     createNewInputSection ();
     editingCounter++;
-
 }
 
 function createNewInputSection () {
@@ -1039,25 +849,20 @@ function createNewInputSection () {
         userInputDiv.appendChild(wholeSection);
         let sectionSection = document.createElement('div');
         sectionSection.classList.add ('sectionTitle');
-
         sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
         wholeSection.appendChild(sectionSection);
         betweenMarkersDiv = document.createElement('div');
         betweenMarkersDiv.innerHTML = '';
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
-
         colorCode = `colorCoding${code}`
         code ++
         if (code == numberofDEperSection) {
             code = 0
         }
         sectionSection.classList.add(`${colorCode}`)
-
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
-
             pairClass = `pair${pairNumber}`;
-
             sectionClass = `section${sectionNumber}`;
             let fieldset = document.createElement('fieldset');
             fieldset.innerHTML = (`
@@ -1094,8 +899,8 @@ function createNewInputSection () {
                 
                 </div> `)
             betweenMarkersDiv.appendChild(fieldset);
-                pairNumber++
-                counter = counter + 2;
+            pairNumber++
+            counter = counter + 2;
         } // k loop (pairs of each section)
         sectionNumber++
     } // i loop (sections)
@@ -1116,7 +921,6 @@ function storeOldUserSelectionArray () {
 
 function createNewUserSelectionArrayForOutput () {
     console.log('function createNewUserSelectionArrayForOutput executed');
-    // allYCcheckboxes = newYCcheckboxes;
     if (newUserSelectionArray.length > 0) {
         oldUserSelectionArray = newUserSelectionArray;
         newUserSelectionArray = [];
@@ -1129,11 +933,9 @@ function createNewUserSelectionArrayForOutput () {
         thisObject['pairNumber'] = oldUserSelectionArray[i].pairNumber;
         thisObject['direction'] = oldUserSelectionArray[i].direction;
         if (checkboxClassList.contains('CCselected')) {
-        //  thisObject['newYarnColor'] = 'CC';
             thisObject['newSelection'] = 'CCselected';
             thisObject['yarnColor'] = 'CC';
         } else if (checkboxClassList.contains('MCselected') || checkboxClassList.contains('noneSelected') || allYCcheckboxes[i].value == 'MCselected') {
-        //  thisObject['newYarnColor'] = 'MC';
             thisObject['newSelection'] = 'MCselected';
             thisObject['yarnColor'] = 'MC';
         } else {
@@ -1148,11 +950,9 @@ function createNewUserSelectionArrayForOutput () {
     userSelectionArray = newUserSelectionArray;
     console.log('userSelectionArray = newUserSelectionArray: ')
     console.log(userSelectionArray);
-    disableBtn(continueEditingBtn);
+    hideBtn(continueEditingBtn);
     disableInputSwitches();
-    // disableBtn(newUserSelectionBtn);
     enableBtn(createChartBtn);
-    continueEditingBtn.classList.add('hidden');
     enableBtn(createSetUpRowsBtn);
 }
 
@@ -1160,13 +960,9 @@ function  SVGcondition () {
     createUserSelectionArray();
     console.log('function SVGcondition executed');
     disableBtn(continueEditingBtn);
-    // for ( let i = 0; i < allSwitches.length; i ++) {
-    //     allSwitches[i].disabled = true;
-    // }
     disableInputSwitches();
     continueEditingBtn.classList.remove('hidden');
     disableBtn(createChartBtn);
-
     NumberCablePairs = numberOfDE; // = 28
     if (NumberCablePairs % 4 == 0) {
         createSVG (NumberCablePairs)
@@ -1187,7 +983,6 @@ function createSVG (NumberCablePairs) {
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
     initialCoordinates (scalar);
-
     if (newUserSelectionArray.length == 0) {
         enableBtn(continueEditingBtn);
     }
@@ -1213,24 +1008,15 @@ function creatingInitialCoordinatesArray (scalar) {
         thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
          if (userSelectionArray[i].direction == 'right') {
             thisObject['x1'] = svgWidth - ((PairNumber - 0.5) * scalar);
-            // thisObject['x1'] = svgWidth - ((PairNumber) * scalar);
             RightMoving = true;
             thisObject['leans'] = 'right'
          } else if (userSelectionArray[i].direction == 'left') {
-            // thisObject['x1'] = svgWidth - ((PairNumber) * scalar);
             thisObject['x1'] = svgWidth - ((PairNumber - 0.5) * scalar);
-            // thisObject['x1'] = svgWidth - ((PairNumber - 1) * scalar);
-
             RightMoving = false;
             thisObject['leans'] = 'left'
         }
         thisObject['rightMoving'] = RightMoving;
         thisObject['i_pairN'] = PairNumber;
-        // if (thisObject.x1 == 0) {
-        //      alert(`x1 = 0 / PairNumber = ${PairNumber} ${thisObject.leans}`);
-        // } else if (thisObject.x1 == svgWidth) {
-        //      alert(`x1 = svgWidth / PairNumber = ${PairNumber} ${thisObject.leans}`);
-        // }
         cablesArray.push(thisObject)
     } // i loop
     console.log('cablesArray: ');
@@ -1245,7 +1031,6 @@ function cablesTrayectory () {
         let StartingY = cablesArray[i].y1;
         ifRightOrLeftMoving(i, StartingX, StartingY)
         if (cablesArray[i].newDirection !== 'none') {
-            // console.log(`i = ${i} cable changes direction`);
             cableThatChangedDirection(i, newDirection);
         }
     }
@@ -1259,13 +1044,11 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
     // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
     if (RightMoving) { // true -> RIGHT moving cable
         if ((StartingX) > StartingY && StartingY == svgHeight) { // the cable has hit the right edge.
-            // console.log(`i: ${i}. this right cable has hit the right edge: ${cablesArray[i]}`)
             cablesArray[i]['group1'] = 'rightCable hits rightEdge';
             NextX = svgWidth;
             NextY = StartingX - StartingY; //? should be < svgHeight
             newDirection = 'left';
         } else { // the right cable has hit the top edge.
-            // console.log(`i: ${i}. this right cable has hit the top: ${cablesArray[i]}`)
             cablesArray[i]['group1'] = 'rightCable hits top';
             NextX = StartingX + StartingY;
             NextY = 0;
@@ -1273,14 +1056,11 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
         }
     } else if (!RightMoving) { // false -> LEFT moving cable
         if (StartingX < StartingY && StartingY == svgHeight) { // the cable has hit the left edge.
-            // if (StartingX < StartingY) { // the cable has hit the left edge.
-            // console.log(`i: ${i}. this left cable has hit the left edge: ${cablesArray[i]}`)
             NextX = 0;
             NextY = StartingY - StartingX;
             cablesArray[i]['group1'] = 'leftCable hits leftEdge';
             newDirection = 'right';
         } else { // the left cable has hit the top edge.
-            // console.log(`i: ${i}. this left cable has hit the top: ${cablesArray[i]}`)
             cablesArray[i]['group1'] = 'leftCable hits top' 
             NextX = StartingX - StartingY 
             NextY = 0;
@@ -1299,12 +1079,10 @@ function cableThatChangedDirection (i, newDirection) {
     let CurrentX = cablesArray[i].x2;
     let CurrentY = cablesArray[i].y2
     if (cablesArray[i].newDirection == 'right') {
-        // console.log(`i: ${i}. left cable hit left edge and changes direction, should move right and hit top`)
         NextX = CurrentX + CurrentY;
         NextY = 0
         cablesArray[i]['group2'] = 'moves right hits top';
     } else if (cablesArray[i].newDirection == 'left') {
-        // console.log('right cable hit right edge and changes direction, should move left and hit top')
         NextX = CurrentX - CurrentY;
         NextY = 0;
         cablesArray[i]['group2'] = 'moves left hits top';
@@ -1363,9 +1141,6 @@ function createLines () {
             }
             cablesArray[i]['line1'] = `x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2}, ${color}`
             cablesArray[i]['color1'] = color;
-            
-
-            // allLines1 = allLines1 + '' + line1
             if (cablesArray[i].newDirection !== 'none') {
                 if (i % 2 == 0) {
                     // c = 'orange'; // right leaning cable that hits the top
@@ -1373,7 +1148,6 @@ function createLines () {
                         <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:${thickness}" /> 
                         `
                     allRightLines2 = allRightLines2 + line2right;
-    
                 } else {
                     // c = 'green'; // left leaning cable that hits the top
                     line2left = `
@@ -1403,18 +1177,14 @@ function createLines () {
     svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px.`);
     svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
-    // disableBtn(createChartBtn);
     hideBtn(createChartBtn);
 }
 
-// picking MC and CC
-
+// picking MC and CC:
 function chooseLineColor () {
     console.log('function chooseLineColor executed');
     pickedMC = '#5F5FA5'; //var(--color4);
     pickedCC = '#ffa500'; // orange
-    // pickedMC = '#a1a1bf'; //
-    // pickedCC = '#0d3b5e'; //
     MCpickerBtn.value = pickedMC;
     CCpickerBtn.value = pickedCC;
     console.log(`pickedMC: ${pickedMC} / pickedCC: ${pickedCC}`);
@@ -1434,7 +1204,6 @@ function changeLineCC () {
     updatePickedColors(pickedMC, pickedCC);
 }
 
-
  function updatePickedColors (pickedMC, pickedCC) {
      console.log('function updatePickedColors executed')  
      for (let i = 0; i < allMClines; i++) {
@@ -1445,17 +1214,6 @@ function changeLineCC () {
      }
      console.log(`MC: ${pickedMC}. CC: ${pickedCC}`);
  }
-
-
-// function giveLinesChosenColor() {
-//     pickedMC = MCpickerBtn.value; 
-//     pickedCC = CCpickerBtn.value;   
-//     updatePickedColors(pickedMC, pickedCC);
-// }
-
-
-
-
 
 function print () {
     window.print()

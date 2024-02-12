@@ -511,6 +511,7 @@ fieldset {
     background-color: var(--color6);
     padding: 0 0.5rem;
     margin: 5px;
+    max-width: 95vw;
 }
 
 .outsideBtnsDiv {
