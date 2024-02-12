@@ -561,7 +561,6 @@ function middlePairsOfSection_SetUpRow1 (c, thisObject) {
 function lastPairOfSection_SetUpRow1 (c, thisObject) {
     keepPurling = false;
     if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'MC') {
-        // console.log(`right MC & left MC`)
         purlStitchCount = 0;
         DE = `${cero_into_two}`
         DEstitchCountRow1 = DEstitchCountRow1 + 2
@@ -569,7 +568,6 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         combination = 'right MC & left MC'
 
     } else if (userSelectionArray[c].yarnColor == 'MC' && userSelectionArray[c+1].yarnColor == 'CC') {
-        // console.log(`right MC & left CC`)
         purlStitchCount = 0
         DE = m1L;
         purlStitchCount++
@@ -577,13 +575,11 @@ function lastPairOfSection_SetUpRow1 (c, thisObject) {
         combination = 'right MC & left CC'
 
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'CC') {
-        // console.log(`right CC & left CC`);
         purlStitchCount++
         DE = ''
         keepPurling = true;
         combination = 'right CC & left CC'
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'MC') {
-        // console.log(`right CC & left MC`);
         purlStitchCount = 0
         DE = m1L;
         DEstitchCountRow1++
@@ -826,7 +822,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
             combination = 'both CC';
         } else if (Row1DE == cero_into_two) { // MC & MC for last pair
             Row2DE = sl2;
-            DEstitchCountRow2 = DEstitchCountRow2 + 2;
+            // DEstitchCountRow2 = DEstitchCountRow2 + 2;
             combination = 'both MC last pair';
         } else if (Row1DE == ktbl1 || Row1DE == m1L) { // MC & CC
             let oldStitchCount = DEstitchCountRow2;
@@ -836,13 +832,13 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                         if (userSelectionArray[k].pairNumber == thisObject.pairNumber) {
                             if (userSelectionArray[k].direction == 'right' && userSelectionArray[k+1].direction == 'left') {
                                 if (userSelectionArray[k].yarnColor == 'MC' && userSelectionArray[k+1].yarnColor == 'CC') {
-                                    Row2DE = `${sl1}, ${m1L} ` // rigth MC && left CC
+                                    Row2DE = `${sl1}, ${m1L} ` // right MC && left CC
                                     DEstitchCountRow2++
                                     if (Row1DE == ktbl1) {
-                                        combination = 'rigth MC & left CC';
+                                        combination = 'right MC & left CC';
                                         break;                                    
                                     } else if (Row1DE == m1L) {
-                                        combination = "rigth MC & left CC last pair"
+                                        combination = "right MC & left CC - last pair"
                                         break;
                                     }
                                 } else if (userSelectionArray[k].yarnColor == 'CC' && userSelectionArray[k+1].yarnColor == "MC") {
@@ -852,7 +848,7 @@ function allPairsOfSection_SetUpRow2 (i, thisObject) {
                                         combination = 'right CC & left MC';
                                         break;
                                     } else if (Row1DE == m1L) {
-                                        combination = 'right CC & left MC last pair';
+                                        combination = 'right CC & left MC - last pair';
                                     }
                                 }
                             }
@@ -1192,9 +1188,7 @@ function createSVG (NumberCablePairs) {
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
     initialCoordinates (scalar);
-    // let counter = 0; 
-    //  startCables (); 
-    // SVGlines (counter);
+
     if (newUserSelectionArray.length == 0) {
         enableBtn(continueEditingBtn);
     }
@@ -1227,7 +1221,7 @@ function creatingInitialCoordinatesArray (scalar) {
             RightMoving = false;
             thisObject['leans'] = 'left'
         }
-        thisObject['rigthMoving'] = RightMoving;
+        thisObject['rightMoving'] = RightMoving;
         thisObject['i_pairN'] = PairNumber;
         cablesArray.push(thisObject)
     } // i loop
@@ -1253,18 +1247,18 @@ function cablesTrayectory () {
 
 function ifRightOrLeftMoving (i, StartingX, StartingY) {
     // console.log('function ifRightOrLeftMoving executed');
-    RightMoving = cablesArray[i].rigthMoving;
+    RightMoving = cablesArray[i].rightMoving;
     // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
     if (RightMoving) { // true -> RIGHT moving cable
         if ((StartingX) > StartingY && StartingY == svgHeight) { // the cable has hit the right edge.
-            // console.log(`i: ${i}. this rigth cable has hit the right edge: ${cablesArray[i]}`)
+            // console.log(`i: ${i}. this right cable has hit the right edge: ${cablesArray[i]}`)
             cablesArray[i]['group1'] = 'rightCable hits rightEdge';
             NextX = svgWidth;
             NextY = StartingX - StartingY; //? should be < svgHeight
             newDirection = 'left';
-        } else { // the rigth cable has hit the top edge.
+        } else { // the right cable has hit the top edge.
             // console.log(`i: ${i}. this right cable has hit the top: ${cablesArray[i]}`)
-            cablesArray[i]['group1'] = 'rigthCable hits top';
+            cablesArray[i]['group1'] = 'rightCable hits top';
             NextX = StartingX + StartingY;
             NextY = 0;
             newDirection = 'none';
@@ -1300,7 +1294,7 @@ function cableThatChangedDirection (i, newDirection) {
         // console.log(`i: ${i}. left cable hit left edge and changes direction, should move right and hit top`)
         NextX = CurrentX + CurrentY;
         NextY = 0
-        cablesArray[i]['group2'] = 'moves rigth hits top';
+        cablesArray[i]['group2'] = 'moves right hits top';
     } else if (cablesArray[i].newDirection == 'left') {
         // console.log('right cable hit right edge and changes direction, should move left and hit top')
         NextX = CurrentX - CurrentY;
