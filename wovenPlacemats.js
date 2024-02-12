@@ -1213,16 +1213,25 @@ function creatingInitialCoordinatesArray (scalar) {
         thisObject['y1'] = svgHeight;
         thisObject['selectedColour'] = userSelectionArray[i].yarnColor;
          if (userSelectionArray[i].direction == 'right') {
-            thisObject['x1'] = svgWidth - ((PairNumber) * scalar);
+            thisObject['x1'] = svgWidth - ((PairNumber - 0.5) * scalar);
+            // thisObject['x1'] = svgWidth - ((PairNumber) * scalar);
             RightMoving = true;
             thisObject['leans'] = 'right'
          } else if (userSelectionArray[i].direction == 'left') {
-            thisObject['x1'] = svgWidth - ((PairNumber - 1) * scalar);
+            // thisObject['x1'] = svgWidth - ((PairNumber) * scalar);
+            thisObject['x1'] = svgWidth - ((PairNumber - 0.5) * scalar);
+            // thisObject['x1'] = svgWidth - ((PairNumber - 1) * scalar);
+
             RightMoving = false;
             thisObject['leans'] = 'left'
         }
         thisObject['rightMoving'] = RightMoving;
         thisObject['i_pairN'] = PairNumber;
+        // if (thisObject.x1 == 0) {
+        //      alert(`x1 = 0 / PairNumber = ${PairNumber} ${thisObject.leans}`);
+        // } else if (thisObject.x1 == svgWidth) {
+        //      alert(`x1 = svgWidth / PairNumber = ${PairNumber} ${thisObject.leans}`);
+        // }
         cablesArray.push(thisObject)
     } // i loop
     console.log('cablesArray: ');
@@ -1390,6 +1399,8 @@ function chooseLineColor () {
     console.log('function chooseLineColor executed');
     pickedMC = '#5F5FA5'; //var(--color4);
     pickedCC = '#ffa500'; // orange
+    // pickedMC = '#a1a1bf'; //
+    // pickedCC = '#0d3b5e'; //
     MCpickerBtn.value = pickedMC;
     CCpickerBtn.value = pickedCC;
     console.log(`pickedMC: ${pickedMC} / pickedCC: ${pickedCC}`);
