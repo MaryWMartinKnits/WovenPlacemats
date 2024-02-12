@@ -1003,11 +1003,11 @@ function writeSetUpRow2 () {
 
 function createSpace () {
     neededHeight_Chart = svgChartDiv.offsetHeight;
-    if (neededHeight_Chart > 0) {
-        neededHeight_SetUpRows = 0;
-    } else {
+    // if (neededHeight_Chart > 0) {
+    //     neededHeight_SetUpRows = 0;
+    // } else {
         neededHeight_SetUpRows = setUpRowsDiv.offsetHeight;
-    }
+    // }
     optimalHeight = neededHeight_SetUpRows + 5 + neededHeight_Chart;
     divToCreateSpace.style.height = `${optimalHeight}px`;
 }
