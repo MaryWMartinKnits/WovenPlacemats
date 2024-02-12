@@ -124,6 +124,7 @@ let cablesThatChangedDirectionsArray = [];
 let SVGinDiv;
 let newDirection;
 let svgPlacemat;
+let thickness;
 
 
 
@@ -151,14 +152,12 @@ function getDOMelements () {
     hideBtn(getUserSelectionBtn);
     // displayValuesBtn = document.querySelector('#displayValues');
     createSetUpRowsBtn = document.querySelector('#createSetUpRowsBtn');
-    // disableBtn(createSetUpRowsBtn);
     windowWidth = document.querySelector('#window-width');
     algorithmBtn = document.querySelector('#algorithm');
     setUpRowsDiv = document.querySelector('#setUpRows');
     continueEditingBtn = document.querySelector('#continueEditingBtn');
     hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
-    // disableBtn(createChartBtn);
     newUserSelectionBtn = document.querySelector('#newUserSelectionBtn')
     hideBtn(newUserSelectionBtn);
     divToCreateSpace = document.querySelector('.space');
@@ -197,22 +196,21 @@ function enableBtn (button) {
 
 }
 
-function displayWindowWidth () {
-    if (window.innerWidth > 1028) {
-        screenDisplay = "BIG screen";
-    } else if (window.innerWidth > 976) {
-        screenDisplay = 'Desktop';
-    } else if (window.innerWidth > 776) {
-    // } else if (window.innerWidth > 746) {
-        screenDisplay = 'BIG Tablet'
-    }  else if (window.innerWidth > 500) {
-    screenDisplay = 'small Tablet'
-    }  else {
-        screenDisplay = 'Smartphone'
-    }
-    windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
-
-}
+// function displayWindowWidth () {
+//     if (window.innerWidth > 1028) {
+//         screenDisplay = "BIG screen";
+//     } else if (window.innerWidth > 976) {
+//         screenDisplay = 'Desktop';
+//     } else if (window.innerWidth > 776) {
+//     // } else if (window.innerWidth > 746) {
+//         screenDisplay = 'BIG Tablet'
+//     }  else if (window.innerWidth > 500) {
+//     screenDisplay = 'small Tablet'
+//     }  else {
+//         screenDisplay = 'Smartphone'
+//     }
+//     windowWidth.innerHTML = ("Window width: " + window.innerWidth + 'px -> ' + screenDisplay);
+// }
 
 function createInputSection () {
     console.log('function createInputSection executed');
@@ -277,7 +275,7 @@ function createYCselectionButtons () {
 
 function addEventListeners () {
     console.log('function addEventListeners executed');
-    window.addEventListener('resize', displayWindowWidth);
+    // window.addEventListener('resize', displayWindowWidth);
     // getUserSelectionBtn.addEventListener('click', createUserSelectionArray);
     // displayValuesBtn.addEventListener('click', displaySelectedValues);
     continueEditingBtn.addEventListener('click', continueEditingColors);
@@ -471,6 +469,7 @@ function createUserSelectionArray () {
 
 function createSetUpRow1Array () {
     createUserSelectionArray();
+    SVGcondition();
     console.log('function createSetUpRow1Array executed');;
     let c = 0;
     for (let i = 0; i < numberOfSections; i++) {
@@ -1315,6 +1314,20 @@ function cableThatChangedDirection (i, newDirection) {
     newDirection = 'none'; // step that might be avoided
 }
 
+function determinelineThickness () {
+    if (svgWidth > 1140) {
+        thickness = 4;
+    } else if (svgWidth> 976) {
+        thickness = 3;
+    } else if (svgWidth > 600) {
+        thickness = 2;
+    } else if (svgWidth > 500) {
+        thickness = 1;
+    } else {
+        thickness = 1;
+    }
+}
+
 function createLines () {
     console.log('function createLines executed')
         let line1right;
@@ -1328,6 +1341,7 @@ function createLines () {
         let allRightLines2 = '';
         let allLines2 = '';
         let color;
+        determinelineThickness();      
         for (let i = 0; i < cablesArray.length; i++) {
             if (cablesArray[i].selectedColour == 'MC') {
                 color = pickedMC;
@@ -1337,13 +1351,13 @@ function createLines () {
             if (i % 2 == 0) {
                 // c = 'red'; // right leaning cable that hits the top
                 line1right = `
-                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:2" /> 
+                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:${thickness}" /> 
                 `
                 allRightLines1 = allRightLines1 + line1right;
             } else {
                 // c = 'blue'; // left leaning cable that hits the top
                 line1left = `
-                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:2" /> 
+                <line x1=${cablesArray[i].x1} y1=${cablesArray[i].y1} x2=${cablesArray[i].x2} y2=${cablesArray[i].y2} style="stroke:${color};stroke-width:${thickness}" /> 
                 `
                 allLeftLines1 = allLeftLines1 + line1left;
             }
@@ -1356,14 +1370,14 @@ function createLines () {
                 if (i % 2 == 0) {
                     // c = 'orange'; // right leaning cable that hits the top
                     line2right = `
-                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:2" /> 
+                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:${thickness}" /> 
                         `
                     allRightLines2 = allRightLines2 + line2right;
     
                 } else {
                     // c = 'green'; // left leaning cable that hits the top
                     line2left = `
-                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:2" /> 
+                        <line x1=${cablesArray[i].x2} y1=${cablesArray[i].y2} x2=${cablesArray[i].x3} y2=${cablesArray[i].y3} style="stroke:${color};stroke-width:${thickness}" /> 
                         `
                     allLeftLines2 = allLeftLines2 + line2left;
                 }
@@ -1386,7 +1400,7 @@ function createLines () {
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
     let svgSize = document.createElement('p');
-    svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px)`);
+    svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px.`);
     svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     // disableBtn(createChartBtn);
