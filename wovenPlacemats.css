@@ -614,3 +614,10 @@ fieldset {
     max-width: max-content;
    }
 }
+
+.red {
+    color: red;
+    background-color: yellow;
+    font-size: larger;
+    font-weight: 500;
+}

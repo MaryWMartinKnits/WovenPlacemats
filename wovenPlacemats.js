@@ -160,7 +160,7 @@ function enableBtn (button) {
 function createInputSection () {
     console.log('function createInputSection executed');
     userInputTitle = document.createElement('h2');
-    userInputTitle.innerHTML = 'User Input:';
+    userInputTitle.innerHTML = 'User Input: <p class="red"> would you like to change the "User Input" title and/or write something else here? </p>';
     begOfPage.appendChild(userInputTitle);
     let code = 0;
     let pairNumber = 1;
@@ -602,6 +602,8 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     }
     SetUpRow1 = '';
     SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
+    SetUpRow1  = `<h2 class="red">Would you like some kind of title to go here?</h2> <p class="red"> Maybe also some text before (or after) the set up rows? </p> <br>${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
+
     if (setUpRow1paragraph == undefined) {
         setUpRow1paragraph = document.createElement('p');
         setUpRow1paragraph.classList.add('setUpRow1paragraph');
@@ -1169,18 +1171,19 @@ function createLines () {
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
-    // `<svg id="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
-    // ${allLines1} + ${allLines2}
-    // </svg>`
-
-    `<svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    `
+    <p class="red"> Would you like to put a title and/or write something here? </p> <br>
+    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
     let svgSize = document.createElement('p');
-    svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px.`);
+    svgSize.innerHTML = 
+    (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. 
+     <p class="red">  Once done testing thickness on different devices let me know, so I can erase the previous text "SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. ".  </p>
+    `);
     svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
