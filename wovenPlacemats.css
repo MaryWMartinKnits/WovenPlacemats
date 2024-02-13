@@ -89,14 +89,12 @@ button {
 }
 
 .hidden {
-    visibility: hidden;
-    height: 0;
-    width: 0;
+    display: none;
 }
 .disabledBtn {
     background-color: rgb(180, 169, 187);
     border-color: var(--color6);
-    color: var(--color7); /*7->5*/
+    color: var(--color7);
 }
 
 .betweenMarkers {
