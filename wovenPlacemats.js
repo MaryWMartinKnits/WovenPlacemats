@@ -831,6 +831,9 @@ function continueEditingColors () {
     enableBtn(createSetUpRowsBtn);
     createNewInputSection ();
     editingCounter++;
+    let oldPlacemat = document.querySelector('#SVGplacemat')
+    oldPlacemat.classList.add('oldPlacemat');
+    oldPlacemat.classList.remove('newPlacemat');
 }
 
 function createNewInputSection () {
@@ -1166,7 +1169,11 @@ function createLines () {
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
-    `<svg class="SVGplacemat" style="background-color:var(--color6); border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    // `<svg id="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    // ${allLines1} + ${allLines2}
+    // </svg>`
+
+    `<svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
@@ -1215,5 +1222,10 @@ function changeLineCC () {
  }
 
 function print () {
-    window.print()
+    window.print('window.print')
 }
+
+// How to code PDF in HTML?
+// How to Embed PDF in HTML: Simple Methods for You
+// Step 1 Create a file called files in the directory containing the HTML file. A PDF file is contained within the files file. 
+// Step 2 Create the embed tag in HTML and include the path in the src attribute. Step 3 Set the application/pdf type attribute.
