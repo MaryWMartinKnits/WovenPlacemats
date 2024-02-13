@@ -19,7 +19,6 @@
 
 body {
     background-color: var(--color5);
-    /* background-color: var(--color7); */
 }
 
 main {
@@ -533,6 +532,14 @@ fieldset {
 .SVGdiv {
     min-height: 100px;
 }
+
+.newPlacemat {
+    background-color: white;
+}
+.oldPlacemat {
+    background-color: #9890a4ed;
+}
+
 /* choosing line colors: */
 
 #colorPickerDiv {

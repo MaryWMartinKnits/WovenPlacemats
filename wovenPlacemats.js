@@ -831,6 +831,9 @@ function continueEditingColors () {
     enableBtn(createSetUpRowsBtn);
     createNewInputSection ();
     editingCounter++;
+    let oldPlacemat = document.querySelector('#SVGplacemat')
+    oldPlacemat.classList.add('oldPlacemat');
+    oldPlacemat.classList.remove('newPlacemat');
 }
 
 function createNewInputSection () {
@@ -1166,7 +1169,11 @@ function createLines () {
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
-    `<svg class="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    // `<svg id="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    // ${allLines1} + ${allLines2}
+    // </svg>`
+
+    `<svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
