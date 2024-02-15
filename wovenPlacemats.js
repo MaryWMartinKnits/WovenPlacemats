@@ -160,7 +160,7 @@ function enableBtn (button) {
 function createInputSection () {
     console.log('function createInputSection executed');
     userInputTitle = document.createElement('h2');
-    userInputTitle.innerHTML = 'User Input:';
+    userInputTitle.innerHTML = 'User Input: <p class="red"> would you like to change the "User Input" title and/or write something else here? </p>';
     begOfPage.appendChild(userInputTitle);
     let code = 0;
     let pairNumber = 1;
@@ -215,7 +215,8 @@ function createYCselectionButtons () {
 function addEventListeners () {
     console.log('function addEventListeners executed');
     continueEditingBtn.addEventListener('click', continueEditingColors);
-    createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
+    // createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
+    createSetUpRowsBtn.addEventListener('click', restrictions);
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
@@ -602,6 +603,8 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     }
     SetUpRow1 = '';
     SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
+    SetUpRow1  = `<h2 class="red">Would you like some kind of title to go here?</h2> <p class="red"> Maybe also some text before (or after) the set up rows? </p> <br>${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
+
     if (setUpRow1paragraph == undefined) {
         setUpRow1paragraph = document.createElement('p');
         setUpRow1paragraph.classList.add('setUpRow1paragraph');
@@ -976,7 +979,18 @@ function  SVGcondition () {
 function createSVG (NumberCablePairs) {
     console.log('function createSVG executed')
     // let scalar = 100;
-    let scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+    let scalar;
+    if (window.innerWidth < window.innerHeight) {
+        scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+    } else if (window.innerWidth > window.innerHeight) {
+        let x = 2;
+        let adaptedScalar = window.innerHeight * x;
+        do  {
+            x = x - 0.1;
+            adaptedScalar = window.innerHeight * x;
+        } while (adaptedScalar + (window.innerWidth*0.1) > window.innerWidth)
+        scalar = (adaptedScalar / NumberCablePairs);
+    }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
     NumberOfCables = NumberCablePairs * 2; // = 56
         svgWidth =  (scalar * NumberCablePairs);
@@ -1095,9 +1109,9 @@ function cableThatChangedDirection (i, newDirection) {
 }
 
 function determinelineThickness () {
-    if (svgWidth > 1140) {
+    if (svgWidth > 1500) {
         thickness = 4;
-    } else if (svgWidth> 976) {
+    } else if (svgWidth > 976) {
         thickness = 3;
     } else if (svgWidth > 600) {
         thickness = 2;
@@ -1169,18 +1183,19 @@ function createLines () {
     SVGinDiv.classList.add('chartDiv');
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
-    // `<svg id="SVGplacemat" style="background-color:white; border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
-    // ${allLines1} + ${allLines2}
-    // </svg>`
-
-    `<svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    `
+    <p class="red"> Would you like to put a title and/or write something here? </p> <br>
+    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
     let svgSize = document.createElement('p');
-    svgSize.innerHTML = (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px.`);
+    svgSize.innerHTML = 
+    (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. 
+     <p class="red">  Once done testing thickness on different devices let me know, so I can erase the previous text "SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. ".  </p>
+    `);
     svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
@@ -1221,11 +1236,51 @@ function changeLineCC () {
      console.log(`MC: ${pickedMC}. CC: ${pickedCC}`);
  }
 
-function print () {
-    window.print('window.print')
-}
 
-// How to code PDF in HTML?
-// How to Embed PDF in HTML: Simple Methods for You
-// Step 1 Create a file called files in the directory containing the HTML file. A PDF file is contained within the files file. 
-// Step 2 Create the embed tag in HTML and include the path in the src attribute. Step 3 Set the application/pdf type attribute.
+ function restrictions () {
+    console.log('function restrictions executed');
+    askEmail();
+ }
+
+ function askEmail () {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    let email = window.prompt('Text asking the user to enter their EMAIL. Let me know what you want to write here');
+    if (email.match(emailRegex)) {
+        askPassword();   
+      } else {
+        alert("Invalid email address!");
+        return false;
+      }
+    // validateEmail(email);
+ }
+
+//  function validateEmail (email) {
+//     let count = 0;
+//     for (let i = 0; i < email.length; i++) {
+//         let x = email[i];
+//         if (email.length > 5) {
+//             if (x == '@') {
+//                 count++
+//             }
+//         }
+//     }
+//     if (count > 0) {
+//         askPassword();
+//     } else {
+//         window.alert('Please enter a valid email adreess.')
+//     }
+//  }
+
+ function askPassword () {
+    let password = window.prompt('Text asking for code/password.');
+    if (password == "password") {
+        console.log('password is correct');
+        createSetUpRow1Array();
+    } else {
+        console.log('password was incorrect');
+       let question = window.confirm('The password was incorrect, do you want to try again?')
+       if (question) {
+        askPassword();
+       }
+    }
+ }
