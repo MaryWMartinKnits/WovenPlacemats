@@ -979,7 +979,12 @@ function  SVGcondition () {
 function createSVG (NumberCablePairs) {
     console.log('function createSVG executed')
     // let scalar = 100;
-    let scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+    let scalar;
+    if (window.innerWidth < window.innerHeight) {
+        scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+    } else if (window.innerWidth > window.innerHeight) {
+        scalar = ((window.innerHeight * 1.4) / NumberCablePairs);
+    }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
     NumberOfCables = NumberCablePairs * 2; // = 56
         svgWidth =  (scalar * NumberCablePairs);
