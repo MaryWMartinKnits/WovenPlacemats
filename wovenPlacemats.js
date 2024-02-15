@@ -983,7 +983,13 @@ function createSVG (NumberCablePairs) {
     if (window.innerWidth < window.innerHeight) {
         scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
     } else if (window.innerWidth > window.innerHeight) {
-        scalar = ((window.innerHeight * 1.4) / NumberCablePairs);
+        let x = 2;
+        let adaptedScalar = window.innerHeight * x;
+        do  {
+            x = x - 0.1;
+            adaptedScalar = window.innerHeight * x;
+        } while (adaptedScalar + (window.innerWidth*0.1) > window.innerWidth)
+        scalar = (adaptedScalar / NumberCablePairs);
     }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
     NumberOfCables = NumberCablePairs * 2; // = 56
