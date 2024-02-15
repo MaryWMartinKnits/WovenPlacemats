@@ -215,7 +215,8 @@ function createYCselectionButtons () {
 function addEventListeners () {
     console.log('function addEventListeners executed');
     continueEditingBtn.addEventListener('click', continueEditingColors);
-    createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
+    // createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
+    createSetUpRowsBtn.addEventListener('click', restrictions);
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
@@ -1097,9 +1098,9 @@ function cableThatChangedDirection (i, newDirection) {
 }
 
 function determinelineThickness () {
-    if (svgWidth > 1140) {
+    if (svgWidth > 1500) {
         thickness = 4;
-    } else if (svgWidth> 976) {
+    } else if (svgWidth > 976) {
         thickness = 3;
     } else if (svgWidth > 600) {
         thickness = 2;
@@ -1224,11 +1225,51 @@ function changeLineCC () {
      console.log(`MC: ${pickedMC}. CC: ${pickedCC}`);
  }
 
-function print () {
-    window.print('window.print')
-}
 
-// How to code PDF in HTML?
-// How to Embed PDF in HTML: Simple Methods for You
-// Step 1 Create a file called files in the directory containing the HTML file. A PDF file is contained within the files file. 
-// Step 2 Create the embed tag in HTML and include the path in the src attribute. Step 3 Set the application/pdf type attribute.
+ function restrictions () {
+    console.log('function restrictions executed');
+    askEmail();
+ }
+
+ function askEmail () {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    let email = window.prompt('Text asking the user to enter their EMAIL. Let me know what you want to write here');
+    if (email.match(emailRegex)) {
+        askPassword();   
+      } else {
+        alert("Invalid email address!");
+        return false;
+      }
+    // validateEmail(email);
+ }
+
+//  function validateEmail (email) {
+//     let count = 0;
+//     for (let i = 0; i < email.length; i++) {
+//         let x = email[i];
+//         if (email.length > 5) {
+//             if (x == '@') {
+//                 count++
+//             }
+//         }
+//     }
+//     if (count > 0) {
+//         askPassword();
+//     } else {
+//         window.alert('Please enter a valid email adreess.')
+//     }
+//  }
+
+ function askPassword () {
+    let password = window.prompt('Text asking for code/password.');
+    if (password == "password") {
+        console.log('password is correct');
+        createSetUpRow1Array();
+    } else {
+        console.log('password was incorrect');
+       let question = window.confirm('The password was incorrect, do you want to try again?')
+       if (question) {
+        askPassword();
+       }
+    }
+ }
