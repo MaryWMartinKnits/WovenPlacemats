@@ -75,6 +75,8 @@ let colorCode;
 let combination = '';
 let createChartBtn;
 let createSetUpRowsBtn;
+let hideSetUpRowsBtn;
+let showSetUpRowsBtn;
 
 // continue editing colors:
 let continueEditingBtn;
@@ -112,8 +114,6 @@ let pickedMC;
 let pickedCC;
 //
 
-let boolean = false;
-
 window.onload = init();
 
 function init() {
@@ -136,20 +136,19 @@ function getDOMelements () {
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
+    hideSetUpRowsBtn = document.querySelector('#hideSetUpRowsBtn');
+    showSetUpRowsBtn = document.querySelector('#showSetUpRowsBtn');
     createInputSection(); 
     createYCselectionButtons();
+    hideBtn(hideSetUpRowsBtn);
+    hideBtn(showSetUpRowsBtn);
     addEventListeners ();
     chooseLineColor();
 }
 
-function disableBtn (button) {
-    button.disable = true;
-    button.classList.add('disabledBtn');
-}
-
 function hideBtn (button) {
     button.disabled = true;
-    button.classList.add('disablesBtn');
+    button.classList.add('disabledBtn');
     button.classList.add('hidden');
 }
 
@@ -211,6 +210,18 @@ function createYCselectionButtons () {
     }
 }
 
+function hideSetUpRows () {
+    setUpRowsDiv.classList.add('hidden');
+    enableBtn(showSetUpRowsBtn);
+    hideBtn(hideSetUpRowsBtn);
+}
+
+function showSetUpRows () {
+    setUpRowsDiv.classList.remove('hidden');
+    enableBtn(hideSetUpRowsBtn);
+    hideBtn(showSetUpRowsBtn);
+}
+
 function addEventListeners () {
     console.log('function addEventListeners executed');
     continueEditingBtn.addEventListener('click', continueEditingColors);
@@ -219,6 +230,8 @@ function addEventListeners () {
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
+    hideSetUpRowsBtn.addEventListener('click', hideSetUpRows);
+    showSetUpRowsBtn.addEventListener('click', showSetUpRows)
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -443,7 +456,6 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
     writeSetUpRow1(allSections1ArrayWritten);
-    disableBtn(continueEditingBtn);
     createSpace();
 } 
 
@@ -962,10 +974,8 @@ function createNewUserSelectionArrayForOutput () {
 function  SVGcondition () {
     createUserSelectionArray();
     console.log('function SVGcondition executed');
-    disableBtn(continueEditingBtn);
     disableInputSwitches();
     continueEditingBtn.classList.remove('hidden');
-    disableBtn(createChartBtn);
     NumberCablePairs = numberOfDE; // = 28
     if (NumberCablePairs % 4 == 0) {
         createSVG (NumberCablePairs);
@@ -979,11 +989,7 @@ function createSVG (NumberCablePairs) {
     // let scalar = 100;
     let scalar;
     if (window.innerWidth < window.innerHeight) {
-        if (boolean) { //final SVG with Setup rows
-            scalar = ((window.innerWidth * 0.80) / NumberCablePairs);
-        } else {
-            scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
-        }
+        scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
     } else if (window.innerWidth > window.innerHeight) {
         let x = 2;
         let adaptedScalar = window.innerHeight * x;
@@ -991,12 +997,7 @@ function createSVG (NumberCablePairs) {
             x = x - 0.1;
             adaptedScalar = window.innerHeight * x;
         } while (adaptedScalar + (window.innerWidth * 0.1) >= window.innerWidth)
-        scalar = (adaptedScalar / NumberCablePairs);
-        if (boolean) { //final SVG with Setup rows
-            x = x - 0.25;
-            adaptedScalar = window.innerHeight * x;
-            scalar = (adaptedScalar / NumberCablePairs);
-        }    
+        scalar = (adaptedScalar / NumberCablePairs);  
         scalar = (adaptedScalar / NumberCablePairs);
     }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
@@ -1263,7 +1264,7 @@ function changeLineCC () {
     password = password.toLowerCase(); // the password will not be case sensitive
     if (password == "password") {
         console.log('password is correct');
-        boolean = true;
+        enableBtn(hideSetUpRowsBtn)
         createSetUpRow1Array();
     } else {
         console.log('password was incorrect');

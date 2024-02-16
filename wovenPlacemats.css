@@ -92,12 +92,6 @@ button {
     display: none;
 }
 
-.disabledBtn {
-    background-color: rgb(180, 169, 187);
-    border-color: var(--color6);
-    color: var(--color7);
-}
-
 .betweenMarkers {
     display: flex;
 
@@ -578,7 +572,7 @@ fieldset {
         flex-wrap: nowrap;
         margin-top: 0.25rem;
     }
-      h3 {
+      .selectionOutputSection h3 {
         font-size: 1.5rem;
         text-indent: 2rem;
       }
