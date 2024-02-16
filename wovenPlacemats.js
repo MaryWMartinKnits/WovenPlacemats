@@ -43,7 +43,6 @@ let p1 = ' p1';
 let k1 = ' k1';
 let k2 = ' k2';
 let divToCreateSpace;
-let neededHeight_SetUpRows;
 let optimalHeight;
 let setUpRow1Div;
 let setUpRow2Div
@@ -96,7 +95,6 @@ let cablesArray = [];
 let RightMoving; // boolean variable;
 let NextX;
 let NextY;
-let neededHeight_Chart
 let SVGinDiv;
 let newDirection;
 let svgPlacemat;
