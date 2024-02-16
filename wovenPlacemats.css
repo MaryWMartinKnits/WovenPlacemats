@@ -376,6 +376,7 @@ fieldset {
     flex-direction: column;
     margin: 0 1rem;
     padding: 1rem;
+    text-align: center;
   }
   
   .swatch .swatchInfo{

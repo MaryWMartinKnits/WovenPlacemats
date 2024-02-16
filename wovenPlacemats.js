@@ -25,10 +25,10 @@ let middleSections2 = '';
 let SetUpRow1 = '';
 let SetUpRow2 = ''
 let slipMarker = ' <strong> sm, </strong> ';
-let beg1 = `<strong> Set up row 1 (with MC): </strong> P2, ktbl1, p1, ${slipMarker} `; //  change beeggining of pattern for however the set up row starts
-let end1 = ' p1, ktbl1, p2. Cut yarn.  Slide work. ';
-let beg2 = `<strong> Set up row 2 (with CC): </strong> K2, sl1, k1, ${slipMarker} `;
-let end2 = ' k1, sl1, k2. Cut yarn.  Slide work.';
+let beg1 = `<strong> Setup Row 1 (MC): </strong> Ptbl1, p1, ktbl1, p1, ${slipMarker} `; //  change beeggining of pattern for however the set up row starts
+let end1 = ' p1, ktbl1, p1, ptbl1 .';
+let beg2 = `<strong> Setup Row 2 (CC): </strong> Ktbl1, k1, sl1, k1, ${slipMarker} `;
+let end2 = ' k1, sl1, k1, ktbl1.';
 let DEstitchCountRow1 = 0;
 let DEstitchCountRow2 = 0;
 let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 4 + 11*7 + 4.
@@ -112,6 +112,8 @@ let pickedMC;
 let pickedCC;
 //
 
+let boolean = false;
+
 window.onload = init();
 
 function init() {
@@ -159,9 +161,6 @@ function enableBtn (button) {
 
 function createInputSection () {
     console.log('function createInputSection executed');
-    userInputTitle = document.createElement('h2');
-    userInputTitle.innerHTML = 'User Input: <p class="red"> would you like to change the "User Input" title and/or write something else here? </p>';
-    begOfPage.appendChild(userInputTitle);
     let code = 0;
     let pairNumber = 1;
     for (let i = 0; i < numberOfSections; i++) {
@@ -595,16 +594,15 @@ function determineStitchPatternForLASTpair (i, setUpRow1Array) {
 function writeSetUpRow1 (middleSections1ArrayWritten) {
     console.log('function writeSetUpRow1 executed');
     totalStCountRow1 = originalStitchCount + DEstitchCountRow1;
-    writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
-    // writtenStitchCount1 = `(${totalStCountRow1} sts).`
+    // writtenStitchCount1 = `(${originalStitchCount} sts + ${DEstitchCountRow1} increased sts = ${originalStitchCount + DEstitchCountRow1} total sts).`
+    writtenStitchCount1 = `(${totalStCountRow1} sts).`
     writtenSection1All = '';
     for (let i = 0; i < middleSections1ArrayWritten.length; i++) {
         writtenSection1All = writtenSection1All + middleSections1ArrayWritten[i]
     }
     SetUpRow1 = '';
     SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
-    SetUpRow1  = `<h2 class="red">Would you like some kind of title to go here?</h2> <p class="red"> Maybe also some text before (or after) the set up rows? </p> <br>${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
-
+    SetUpRow1  = `<p>Work the Woven Placemat Collection pattern.  Use these Setup Rows to knit your design. </p> ${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`     
     if (setUpRow1paragraph == undefined) {
         setUpRow1paragraph = document.createElement('p');
         setUpRow1paragraph.classList.add('setUpRow1paragraph');
@@ -785,8 +783,8 @@ function determineStitchPatternForLASTpairRow2 (i, setUpRow2Array) {
 function writeSetUpRow2 () {
     console.log('function writeSetUpRow2 executed');
     totalStCountRow2 = totalStCountRow1 + DEstitchCountRow2;
-    writtenStitchCount2 = `(${totalStCountRow2}sts). `
-    writtenStitchCount2 = `(${totalStCountRow1} sts + ${DEstitchCountRow2} increased sts = ${totalStCountRow2} total sts).` // erase after checking accuracy.
+    writtenStitchCount2 = `(${totalStCountRow2} sts). `
+    // writtenStitchCount2 = `(${totalStCountRow1} sts + ${DEstitchCountRow2} increased sts = ${totalStCountRow2} total sts).` // erase after checking accuracy.
     SetUpRow2 = '';
     for (let i = 0; i < middleSections2Array.length; i++) {
         allSections2ArrayWritten[i] = `<span class="colorCoding${i}"> ${middleSections2Array[i].writtenInstructions} </span> ${slipMarker}`
@@ -795,7 +793,7 @@ function writeSetUpRow2 () {
     for (let j = 0; j < allSections2ArrayWritten.length; j++) {
         writtenSection2All = writtenSection2All + allSections2ArrayWritten[j];
     }
-    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2}`;    
+    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2} <br> <p> Consider taking a screenshot of Placemat Drawing and the Setup Rows for future reference.  </p>`;    
     if (setUpRow2paragraph == undefined) {
         setUpRow2paragraph = document.createElement('p');
         setUpRow2paragraph.classList.add('setUpRow2paragraph');
@@ -970,7 +968,7 @@ function  SVGcondition () {
     disableBtn(createChartBtn);
     NumberCablePairs = numberOfDE; // = 28
     if (NumberCablePairs % 4 == 0) {
-        createSVG (NumberCablePairs)
+        createSVG (NumberCablePairs);
     } else {
         console.log(`the number of cable pairs should be divisible by 4. Current number of pairs = ${NumberCablePairs}`)
     }
@@ -981,14 +979,24 @@ function createSVG (NumberCablePairs) {
     // let scalar = 100;
     let scalar;
     if (window.innerWidth < window.innerHeight) {
-        scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+        if (boolean) { //final SVG with Setup rows
+            scalar = ((window.innerWidth * 0.80) / NumberCablePairs);
+        } else {
+            scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
+        }
     } else if (window.innerWidth > window.innerHeight) {
         let x = 2;
         let adaptedScalar = window.innerHeight * x;
         do  {
             x = x - 0.1;
             adaptedScalar = window.innerHeight * x;
-        } while (adaptedScalar + (window.innerWidth*0.1) > window.innerWidth)
+        } while (adaptedScalar + (window.innerWidth * 0.1) >= window.innerWidth)
+        scalar = (adaptedScalar / NumberCablePairs);
+        if (boolean) { //final SVG with Setup rows
+            x = x - 0.25;
+            adaptedScalar = window.innerHeight * x;
+            scalar = (adaptedScalar / NumberCablePairs);
+        }    
         scalar = (adaptedScalar / NumberCablePairs);
     }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
@@ -1184,19 +1192,16 @@ function createLines () {
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
     `
-    <p class="red"> Would you like to put a title and/or write something here? </p> <br>
     <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
-    let svgSize = document.createElement('p');
-    svgSize.innerHTML = 
-    (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. 
-     <p class="red">  Once done testing thickness on different devices let me know, so I can erase the previous text "SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. ".  </p>
-    `);
-    svgPlacemat.appendChild(svgSize);
+    // let svgSize = document.createElement('p');
+    // svgSize.innerHTML = 
+    // (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. `);
+    // svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
 }
@@ -1244,37 +1249,21 @@ function changeLineCC () {
 
  function askEmail () {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    let email = window.prompt('Text asking the user to enter their EMAIL. Let me know what you want to write here');
+    let email = window.prompt('Enter your email.  Please use the email address associated with your pattern purchase. ');
     if (email.match(emailRegex)) {
         askPassword();   
       } else {
         alert("Invalid email address!");
         return false;
       }
-    // validateEmail(email);
  }
 
-//  function validateEmail (email) {
-//     let count = 0;
-//     for (let i = 0; i < email.length; i++) {
-//         let x = email[i];
-//         if (email.length > 5) {
-//             if (x == '@') {
-//                 count++
-//             }
-//         }
-//     }
-//     if (count > 0) {
-//         askPassword();
-//     } else {
-//         window.alert('Please enter a valid email adreess.')
-//     }
-//  }
-
  function askPassword () {
-    let password = window.prompt('Text asking for code/password.');
+    let password = window.prompt('Enter password found in the pattern.');
+    password = password.toLowerCase(); // the password will not be case sensitive
     if (password == "password") {
         console.log('password is correct');
+        boolean = true;
         createSetUpRow1Array();
     } else {
         console.log('password was incorrect');
