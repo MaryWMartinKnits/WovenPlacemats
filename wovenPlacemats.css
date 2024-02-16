@@ -62,16 +62,19 @@ button {
     color: var(--color2);
 }
   
-/* footer {
-    position: fixed;
-    visibility:hidden;
-     bottom: 0;  
-    background-color: #B0C795;
+ footer {
+    color: var(--color3);
     padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1.15rem;
     text-align: center;
-} */
+    border-radius: 0.5rem;
+    background-color: var(--color6);
+} 
+
+footer a {
+    color: var(--color2);
+}
 
 .pairNumber {
     display: flex;
@@ -310,12 +313,11 @@ fieldset {
 }
 
 #setUpRows {
-    position: fixed;
-    bottom: 0;
     background-color: var(--color6);
     padding: 0 0.5rem;
     margin: 5px;
     max-width: 95vw;
+    display: block;
 }
 
 .outsideBtnsDiv {

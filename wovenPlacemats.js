@@ -33,7 +33,6 @@ let DEstitchCountRow1 = 0;
 let DEstitchCountRow2 = 0;
 let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 4 + 11*7 + 4.
 let kfb = ' kfb';
-// let p2 = ' p2'
 let cero_into_two = ' 0-into-2';
 let ktbl1 = ' ktbl1';
 let m1L = ' m1L';
@@ -75,8 +74,6 @@ let colorCode;
 let combination = '';
 let createChartBtn;
 let createSetUpRowsBtn;
-let hideSetUpRowsBtn;
-let showSetUpRowsBtn;
 
 // continue editing colors:
 let continueEditingBtn;
@@ -112,7 +109,6 @@ let allMClines;
 let allCClines;
 let pickedMC;
 let pickedCC;
-//
 
 window.onload = init();
 
@@ -136,12 +132,8 @@ function getDOMelements () {
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
-    hideSetUpRowsBtn = document.querySelector('#hideSetUpRowsBtn');
-    showSetUpRowsBtn = document.querySelector('#showSetUpRowsBtn');
     createInputSection(); 
     createYCselectionButtons();
-    hideBtn(hideSetUpRowsBtn);
-    hideBtn(showSetUpRowsBtn);
     addEventListeners ();
     chooseLineColor();
 }
@@ -210,28 +202,13 @@ function createYCselectionButtons () {
     }
 }
 
-function hideSetUpRows () {
-    setUpRowsDiv.classList.add('hidden');
-    enableBtn(showSetUpRowsBtn);
-    hideBtn(hideSetUpRowsBtn);
-}
-
-function showSetUpRows () {
-    setUpRowsDiv.classList.remove('hidden');
-    enableBtn(hideSetUpRowsBtn);
-    hideBtn(showSetUpRowsBtn);
-}
-
 function addEventListeners () {
     console.log('function addEventListeners executed');
     continueEditingBtn.addEventListener('click', continueEditingColors);
-    // createSetUpRowsBtn.addEventListener('click', createSetUpRow1Array);
     createSetUpRowsBtn.addEventListener('click', restrictions);
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
-    hideSetUpRowsBtn.addEventListener('click', hideSetUpRows);
-    showSetUpRowsBtn.addEventListener('click', showSetUpRows)
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -240,10 +217,8 @@ function addEventListeners () {
 }
 
 function changeColorSelection (checkedYC) {
-    // console.log('changeColorSelection function executed for: ');
     firedCheckboxID = event.target.id;
     checkedYC = document.querySelector('#'+firedCheckboxID);
-    // console.log(checkedYC);
     if (checkedYC.checked) {
         checkedYC.value = 'CCselected';
         checkedYC.classList.add('CCselected');
@@ -367,7 +342,6 @@ function firstPairOfSection_SetUpRow1 (c,thisObject) {
         keepPurling = true;
     } else if (userSelectionArray[c].yarnColor == 'CC' && userSelectionArray[c+1].yarnColor == 'MC') {
         DE = `${p1}, ${ktbl1} `;
-        // DEstitchCountRow1++
         purlStitchCount = 2;
         keepPurling = false;
     }
@@ -456,7 +430,6 @@ function wovenPlacematSetUpRow1 (setUpRow1Array) {
     MiddleSections_SetUpRow1(setUpRow1Array);
     LASTsection_SetUpRow1(setUpRow1Array);
     writeSetUpRow1(allSections1ArrayWritten);
-    createSpace();
 } 
 
 function FIRSTsection_SetUpRow1 (setUpRow1Array) {
@@ -627,8 +600,7 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
         setUpRow1paragraph.innerHTML = '';
         setUpRow1paragraph.innerHTML = SetUpRow1;
     }
-    window.addEventListener('resize', createSpace);
-    createSetUpRow2Array(setUpRow1Array) //
+    createSetUpRow2Array(setUpRow1Array)
 }
 
 function allPairsOfSection_SetUpRow2 (i, thisObject) {
@@ -821,17 +793,7 @@ function writeSetUpRow2 () {
     disableInputSwitches();
     hideBtn(createSetUpRowsBtn);
     hideBtn(createChartBtn);
-}
-
-function createSpace () {
-    neededHeight_Chart = svgChartDiv.offsetHeight;
-    // if (neededHeight_Chart > 0) {
-    //     neededHeight_SetUpRows = 0;
-    // } else {
-        neededHeight_SetUpRows = setUpRowsDiv.offsetHeight;
-    // }
-    optimalHeight = neededHeight_SetUpRows + 5 + neededHeight_Chart;
-    divToCreateSpace.style.height = `${optimalHeight}px`;
+    setUpRowsDiv.focus();
 }
 
 // continue editing colors section:
@@ -986,7 +948,6 @@ function  SVGcondition () {
 
 function createSVG (NumberCablePairs) {
     console.log('function createSVG executed')
-    // let scalar = 100;
     let scalar;
     if (window.innerWidth < window.innerHeight) {
         scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
@@ -1205,6 +1166,7 @@ function createLines () {
     // svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
+    SVGinDiv.focus();
 }
 
 // picking MC and CC:
@@ -1264,7 +1226,6 @@ function changeLineCC () {
     password = password.toLowerCase(); // the password will not be case sensitive
     if (password == "password") {
         console.log('password is correct');
-        enableBtn(hideSetUpRowsBtn)
         createSetUpRow1Array();
     } else {
         console.log('password was incorrect');
