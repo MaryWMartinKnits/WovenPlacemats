@@ -127,8 +127,8 @@ function getDOMelements () {
     hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
     divToCreateSpace = document.querySelector('.space');
-    let userInputDiv = document.querySelector('#userInputDiv');
-    let svgChartDiv = document.querySelector('#svgChartDiv');
+    // let userInputDiv = document.querySelector('#userInputDiv');
+    // let svgChartDiv = document.querySelector('#svgChartDiv');
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
@@ -793,7 +793,7 @@ function writeSetUpRow2 () {
     disableInputSwitches();
     hideBtn(createSetUpRowsBtn);
     hideBtn(createChartBtn);
-    setUpRowsDiv.focus();
+    document.getElementById('setUpRows').focus();
 }
 
 // continue editing colors section:
@@ -1166,7 +1166,7 @@ function createLines () {
     // svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
-    SVGinDiv.focus();
+    document.getElementById("svgChartDiv").focus();
 }
 
 // picking MC and CC:
