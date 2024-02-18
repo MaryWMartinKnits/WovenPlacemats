@@ -28,9 +28,6 @@
     <title>Woven Placemats</title>
 </head>
 <body>
-    <header>
-        <!-- <p id="window-width">window width: </p> -->
-    </header>
     <main>
         <div id="begOfPage">
             <h1>Design Your Own Woven Placemat</h1>
@@ -46,7 +43,7 @@
             <div id="colorSwatches">
                 <div class="swatch">
                     <label for="colorPickerMC">
-                        <input type="color" id="colorPickerMC" value="#5F5FA5"> 
+                        <input type="color" id="colorPickerMC" title="Pick the main color (MC)" value="#5F5FA5"> 
                     </label>
                     <div class="swatchInfo">
                         <h3>Pick MC</h3>
@@ -55,7 +52,7 @@
                 </div>
                 <div class="swatch">
                     <label for="colorPickerCC"> 
-                        <input type="color" id="colorPickerCC" value="#ffa500">  
+                        <input type="color" id="colorPickerCC" title="Pick the contrasting color (CC)" value="#ffa500">  
                     </label>
                     <div class="swatchInfo">
                         <h3>Pick CC</h3>
@@ -65,11 +62,11 @@
         </div> 
 
         <div class="outsideBtnsDiv">
-            <div class="buttonsDiv">
-                <button id="createChartBtn">Draw Placemat</button>
-                <button id="continueEditingBtn">Continue editing</button>
-                <button id="createSetUpRowsBtn">Create Setup Rows</button>
-            </div>
+            <section class="buttonsDiv">
+                <button id="createChartBtn" title="Draw placemat">Draw Placemat</button>
+                <button id="continueEditingBtn" title="Continue editing">Continue editing</button>
+                <button id="createSetUpRowsBtn" title="Create Setup Rows">Create Setup Rows</button>
+            </section>
         </div>
 
 
@@ -85,7 +82,7 @@
         <script src="wovenPlacemats.js"></script>
     </main>
     <footer id="footer">
-        <a href="http://www.marywmartinknits.com" target="_blank">www.marywmartinknits.com</a>
+        <a href="http://www.marywmartinknits.com" target="_blank" aria-label="Go to Mary W Matin Knits website">www.marywmartinknits.com</a>
     </footer>
 </body>
 </html>
