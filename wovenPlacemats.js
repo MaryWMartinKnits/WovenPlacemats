@@ -112,6 +112,9 @@ let pickedMC;
 let pickedCC;
 let pickedBackground = '#ffffff';
 
+let note1;
+let note2;
+
 
 window.onload = init();
 
@@ -140,6 +143,8 @@ function getDOMelements () {
     backgroundPickerBtn = document.querySelector('#backgroundPickerBtn')
     updateSVG = document.querySelector('#updateSVG');
     updateSVG.classList.add('hidden');
+    note1 = document.querySelector('#note1');
+    note2 = document.querySelector('#note2');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
@@ -820,6 +825,7 @@ function continueEditingColors () {
     oldPlacemat.classList.remove('newPlacemat');
     updateSVG.classList.remove('hidden');
     updateSVG.classList.add('outOfSync');
+    note1.classList.add('hidden');
 }
 
 function createNewInputSection () {
@@ -957,6 +963,9 @@ function  SVGcondition () {
     }
     updateSVG.classList.add('hidden');
     updateSVG.classList.remove('outOfSync');
+
+    note1.classList.remove('hidden');
+    note2.classList.remove('hidden');
 }
 
 function createSVG (NumberCablePairs) {
