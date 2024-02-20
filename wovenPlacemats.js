@@ -104,10 +104,13 @@ let chartNumbersDiv;
 // choosing colors:
 let MCpickerBtn;
 let CCpickerBtn;
+let backgroundPickerBtn;
 let allMClines;
 let allCClines;
 let pickedMC;
 let pickedCC;
+let pickedBackground = '#ffffff';
+
 
 window.onload = init();
 
@@ -133,6 +136,7 @@ function getDOMelements () {
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
+    backgroundPickerBtn = document.querySelector('#backgroundPickerBtn')
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
@@ -210,6 +214,7 @@ function addEventListeners () {
     createChartBtn.addEventListener('click', SVGcondition);
     MCpickerBtn.addEventListener('change', changeLineMC);
     CCpickerBtn.addEventListener('change', changeLineCC);
+    backgroundPickerBtn.addEventListener('change', changeBackground);
     let thisCheckbox;
      for (let i = 0; i < allYCcheckboxes.length; i++) {
         thisCheckbox = allYCcheckboxes[i];
@@ -236,7 +241,7 @@ function changeColorSelection (checkedYC) {
 }
 
 function disableInputSwitches () {
-    console.log('function disableInputSwitches executed');
+    // console.log('function disableInputSwitches executed');
     allSwitches = document.querySelectorAll('input');
     allLabels = document.querySelectorAll('label');
     allFieldsets = document.querySelectorAll('fieldset');
@@ -1012,10 +1017,10 @@ function createChartNumbers () {
                 break;
         }
         if (i > 0 && i < cablesArray.length) {
-            console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
+            // console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
             if (cablesArray[i-1].section !== cablesArray[i].section) {
                 x = x + 0.01;
-                console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
+                // console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
                 if (i > 47) {
                     x = x + 0.05;
                 }
@@ -1235,7 +1240,7 @@ function createLines () {
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
     `
-    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); height:${svgHeight}; width: ${svgWidth}"> 
+    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); background-color:${pickedBackground}; height:${svgHeight}; width: ${svgWidth}"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
@@ -1264,17 +1269,23 @@ function changeLineMC () {
     console.log('function changeLineMC executed');
     pickedMC = MCpickerBtn.value;
     console.log(`MC = ${pickedMC}`);
-    updatePickedColors(pickedMC, pickedCC);
+    updatePickedColors(pickedMC, pickedCC, pickedBackground);
 }
 
 function changeLineCC () {
     console.log('function changeLineCC executed');
     pickedCC = CCpickerBtn.value;
     console.log(`CC = ${pickedCC}`);
-    updatePickedColors(pickedMC, pickedCC);
+    updatePickedColors(pickedMC, pickedCC, pickedBackground);
 }
 
- function updatePickedColors (pickedMC, pickedCC) {
+function changeBackground () {
+    console.log('function changeBackground executed');
+    pickedBackground =  backgroundPickerBtn.value;
+    updatePickedColors(pickedMC, pickedCC, pickedBackground)
+}
+
+ function updatePickedColors (pickedMC, pickedCC, pickedBackground) {
      console.log('function updatePickedColors executed')  
      for (let i = 0; i < allMClines; i++) {
          allMClines[i].style.stroke = `${pickedMC}`

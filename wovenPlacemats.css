@@ -354,9 +354,9 @@ fieldset {
     min-height: 100px;
 }
 
-.newPlacemat {
+/* .newPlacemat {
     background-color: white;
-}
+} */
 
 .oldPlacemat {
     background-color: #9890a4ed;
@@ -372,8 +372,8 @@ fieldset {
 
 #colorSwatches {
     width: 95%;
-    display: flex;;
-    justify-content:space-around;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 0.5rem 0;
 }
