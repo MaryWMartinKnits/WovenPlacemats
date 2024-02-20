@@ -354,12 +354,14 @@ fieldset {
     min-height: 100px;
 }
 
-/* .newPlacemat {
-    background-color: white;
+/* .oldPlacemat {
+    background-color: #9890a4ed;
 } */
 
-.oldPlacemat {
-    background-color: #9890a4ed;
+.outOfSync {
+    display: block;
+    background-color: #00000033;
+    color: #ffffff;
 }
 
 /* choosing line colors: */
