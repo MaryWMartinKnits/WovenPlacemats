@@ -632,3 +632,19 @@ fieldset {
     font-size: larger;
     font-weight: 500;
 }
+
+#SVGnumbers {
+    min-height: 18px;
+}
+
+@media screen and (max-width: 500px) {
+     #SVGnumbers text {
+        font-size: 0.6rem;
+     }
+}
+
+@media screen and (min-width: 1029px) {
+    #SVGnumbers text {
+        font-size: 1.2rem;
+     }
+}

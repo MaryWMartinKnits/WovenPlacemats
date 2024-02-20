@@ -24,24 +24,24 @@ let middleSections2Array = [];
 let middleSections2 = '';
 let SetUpRow1 = '';
 let SetUpRow2 = ''
-let slipMarker = ' <strong> sm, </strong> ';
-let beg1 = `<strong> Setup Row 1 (MC): </strong> Ptbl1, p1, ktbl1, p1, ${slipMarker} `; //  change beeggining of pattern for however the set up row starts
-let end1 = ' p1, ktbl1, p1, ptbl1 .';
-let beg2 = `<strong> Setup Row 2 (CC): </strong> Ktbl1, k1, sl1, k1, ${slipMarker} `;
-let end2 = ' k1, sl1, k1, ktbl1.';
+const slipMarker = ' <strong> sm, </strong> ';
+const beg1 = `<strong> Setup Row 1 (MC): </strong> Ptbl1, p1, ktbl1, p1, ${slipMarker} `; //  change beeggining of pattern for however the set up row starts
+const end1 = ' p1, ktbl1, p1, ptbl1 .';
+const beg2 = `<strong> Setup Row 2 (CC): </strong> Ktbl1, k1, sl1, k1, ${slipMarker} `;
+const end2 = ' k1, sl1, k1, ktbl1.';
 let DEstitchCountRow1 = 0;
 let DEstitchCountRow2 = 0;
 let originalStitchCount = 85 //number of sts to begin with, I think it's 85. 4 + 11*7 + 4.
-let kfb = ' kfb';
-let cero_into_two = ' 0-into-2';
-let ktbl1 = ' ktbl1';
-let m1L = ' m1L';
-let sl1 = ' sl1';
+const kfb = ' kfb';
+const cero_into_two = ' 0-into-2';
+const ktbl1 = ' ktbl1';
+const m1L = ' m1L';
+const sl1 = ' sl1';
 let purlStitchCount = 1// might have to initialize it at another value depending on pattern. Check this!
 let purl = '';
-let p1 = ' p1';
-let k1 = ' k1';
-let k2 = ' k2';
+const p1 = ' p1';
+const k1 = ' k1';
+const k2 = ' k2';
 let divToCreateSpace;
 let optimalHeight;
 let setUpRow1Div;
@@ -63,7 +63,7 @@ let setUpRow1paragraph;
 let setUpRow2paragraph;
 let setUpRow2Array = [];
 let Row2DE = ''
-let sl2 = ' sl2'
+const sl2 = ' sl2'
 let totalStCountRow1;
 let totalStCountRow2;
 let writtenStitchCount2;
@@ -99,6 +99,7 @@ let SVGinDiv;
 let newDirection;
 let svgPlacemat;
 let thickness;
+let chartNumbersDiv;
 
 // choosing colors:
 let MCpickerBtn;
@@ -127,6 +128,8 @@ function getDOMelements () {
     divToCreateSpace = document.querySelector('.space');
     // let userInputDiv = document.querySelector('#userInputDiv');
     // let svgChartDiv = document.querySelector('#svgChartDiv');
+    chartNumbersDiv = document.querySelector('#chartNumbersDiv');
+    chartNumbersDiv.classList.add('hidden');
     svgPlacemat = document.querySelector('#svgPlacemat');
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
@@ -950,7 +953,7 @@ function createSVG (NumberCablePairs) {
     if (window.innerWidth < window.innerHeight) {
         scalar = ((window.innerWidth * 0.90) / NumberCablePairs);
     } else if (window.innerWidth > window.innerHeight) {
-        let x = 2;
+        let x = 1.8;
         let adaptedScalar = window.innerHeight * x;
         do  {
             x = x - 0.1;
@@ -971,6 +974,85 @@ function createSVG (NumberCablePairs) {
         enableBtn(continueEditingBtn);
     }
     disableInputSwitches();
+    createChartNumbers ();
+}
+
+function createChartNumbers () {
+    console.log('function createChartNumbers executed');
+    chartNumbersDiv.classList.remove('hidden');
+    let pairN;
+    // let n;
+    // let numbers = [];
+    let writtenNumbers = '';
+    let colorC = 0;
+    let counter = -1;
+    let sectionColor;
+    let x = 0.001;
+    for (let i = 0; i < cablesArray.length; i = i + 2) {
+        pairN = cablesArray[i].i_pairN;
+        if (i % 8 == 0) {
+            counter++
+        } 
+        colorC = counter;
+        switch (colorC) {
+            case 0:
+            case 4:
+                sectionColor = "#ff0000";
+                break;
+            case 1:
+            case 5:
+                sectionColor = "#008000";
+                break;
+            case 2:
+            case 6:
+                sectionColor = "#0000ff";
+                break;
+            case 3: 
+                sectionColor = "#800080";
+                break;
+        }
+        if (i > 0 && i < cablesArray.length) {
+            console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
+            if (cablesArray[i-1].section !== cablesArray[i].section) {
+                x = x + 0.01;
+                console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
+                if (i > 47) {
+                    x = x + 0.05;
+                }
+            }
+        }
+
+        writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*x)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+
+        
+        
+        // if (pairN < 5) {
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.005)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN < 9) {
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.01)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN < 13) {
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.015)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN < 20){
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.03)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN < 24){
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.04)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN == 26){
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.15)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN == 27){
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.25)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else if (pairN == 28){
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.45)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // } else {
+        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.08)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+        // }
+    }
+       
+    chartNumbersDiv.innerHTML = 
+    `
+    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
+     ${writtenNumbers}
+    </svg>`
+    
 }
 
 function initialCoordinates (scalar) {
@@ -1001,6 +1083,7 @@ function creatingInitialCoordinatesArray (scalar) {
         }
         thisObject['rightMoving'] = RightMoving;
         thisObject['i_pairN'] = PairNumber;
+        thisObject['section'] = userSelectionArray[i].section;
         cablesArray.push(thisObject)
     } // i loop
     console.log('cablesArray: ');
