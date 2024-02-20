@@ -83,6 +83,7 @@ let newYCcheckboxes;
 let editingCounter = 0;
 let allLabels;
 let allFieldsets;
+let updateSVG;
 
 // SVG:
 let NumberCablePairs;
@@ -137,6 +138,8 @@ function getDOMelements () {
     MCpickerBtn = document.querySelector('#colorPickerMC');
     CCpickerBtn = document.querySelector('#colorPickerCC');
     backgroundPickerBtn = document.querySelector('#backgroundPickerBtn')
+    updateSVG = document.querySelector('#updateSVG');
+    updateSVG.classList.add('hidden');
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
@@ -815,6 +818,8 @@ function continueEditingColors () {
     let oldPlacemat = document.querySelector('#SVGplacemat')
     oldPlacemat.classList.add('oldPlacemat');
     oldPlacemat.classList.remove('newPlacemat');
+    updateSVG.classList.remove('hidden');
+    updateSVG.classList.add('outOfSync');
 }
 
 function createNewInputSection () {
@@ -950,6 +955,8 @@ function  SVGcondition () {
     } else {
         console.log(`the number of cable pairs should be divisible by 4. Current number of pairs = ${NumberCablePairs}`)
     }
+    updateSVG.classList.add('hidden');
+    updateSVG.classList.remove('outOfSync');
 }
 
 function createSVG (NumberCablePairs) {

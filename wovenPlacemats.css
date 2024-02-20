@@ -348,6 +348,7 @@ fieldset {
 #svgChartDiv {
     text-align: center;
     margin: 0.5rem 0;
+    position: relative;
 }
 
 .SVGdiv {
@@ -359,10 +360,28 @@ fieldset {
 } */
 
 .outOfSync {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
     display: block;
-    background-color: #00000033;
-    color: #ffffff;
+    background-color: #5f5fa5b1;
+    color: #000000;
+    min-height: 30px;
+    border-radius: 10px;
+    background-image: linear-gradient(90deg, #ffffff58,  #5F5FA583, #ffffffd9, #5F5FA583 , #ffffff58 );
 }
+
+.outOfSync p {
+    font-size: 1.5rem;
+    font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+    text-shadow: 0 0 3px var(--color7), 0 0 5px var(--color7);
+    color: var(--color2);
+    font-weight: bold;
+
+}
+
+
 
 /* choosing line colors: */
 
@@ -643,10 +662,15 @@ fieldset {
      #SVGnumbers text {
         font-size: 0.6rem;
      }
+     .outOfSync p {
+        font-size: 1rem;
+    }
+    
 }
 
 @media screen and (min-width: 1029px) {
     #SVGnumbers text {
         font-size: 1.2rem;
+        font-weight: bold;
      }
 }
