@@ -674,3 +674,7 @@ fieldset {
         font-weight: bold;
      }
 }
+
+.text {
+    padding: 1rem;
+}
