@@ -90,7 +90,7 @@ let NumberCablePairs;
 let NumVerticalRepeats;
 let NumberOfCables;
 let svgHeight;
-let svgWidth
+let svgWidth;
 let PairNumber;
 let cablesArray = [];
 let RightMoving; // boolean variable;
@@ -984,9 +984,10 @@ function createSVG (NumberCablePairs) {
         scalar = (adaptedScalar / NumberCablePairs);
     }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
-    NumberOfCables = NumberCablePairs * 2; // = 56
-        svgWidth =  (scalar * NumberCablePairs);
-        svgHeight = (scalar * NumVerticalRepeats);
+    NumberOfCables = NumberCablePairs * 2; // = 56  
+
+        svgWidth =  `${Math.round(scalar * NumberCablePairs)}`;
+        svgHeight = Math.round(scalar * NumVerticalRepeats);
         console.log(`svgWidth = ${svgWidth}. svgHeight = ${svgHeight}. Scalar = ${scalar}`)
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
@@ -1073,7 +1074,7 @@ function createChartNumbers () {
 }
     chartNumbersDiv.innerHTML = 
      `
-    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
+    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}px; width: ${svgWidth}px"> 
      ${colorBoxes} ${writtenNumbers}
     </svg>`
 }
@@ -1258,7 +1259,7 @@ function createLines () {
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
     `
-    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); background-color:${pickedBackground}; height:${svgHeight}; width: ${svgWidth}"> 
+    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); background-color:${pickedBackground}; height:${svgHeight}px; width: ${svgWidth}px"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
