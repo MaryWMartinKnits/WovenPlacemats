@@ -1301,7 +1301,6 @@ function changeBackground () {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     let email = window.prompt('Enter your email.  Please use the email address associated with your pattern purchase. ');
     if (email.match(emailRegex)) {
-        // askPassword();
         createSetUpRow1Array();   
       } else {
         alert("Invalid email address!");
@@ -1315,7 +1314,6 @@ function changeBackground () {
     if (password == "password") {
         console.log('password is correct');
         askEmail();
-        // createSetUpRow1Array();
     } else {
         console.log('password was incorrect');
        let question = window.confirm('The password was incorrect, do you want to try again?')
@@ -1324,3 +1322,15 @@ function changeBackground () {
        }
     }
  }
+
+ let logo = document.getElementById('logo');
+ let popup = document.getElementById("logoPopup");
+ logo.addEventListener('mouseover', popUp);
+ logo.addEventListener('mouseout', popUp);
+
+
+
+ // When the user hovers over <div class="popup">, open the popup
+function popUp() {
+    popup.classList.toggle("show");
+  }
