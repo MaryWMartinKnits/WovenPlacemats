@@ -1044,28 +1044,6 @@ function createChartNumbers () {
         }
 
         writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*x)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-
-        
-        
-        // if (pairN < 5) {
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.005)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN < 9) {
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.01)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN < 13) {
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.015)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN < 20){
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.03)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN < 24){
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.04)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN == 26){
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.15)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN == 27){
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.25)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else if (pairN == 28){
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.45)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // } else {
-        //     writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*0.08)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-        // }
     }
        
     chartNumbersDiv.innerHTML = 
@@ -1315,14 +1293,16 @@ function changeBackground () {
 
  function restrictions () {
     console.log('function restrictions executed');
-    askEmail();
+    askPassword();
+    // askEmail();
  }
 
  function askEmail () {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     let email = window.prompt('Enter your email.  Please use the email address associated with your pattern purchase. ');
     if (email.match(emailRegex)) {
-        askPassword();   
+        // askPassword();
+        createSetUpRow1Array();   
       } else {
         alert("Invalid email address!");
         return false;
@@ -1334,7 +1314,8 @@ function changeBackground () {
     password = password.toLowerCase(); // the password will not be case sensitive
     if (password == "password") {
         console.log('password is correct');
-        createSetUpRow1Array();
+        askEmail();
+        // createSetUpRow1Array();
     } else {
         console.log('password was incorrect');
        let question = window.confirm('The password was incorrect, do you want to try again?')
