@@ -518,6 +518,10 @@ fieldset {
     .pairStitchesDiv p {
         display: block;
     }
+
+    #SVGnumbers text {
+        font-size: 0.85rem;
+    }
 }
 
 /* BIG Tablet */

@@ -90,7 +90,7 @@ let NumberCablePairs;
 let NumVerticalRepeats;
 let NumberOfCables;
 let svgHeight;
-let svgWidth
+let svgWidth;
 let PairNumber;
 let cablesArray = [];
 let RightMoving; // boolean variable;
@@ -984,9 +984,10 @@ function createSVG (NumberCablePairs) {
         scalar = (adaptedScalar / NumberCablePairs);
     }
     NumVerticalRepeats = NumberCablePairs / 2; // = 14
-    NumberOfCables = NumberCablePairs * 2; // = 56
-        svgWidth =  (scalar * NumberCablePairs);
-        svgHeight = (scalar * NumVerticalRepeats);
+    NumberOfCables = NumberCablePairs * 2; // = 56  
+
+        svgWidth =  `${Math.round(scalar * NumberCablePairs)}`;
+        svgHeight = Math.round(scalar * NumVerticalRepeats);
         console.log(`svgWidth = ${svgWidth}. svgHeight = ${svgHeight}. Scalar = ${scalar}`)
     let maximumNumberOfLineSegments = Math.ceil((svgHeight / svgWidth)) + 1
     console.log('maximumNumberOfLineSegments: ' + maximumNumberOfLineSegments)
@@ -1002,13 +1003,20 @@ function createChartNumbers () {
     console.log('function createChartNumbers executed');
     chartNumbersDiv.classList.remove('hidden');
     let pairN;
-    // let n;
-    // let numbers = [];
+    let colorBoxes = '';
+    let colorBox = '';
     let writtenNumbers = '';
+    let writtenNumber = '';
     let colorC = 0;
     let counter = -1;
     let sectionColor;
     let x = 0.001;
+    let xForNumber;
+    let boxWidth = svgWidth / 7;
+    let xForBox = 0;
+    let numbersSVGheigth = 18;
+    let extendedBoxWidth = 0;
+
     for (let i = 0; i < cablesArray.length; i = i + 2) {
         pairN = cablesArray[i].i_pairN;
         if (i % 8 == 0) {
@@ -1033,25 +1041,42 @@ function createChartNumbers () {
                 break;
         }
         if (i > 0 && i < cablesArray.length) {
-            // console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
-            if (cablesArray[i-1].section !== cablesArray[i].section) {
+            if (cablesArray[i-1].section !== cablesArray[i].section) { // spacing out new numbers from the new section
                 x = x + 0.01;
-                // console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
                 if (i > 47) {
                     x = x + 0.05;
                 }
             }
         }
-
-        writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*x)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
-    }
-       
+        xForNumber = Math.round(cablesArray[i].x1 - (cablesArray[i].x1*x));
+        numbersSVGheigth = (svgHeight / numberofDEperSection) / 4;
+        if (numbersSVGheigth < 18) {
+            numbersSVGheigth = 18
+        }
+        if (i == cablesArray.length-2 || (cablesArray[i].section !== cablesArray[i+2].section)) { // creating different color boxes for each section        
+            if (i == cablesArray.length - 2) {
+                colorBox = `
+                <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
+                `
+            } else {
+                extendedBoxWidth = boxWidth + extendedBoxWidth;
+                console.log('extendedBoxWidth: ' + extendedBoxWidth);
+                xForBox = svgWidth - extendedBoxWidth;
+                console.log('xForBox: ' + xForBox);
+                colorBox = `
+                <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
+                `
+            }
+            colorBoxes = colorBoxes + colorBox;
+        } 
+        writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#fff">${pairN}</text>`;
+        writtenNumbers = writtenNumbers + writtenNumber;
+}
     chartNumbersDiv.innerHTML = 
-    `
-    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
-     ${writtenNumbers}
+     `
+    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}px; width: ${svgWidth}px"> 
+     ${colorBoxes} ${writtenNumbers}
     </svg>`
-    
 }
 
 function initialCoordinates (scalar) {
@@ -1234,7 +1259,7 @@ function createLines () {
     SVGinDiv.innerHTML = '';
     SVGinDiv.innerHTML = 
     `
-    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); background-color:${pickedBackground}; height:${svgHeight}; width: ${svgWidth}"> 
+    <svg id="SVGplacemat" class="newPlacemat" style="border:1px solid var(--color4); background-color:${pickedBackground}; height:${svgHeight}px; width: ${svgWidth}px"> 
     ${allLines1} + ${allLines2}
     </svg>`
     svgPlacemat.appendChild(SVGinDiv);
@@ -1323,12 +1348,12 @@ function changeBackground () {
     }
  }
 
+//  POP UPs:
+
  let logo = document.getElementById('logo');
  let popup = document.getElementById("logoPopup");
  logo.addEventListener('mouseover', popUp);
  logo.addEventListener('mouseout', popUp);
-
-
 
  // When the user hovers over <div class="popup">, open the popup
 function popUp() {
