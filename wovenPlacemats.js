@@ -1006,15 +1006,16 @@ function createChartNumbers () {
     let colorBox = '';
     let writtenNumbers = '';
     let writtenNumber = '';
-    let boxesANDnumbers = '';
-    // let boxANDnumber = '';
     let colorC = 0;
     let counter = -1;
     let sectionColor;
     let x = 0.001;
     let xForNumber;
-    let xForBox;
+    let boxWidth = svgWidth / 7;
+    let xForBox = 0;
     let numbersSVGheigth = 18;
+    let extendedBoxWidth = 0;
+
     for (let i = 0; i < cablesArray.length; i = i + 2) {
         pairN = cablesArray[i].i_pairN;
         if (i % 8 == 0) {
@@ -1039,28 +1040,28 @@ function createChartNumbers () {
                 break;
         }
         if (i > 0 && i < cablesArray.length) {
-            // console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
             if (cablesArray[i-1].section !== cablesArray[i].section) { // spacing out new numbers from the new section
                 x = x + 0.01;
-                // console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
                 if (i > 47) {
                     x = x + 0.05;
                 }
             }
         }
         xForNumber = Math.round(cablesArray[i].x1 - (cablesArray[i].x1*x));
-        xForBox = Math.round(xForNumber - 0.01*(svgWidth));
         numbersSVGheigth = (svgHeight / numberofDEperSection) / 4;
         if (numbersSVGheigth < 18) {
             numbersSVGheigth = 18
         }
-        
         if (i == cablesArray.length-2 || (cablesArray[i].section !== cablesArray[i+2].section)) { // creating different color boxes for each section        
             if (i == cablesArray.length - 2) {
                 colorBox = `
                 <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
                 `
             } else {
+                extendedBoxWidth = boxWidth + extendedBoxWidth;
+                console.log('extendedBoxWidth: ' + extendedBoxWidth);
+                xForBox = svgWidth - extendedBoxWidth;
+                console.log('xForBox: ' + xForBox);
                 colorBox = `
                 <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
                 `
@@ -1069,15 +1070,12 @@ function createChartNumbers () {
         } 
         writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#fff">${pairN}</text>`;
         writtenNumbers = writtenNumbers + writtenNumber;
-        console.log('i: ' + i);
 }
-   
     chartNumbersDiv.innerHTML = 
      `
     <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
      ${colorBoxes} ${writtenNumbers}
     </svg>`
-    
 }
 
 function initialCoordinates (scalar) {
