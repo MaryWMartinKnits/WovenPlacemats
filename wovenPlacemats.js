@@ -1002,13 +1002,18 @@ function createChartNumbers () {
     console.log('function createChartNumbers executed');
     chartNumbersDiv.classList.remove('hidden');
     let pairN;
-    // let n;
-    // let numbers = [];
+    let colorBoxes = '';
+    let colorBox = '';
     let writtenNumbers = '';
+    let writtenNumber = '';
+    let boxesANDnumbers = '';
+    let boxANDnumber = '';
     let colorC = 0;
     let counter = -1;
     let sectionColor;
     let x = 0.001;
+    let xForNumber;
+    let xForBox;
     for (let i = 0; i < cablesArray.length; i = i + 2) {
         pairN = cablesArray[i].i_pairN;
         if (i % 8 == 0) {
@@ -1034,7 +1039,7 @@ function createChartNumbers () {
         }
         if (i > 0 && i < cablesArray.length) {
             // console.log(`section: ${cablesArray[i-1].section}. x = ${x}.` );
-            if (cablesArray[i-1].section !== cablesArray[i].section) {
+            if (cablesArray[i-1].section !== cablesArray[i].section) { // spacing out new numbers from the new section
                 x = x + 0.01;
                 // console.log(`section: ${cablesArray[i].section}. x = ${x}.` );
                 if (i > 47) {
@@ -1042,14 +1047,38 @@ function createChartNumbers () {
                 }
             }
         }
+        xForNumber = cablesArray[i].x1 - (cablesArray[i].x1*x);
+        xForBox = xForNumber - 0.01*svgWidth
+        
+        if (i == cablesArray.length-2 || (cablesArray[i].section !== cablesArray[i+2].section)) { // creating different color boxes for each section        
+            colorBox = `
+            <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${(svgHeight / numberofDEperSection) / 4}" stroke="${sectionColor}" stroke-width="5" fill="${sectionColor}" />
+            `
+            // writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+            writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#ffffff">${pairN}</text>` + writtenNumbers;
 
-        writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*x)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+            boxANDnumber = colorBox + writtenNumber;
+            boxesANDnumbers = boxANDnumber + boxesANDnumbers;
+            console.log('colorBox:');
+            console.log(colorBox);
+
+        } else { // if it's not a new section => don't create a color box
+            // writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
+            writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#ffffff">${pairN}</text>` + writtenNumbers;
+            boxesANDnumbers = writtenNumber + boxesANDnumbers;
+        }
+        console.log('writtenNumber: ');
+        // writtenNumbers = `<text x="${cablesArray[i].x1 - (cablesArray[i].x1*x)}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="${sectionColor}">${pairN}</text>` + writtenNumbers;
     }
        
     chartNumbersDiv.innerHTML = 
-    `
+    // `
+    // <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
+    //  ${writtenNumbers}
+    // </svg>`
+     `
     <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}; width: ${svgWidth}"> 
-     ${writtenNumbers}
+     ${boxesANDnumbers}
     </svg>`
     
 }
@@ -1323,12 +1352,12 @@ function changeBackground () {
     }
  }
 
+//  POP UPs:
+
  let logo = document.getElementById('logo');
  let popup = document.getElementById("logoPopup");
  logo.addEventListener('mouseover', popUp);
  logo.addEventListener('mouseout', popUp);
-
-
 
  // When the user hovers over <div class="popup">, open the popup
 function popUp() {
