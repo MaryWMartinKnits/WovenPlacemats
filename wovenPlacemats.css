@@ -355,10 +355,6 @@ fieldset {
     min-height: 100px;
 }
 
-/* .oldPlacemat {
-    background-color: #9890a4ed;
-} */
-
 .outOfSync {
     position: absolute;
     top: 40%;
@@ -380,8 +376,6 @@ fieldset {
     font-weight: bold;
 
 }
-
-
 
 /* choosing line colors: */
 
@@ -483,6 +477,13 @@ fieldset {
     }
     .buttonsDiv {
         justify-content: center;
+    }
+
+    #SVGnumbers text {
+        font-size: 0.6rem;
+    }
+    .outOfSync p {
+        font-size: 1rem;
     }
 }
 
@@ -645,34 +646,15 @@ fieldset {
    .buttonsDiv {
     max-width: max-content;
    }
-}
 
-.red {
-    color: red;
-    background-color: yellow;
-    font-size: larger;
-    font-weight: 500;
+   #SVGnumbers text {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
 }
 
 #SVGnumbers {
     min-height: 18px;
-}
-
-@media screen and (max-width: 500px) {
-     #SVGnumbers text {
-        font-size: 0.6rem;
-     }
-     .outOfSync p {
-        font-size: 1rem;
-    }
-    
-}
-
-@media screen and (min-width: 1029px) {
-    #SVGnumbers text {
-        font-size: 1.2rem;
-        font-weight: bold;
-     }
 }
 
 .text {
