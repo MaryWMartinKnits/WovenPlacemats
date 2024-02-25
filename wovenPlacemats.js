@@ -238,13 +238,11 @@ function changeColorSelection (checkedYC) {
         checkedYC.classList.add('CCselected');
         checkedYC.classList.remove('MCselected');
         checkedYC.classList.remove('noneSelected');
-        checkedYC.classList.remove('on');
     } else {
         checkedYC.value = 'MCselected';
         checkedYC.classList.add('MCselected');
         checkedYC.classList.remove('CCselected');
         checkedYC.classList.remove('noneSelected');
-        checkedYC.classList.remove('on');
     }
 }
 
@@ -901,9 +899,26 @@ function createNewInputSection () {
     newYCcheckboxes = document.querySelectorAll('.newCheckbox')
     for (let i = 0; i < newYCcheckboxes.length; i++) {
         let thisCheckbox = newYCcheckboxes[i];
-        newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
+        newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelectionAgain(thisCheckbox)})
     }
     console.log(`'NEW input section created! editingCounter = ${editingCounter}`);
+}
+
+function changeColorSelectionAgain (checkedYC) {
+    firedCheckboxID = event.target.id;
+    checkedYC = document.querySelector('#'+firedCheckboxID);
+    if (checkedYC.checked) {
+        checkedYC.checked = false;
+    }
+    if (checkedYC.checked) {
+        checkedYC.value = 'CCselected';
+        checkedYC.classList.add('CCselected');
+        checkedYC.classList.remove('MCselected');
+    } else {
+        checkedYC.value = 'MCselected';
+        checkedYC.classList.add('MCselected');
+        checkedYC.classList.remove('CCselected');
+    }
 }
 
 function storeOldUserSelectionArray () {
