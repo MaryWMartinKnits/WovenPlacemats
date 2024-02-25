@@ -823,6 +823,7 @@ function continueEditingColors () {
     oldPlacemat.classList.remove('newPlacemat');
     updateSVG.classList.remove('hidden');
     updateSVG.classList.add('outOfSync');
+    // window.onresize = resized; //
     note1.classList.add('hidden');
 }
 
@@ -1075,9 +1076,9 @@ function createChartNumbers () {
                 `
             } else {
                 extendedBoxWidth = boxWidth + extendedBoxWidth;
-                console.log('extendedBoxWidth: ' + extendedBoxWidth);
+                // console.log('extendedBoxWidth: ' + extendedBoxWidth);
                 xForBox = svgWidth - extendedBoxWidth;
-                console.log('xForBox: ' + xForBox);
+                // console.log('xForBox: ' + xForBox);
                 colorBox = `
                 <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
                 `
@@ -1363,14 +1364,21 @@ function changeBackground () {
     }
  }
 
-//  POP UPs:
+// //  POP UPs:
 
- let logo = document.getElementById('logo');
- let popup = document.getElementById("logoPopup");
- logo.addEventListener('mouseover', popUp);
- logo.addEventListener('mouseout', popUp);
+//  let logo = document.getElementById('logo');
+//  let popup = document.getElementById("logoPopup");
+//  logo.addEventListener('mouseover', popUp);
+//  logo.addEventListener('mouseout', popUp);
 
- // When the user hovers over <div class="popup">, open the popup
-function popUp() {
-    popup.classList.toggle("show");
-  }
+//  // When the user hovers over <div class="popup">, open the popup
+// function popUp() {
+//     popup.classList.toggle("show");
+//   }
+
+
+//   function resized () {
+//     console.log('function resized executed');
+//     console.log('window.innerWidth: ' + window.innerWidth);
+//     console.log('updateSVG.offsetHeight: ' +  updateSVG.offsetHeight);
+//   }
