@@ -238,13 +238,11 @@ function changeColorSelection (checkedYC) {
         checkedYC.classList.add('CCselected');
         checkedYC.classList.remove('MCselected');
         checkedYC.classList.remove('noneSelected');
-        checkedYC.classList.remove('on');
     } else {
         checkedYC.value = 'MCselected';
         checkedYC.classList.add('MCselected');
         checkedYC.classList.remove('CCselected');
         checkedYC.classList.remove('noneSelected');
-        checkedYC.classList.remove('on');
     }
 }
 
@@ -825,6 +823,7 @@ function continueEditingColors () {
     oldPlacemat.classList.remove('newPlacemat');
     updateSVG.classList.remove('hidden');
     updateSVG.classList.add('outOfSync');
+    // window.onresize = resized; //
     note1.classList.add('hidden');
 }
 
@@ -901,9 +900,26 @@ function createNewInputSection () {
     newYCcheckboxes = document.querySelectorAll('.newCheckbox')
     for (let i = 0; i < newYCcheckboxes.length; i++) {
         let thisCheckbox = newYCcheckboxes[i];
-        newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
+        newYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelectionAgain(thisCheckbox)})
     }
     console.log(`'NEW input section created! editingCounter = ${editingCounter}`);
+}
+
+function changeColorSelectionAgain (checkedYC) {
+    firedCheckboxID = event.target.id;
+    checkedYC = document.querySelector('#'+firedCheckboxID);
+    if (checkedYC.checked) {
+        checkedYC.checked = false;
+    }
+    if (checkedYC.checked) {
+        checkedYC.value = 'CCselected';
+        checkedYC.classList.add('CCselected');
+        checkedYC.classList.remove('MCselected');
+    } else {
+        checkedYC.value = 'MCselected';
+        checkedYC.classList.add('MCselected');
+        checkedYC.classList.remove('CCselected');
+    }
 }
 
 function storeOldUserSelectionArray () {
@@ -1060,9 +1076,9 @@ function createChartNumbers () {
                 `
             } else {
                 extendedBoxWidth = boxWidth + extendedBoxWidth;
-                console.log('extendedBoxWidth: ' + extendedBoxWidth);
+                // console.log('extendedBoxWidth: ' + extendedBoxWidth);
                 xForBox = svgWidth - extendedBoxWidth;
-                console.log('xForBox: ' + xForBox);
+                // console.log('xForBox: ' + xForBox);
                 colorBox = `
                 <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
                 `
@@ -1348,14 +1364,21 @@ function changeBackground () {
     }
  }
 
-//  POP UPs:
+// //  POP UPs:
 
- let logo = document.getElementById('logo');
- let popup = document.getElementById("logoPopup");
- logo.addEventListener('mouseover', popUp);
- logo.addEventListener('mouseout', popUp);
+//  let logo = document.getElementById('logo');
+//  let popup = document.getElementById("logoPopup");
+//  logo.addEventListener('mouseover', popUp);
+//  logo.addEventListener('mouseout', popUp);
 
- // When the user hovers over <div class="popup">, open the popup
-function popUp() {
-    popup.classList.toggle("show");
-  }
+//  // When the user hovers over <div class="popup">, open the popup
+// function popUp() {
+//     popup.classList.toggle("show");
+//   }
+
+
+//   function resized () {
+//     console.log('function resized executed');
+//     console.log('window.innerWidth: ' + window.innerWidth);
+//     console.log('updateSVG.offsetHeight: ' +  updateSVG.offsetHeight);
+//   }
