@@ -115,6 +115,9 @@ let pickedBackground = '#ffffff';
 let note1;
 let note2;
 
+// accordions:
+
+let accArray;
 
 window.onload = init();
 
@@ -145,10 +148,13 @@ function getDOMelements () {
     updateSVG.classList.add('hidden');
     note1 = document.querySelector('#note1');
     note2 = document.querySelector('#note2');
+    accArray = document.getElementsByClassName('accordion');
+    console.log(accArray); //
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
     chooseLineColor();
+    accordions (); //
 }
 
 function hideBtn (button) {
@@ -805,7 +811,17 @@ function writeSetUpRow2 () {
     disableInputSwitches();
     hideBtn(createSetUpRowsBtn);
     hideBtn(createChartBtn);
+    // note1.classList.add('hidden');
+    const colorPickerDiv = document.querySelector('#colorPickerDiv');
+    colorPickerDiv.style.display = 'none';
+    const note0 = document.querySelectorAll('.note0');
+    for (let i = 0; i < note0.length; i++) {
+        note0[i].style.display = 'none';
+    }
     document.getElementById('setUpRows').focus();
+    setUpRowsDiv.style.margin = '0.5rem';
+    setUpRowsDiv.style.padding = '0.05rem 0.5rem';
+
 }
 
 // continue editing colors section:
@@ -1381,3 +1397,31 @@ function changeBackground () {
 //     console.log('window.innerWidth: ' + window.innerWidth);
 //     console.log('updateSVG.offsetHeight: ' +  updateSVG.offsetHeight);
 //   }
+
+// accordions:
+
+
+function accordions () {
+    for (let i = 0; i < accArray.length; i++) {
+        accArray[i].addEventListener('click', toggleAccordions);
+    }
+}
+
+function toggleAccordions () {
+    this.classList.toggle('active');
+    let panel = this.nextElementSibling;
+    if (panel.style.maxHeight && panel.style.maxHeight !== '0px') {
+        panel.style.maxHeight = `0px`;
+        if (panel.id == 'socials') {
+            panel.style.padding = '0px'; 
+        }
+    } else {
+        panel.style.maxHeight = `${panel.scrollHeight}px`; 
+        if (panel.id == 'socials') {
+            // panel.style['background-color'] = 'red';
+            panel.style.padding = '16px';
+            panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
+        }
+    }
+   
+}

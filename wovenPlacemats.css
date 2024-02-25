@@ -70,18 +70,18 @@ button {
     color: var(--color2);
 }
   
- footer {
+/* footer {
     color: var(--color3);
     padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1.15rem;
     text-align: center;
-    border-radius: 0.5rem;
+    border-radius: 0.5rem; 
     background-color: var(--color6);
     display: block;
-} 
+}  */
 
-footer a {
+/* footer a, */ #socials a {
     color: var(--color2);
 }
 
@@ -329,9 +329,10 @@ fieldset {
 #setUpRows {
     background-color: var(--color6);
     padding: 0 0.5rem;
-    margin: 5px;
+    margin: 0 5px;
     max-width: 95vw;
     display: block;
+    border-radius: 0.5rem;
 }
 
 .outsideBtnsDiv {
@@ -394,7 +395,7 @@ fieldset {
 
 .swatch{
     border: 2px solid var(--color6);
-    border-radius: 5%;
+    border-radius: 0.5rem;
     box-shadow: 1em 1em 1em rgba(0, 0, 0, .1);
     display: flex;
     flex-direction: column;
@@ -682,7 +683,7 @@ fieldset {
     opacity: 85%;
     color: var(--color3);
     text-align: center;
-    border-radius: 6px;
+    border-radius: 0.5rem;
     padding: 8px 0;
     position: absolute;
     z-index: 1;
@@ -717,3 +718,67 @@ fieldset {
     from {opacity: 0;}
     to {opacity:1 ;}
   }
+
+
+  /* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: var(--color6);
+    color: var(--color4);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: 0.4s;
+    margin: 0px;
+  }
+
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .accordion:hover {
+    background-color: var(--color4);
+    color: var(--color5);
+  }
+ 
+  /* Style the accordion panel. Note: hidden by default */
+
+  #socials{
+    color: var(--color3);
+    /* padding: 1rem; */
+    margin-bottom: 0.5rem;
+    margin: 1rem auto;
+    font-size: 1.15rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    background-color: var(--color6);
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+} 
+
+  .panel {
+    padding: 0 18px;
+    background-color: var(--color5);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
+  /* add a plus sign before and a minus sign after expansion */
+  
+.accordion:after {
+    content: '\002B';
+    color: var(--color4);
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  .active:after {
+    content: "\2212";
+    color: var(--color4);
+  }
+
+
+

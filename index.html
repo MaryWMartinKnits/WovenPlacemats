@@ -40,25 +40,32 @@
             
         </div>
         <section id="introduction" class="text">
-            <p>These instructions are to be used in conjunction with the Woven Placemats Collection pattern.</p>
-            <p>The patterns for the four placemats provided in this collection differ only in their setup rows. After designing your placemat, the setup rows created will be used in the placemat pattern.</p>
-            <p>There are fifty-six cables on the placemat. Each cable starts at the bottom and travels either left or right as it moves up the mat. If the cable reaches the side, it changes horizontal direction and continues moving upwards.</p>
-            <p>The colour of each cable is established as either MC or CC in the setup rows. There are lots of different colour placements possible (2 to the power of 56 to be exact) and each will create a different design.</p>
-            <p>I designed the four placemats in the Woven Placemat Collection with an equal number of MC and CC cables and they are symmetric across the vertical axis. These were my preferences and are not necessary conditions. Your yarn usage for MC & CC will change depending on your colours.</p>
-            <p>There are many beautiful designs. I hope you enjoy creating your own.</p>
+            <button class="accordion">Introduction</button>
+            <div class="panel">
+                <p>These instructions are to be used in conjunction with the Woven Placemats Collection pattern.</p>
+                <p>The patterns for the four placemats provided in this collection differ only in their setup rows. After designing your placemat, the setup rows created will be used in the placemat pattern.</p>
+                <p>There are fifty-six cables on the placemat. Each cable starts at the bottom and travels either left or right as it moves up the mat. If the cable reaches the side, it changes horizontal direction and continues moving upwards.</p>
+                <p>The colour of each cable is established as either MC or CC in the setup rows. There are lots of different colour placements possible (2 to the power of 56 to be exact) and each will create a different design.</p>
+                <p>I designed the four placemats in the Woven Placemat Collection with an equal number of MC and CC cables and they are symmetric across the vertical axis. These were my preferences and are not necessary conditions. Your yarn usage for MC & CC will change depending on your colours.</p>
+                <p>There are many beautiful designs. I hope you enjoy creating your own.</p>
+            </div>
         </section>
 
+
         <section id="instructions" class="text">
-            <h2>Instructions</h2>
-            <p>The seven sections correspond to the sections between markers on your needles. Pair 1 refers to the cables at the right end of the placemat; pair 28 is at the left end. The left cable for each pair initially travels to the left; likewise the right cable initially travels to the right.</p>
-            <p>Choose either MC or CC for each cable on the placemat.</p>
+            <!-- <h2>Instructions</h2> -->
+            <button class="accordion">Instructions</button>
+            <div class="panel">
+                <p>The seven sections correspond to the sections between markers on your needles. Pair 1 refers to the cables at the right end of the placemat; pair 28 is at the left end. The left cable for each pair initially travels to the left; likewise the right cable initially travels to the right.</p>
+                <p>Choose either MC or CC for each cable on the placemat.</p>
+            </div>
         </section>
 
         <div id="userInputDiv">
         </div>
         </div>
 
-        <div class="text">
+        <div class="text note0">
             <p>Choose the colours used in drawing the placemat to represent MC or CC and the background that gives you a good definition with your MC and CC choices.</p>
         </div>
 
@@ -94,7 +101,7 @@
             </div>
         </div> 
 
-        <div class="text">
+        <div class="text note0">
             <p>Press Draw Placemat to see how your placemat will look with your selections.</p>
         </div>
 
@@ -106,7 +113,7 @@
             </section>
         </div>
 
-        <div id="note1" class="hidden text" >
+        <div id="note1" class="hidden text note0" >
             <p>To make changes to your inputs, press Continue Editing.</p>
             <p>When you are happy with your placemat, press Create Setup Rows. Please enter the email that you used when purchasing this pattern. Changes cannot be made to the inputs after creating the setup rows.</p>
         </div>
@@ -120,19 +127,25 @@
             <div id="chartNumbersDiv"></div>
         </div>
 
+        <div id="setUpRows" tabindex="0">
+        </div>
+
         <div id="note2" class="hidden text">
             <p>Note: The drawings do not show the over/under crossing of the cables; so the colour dominance of the combined colour blocks is not accurate. Please use it as a guide to where different colour blocks form.</p>
             <p>Consider taking screenshots of any information you would like to access in the future. <br>
-                I would love to see your designs. Please share the pictures but do NOT share the associated setup rows</p>
+            I would love to see your designs. Please share the pictures but do NOT share the associated setup rows</p>
         </div>
 
-        <div id="setUpRows" tabindex="0">
+        <button class="accordion">Learn more about MaryWMartinKnits designs</button>
+        <div class="panel" id="socials">
+            <a href="http://www.marywmartinknits.com" target="_blank" aria-label="Go to Mary W Matin Knits website">www.marywmartinknits.com</a>
+            <!-- website and social icons -->
         </div>
 
         <script src="wovenPlacemats.js"></script>
     </main>
-    <footer id="footer">
+    <!-- <footer id="footer">
         <a href="http://www.marywmartinknits.com" target="_blank" aria-label="Go to Mary W Matin Knits website">www.marywmartinknits.com</a>
-    </footer>
+    </footer> -->
 </body>
 </html>
