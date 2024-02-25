@@ -811,7 +811,17 @@ function writeSetUpRow2 () {
     disableInputSwitches();
     hideBtn(createSetUpRowsBtn);
     hideBtn(createChartBtn);
+    // note1.classList.add('hidden');
+    const colorPickerDiv = document.querySelector('#colorPickerDiv');
+    colorPickerDiv.style.display = 'none';
+    const note0 = document.querySelectorAll('.note0');
+    for (let i = 0; i < note0.length; i++) {
+        note0[i].style.display = 'none';
+    }
     document.getElementById('setUpRows').focus();
+    setUpRowsDiv.style.margin = '0.5rem';
+    setUpRowsDiv.style.padding = '0.05rem 0.5rem';
+
 }
 
 // continue editing colors section:
