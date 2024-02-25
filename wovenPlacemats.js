@@ -908,17 +908,16 @@ function createNewInputSection () {
 function changeColorSelectionAgain (checkedYC) {
     firedCheckboxID = event.target.id;
     checkedYC = document.querySelector('#'+firedCheckboxID);
-    if (checkedYC.checked) {
+    if (checkedYC.value == 'CCselected') {
         checkedYC.checked = false;
-    }
-    if (checkedYC.checked) {
-        checkedYC.value = 'CCselected';
-        checkedYC.classList.add('CCselected');
-        checkedYC.classList.remove('MCselected');
-    } else {
         checkedYC.value = 'MCselected';
         checkedYC.classList.add('MCselected');
         checkedYC.classList.remove('CCselected');
+    } else if (checkedYC.value == 'MCselected') {
+        checkedYC.checked = true;
+        checkedYC.value = 'CCselected';
+        checkedYC.classList.add('CCselected');
+        checkedYC.classList.remove('MCselected');
     }
 }
 
