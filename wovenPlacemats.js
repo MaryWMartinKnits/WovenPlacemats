@@ -1421,6 +1421,7 @@ function toggleAccordions () {
             // panel.style['background-color'] = 'red';
             panel.style.padding = '16px';
             panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
+            document.getElementById('socials').focus();
         }
     }
    
