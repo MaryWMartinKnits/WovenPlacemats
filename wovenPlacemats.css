@@ -667,46 +667,6 @@ fieldset {
 .text {
     padding: 1rem;
 }
-
-/* Popup container */
-.popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-  }
-
-  /* The actual popup (appears on top) */
-.popup .popupText {
-    visibility: hidden;
-    width: 160px;
-    background-color: var(--color7);
-    opacity: 85%;
-    color: var(--color3);
-    text-align: center;
-    border-radius: 0.5rem;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 0%;
-    margin-left: -80px;
-  }
-
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-.popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s
-  }
-
-  /* Popup arrow */
-.popup .popupText::after {
-    content: "";
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    margin-left: -5px;
-  }
   
   /* Add animation (fade in the popup) */
   @-webkit-keyframes fadeIn {
