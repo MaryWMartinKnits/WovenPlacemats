@@ -1379,27 +1379,7 @@ function changeBackground () {
     }
  }
 
-// //  POP UPs:
-
-//  let logo = document.getElementById('logo');
-//  let popup = document.getElementById("logoPopup");
-//  logo.addEventListener('mouseover', popUp);
-//  logo.addEventListener('mouseout', popUp);
-
-//  // When the user hovers over <div class="popup">, open the popup
-// function popUp() {
-//     popup.classList.toggle("show");
-//   }
-
-
-//   function resized () {
-//     console.log('function resized executed');
-//     console.log('window.innerWidth: ' + window.innerWidth);
-//     console.log('updateSVG.offsetHeight: ' +  updateSVG.offsetHeight);
-//   }
-
 // accordions:
-
 
 function accordions () {
     for (let i = 0; i < accArray.length; i++) {
@@ -1421,6 +1401,7 @@ function toggleAccordions () {
             // panel.style['background-color'] = 'red';
             panel.style.padding = '16px';
             panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
+            document.getElementById('socials').focus();
         }
     }
    
