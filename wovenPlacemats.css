@@ -48,6 +48,7 @@ h1 {
     font-size: 1.5rem;
     text-align: center;
     color: black;
+    /* color: var(--color3); */
 }
 
 h2, h3 {
@@ -63,6 +64,10 @@ button {
     border-radius: 0.375rem;
     font-size: 1.2rem;
     margin: 0.2rem;
+}
+
+button:hover {
+    box-shadow: 0 0 5px 1px var(--color4);
 }
 
 ::selection {
@@ -698,6 +703,7 @@ fieldset {
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
   .accordion:hover {
     box-shadow: 0 0 5px 5px var(--color4);
+    font-weight: bold;
   }
  
   /* Style the accordion panel. Note: hidden by default */
