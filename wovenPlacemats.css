@@ -285,13 +285,13 @@ fieldset {
     display: block;
 }
 
-.colorCoding0 h3, .colorCoding1 h3, .colorCoding2 h3, .colorCoding3 h3 {
+.colorCoding0 h3, .colorCoding1 h3, .colorCoding2 h3, .colorCoding3 h3, .colorCoding4 h3, .colorCoding5 h3, .colorCoding6 h3 {
     padding: 0.2rem;
     padding-right: 1.5rem;
     border-radius: 0.5rem;
     color: var(--color6);
 }
-.colorCoding0 h4, .colorCoding1 h4, .colorCoding2 h4, .colorCoding3 h4 {
+.colorCoding0 h4, .colorCoding1 h4, .colorCoding2 h4, .colorCoding3 h4, .colorCoding4 h4, .colorCoding5 h4, .colorCoding6 h4 {
     font-size: 1.2rem;
     font-variant:small-caps;
 }
@@ -300,31 +300,50 @@ fieldset {
     border-radius: 0.5rem;
     margin: 0.2rem;
 }
-.colorCoding0  h3 {
-    background-color:#ff000088;
+
+.colorCoding0  h3 {     
+    /* background-color:#ff000088; */
+    background-color:#ff006e /* pink */
 }
-.colorCoding0, .colorCoding4 {
-    background-color:#ff000030;
+.colorCoding1  h3 { 
+    background-color: #0000ff; /* blue */
 }
-.colorCoding1  h3 {
-   background-color: #00800088; 
+.colorCoding2  h3 { 
+    background-color: #ee9b00 /* orange*/
 }
-.colorCoding1, .colorCoding5 {
-    background-color: #00800030; 
+.colorCoding3  h3 {
+    background-color: #800080; /* purple */
 }
-.colorCoding2  h3 {
-    background-color: #0000ff88;
+.colorCoding4  h3 { 
+    background-color: #0a9396; /* turquesa */
 }
-.colorCoding2, .colorCoding6 {
-    background-color: #0000ff30;
+.colorCoding5  h3 { 
+    background-color: #b5838d; /* dusty pink */
+}
+.colorCoding6  h3 { 
+    background-color: #ff0000; /* red */ 
 }
 
-.colorCoding3  h3{
-    background-color: #80008088;
-} 
-
-.colorCoding3  {
-    background-color: #80008030;
+.colorCoding0 {     
+    background-color:#ff006e30 /* pink */
+}
+.colorCoding1 { 
+    background-color: #0000ff30; /* blue */
+}
+.colorCoding2 { 
+    background-color: #ee9b0030 /* orange*/
+}
+.colorCoding3 {
+    background-color: #80008030; /* purple */
+}
+.colorCoding4 { 
+    background-color: #0a939630; /* turquesa */
+}
+.colorCoding5 { 
+    background-color: #b5838d30; /* dusty pink */
+}
+.colorCoding6 { 
+    background-color: #ff000030; /* red */ 
 }
 
 .setUpRow1paragraph span {
