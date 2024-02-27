@@ -185,9 +185,9 @@ function createInputSection () {
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
         colorCode = `colorCoding${code}`
         code ++
-        if (code == numberofDEperSection) {
-            code = 0
-        }
+        // if (code == numberofDEperSection) {
+        //     code = 0
+        // }
         sectionSection.classList.add(`${colorCode}`)
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
@@ -368,7 +368,6 @@ function firstPairOfSection_SetUpRow1 (c,thisObject) {
     thisObject['keepPurling'] = keepPurling;
     setUpRow1Array.push(thisObject);
     return purlStitchCount;
-
 }
 
 function middlePairsOfSection_SetUpRow1 (c, thisObject) {
@@ -1056,19 +1055,25 @@ function createChartNumbers () {
         colorC = counter;
         switch (colorC) {
             case 0:
-            case 4:
-                sectionColor = "#ff0000";
+                sectionColor = "#ff006e" //pink
                 break;
             case 1:
-            case 5:
-                sectionColor = "#008000";
+                sectionColor = "#0000ff"; //blue
                 break;
             case 2:
-            case 6:
-                sectionColor = "#0000ff";
+                sectionColor = "#ee9b00" //orange
                 break;
-            case 3: 
-                sectionColor = "#800080";
+            case 3:
+                sectionColor = "#800080"; //purple
+                break;
+            case 4: 
+                sectionColor = "#0a9396"; //turquesa
+                break;
+            case 5:                
+                sectionColor = "#b5838d"; //dusty pink
+                break;
+            case 6:
+                sectionColor = "#ff0000"; //red                
                 break;
         }
         if (i > 0 && i < cablesArray.length) {
@@ -1087,15 +1092,13 @@ function createChartNumbers () {
         if (i == cablesArray.length-2 || (cablesArray[i].section !== cablesArray[i+2].section)) { // creating different color boxes for each section        
             if (i == cablesArray.length - 2) {
                 colorBox = `
-                <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
+                <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}; stroke-width:3;stroke:${sectionColor}" />
                 `
             } else {
                 extendedBoxWidth = boxWidth + extendedBoxWidth;
-                // console.log('extendedBoxWidth: ' + extendedBoxWidth);
                 xForBox = svgWidth - extendedBoxWidth;
-                // console.log('xForBox: ' + xForBox);
                 colorBox = `
-                <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" fill="${sectionColor}" />
+                <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}; stroke-width:3;stroke:${sectionColor}" />
                 `
             }
             colorBoxes = colorBoxes + colorBox;
@@ -1105,7 +1108,7 @@ function createChartNumbers () {
 }
     chartNumbersDiv.innerHTML = 
      `
-    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4}px; width: ${svgWidth}px"> 
+    <svg id="SVGnumbers"; style="border:1px solid var(--color4); background-color:white; height:${(svgHeight / numberofDEperSection) / 4 + 1}px; width: ${svgWidth}px"> 
      ${colorBoxes} ${writtenNumbers}
     </svg>`
 }
@@ -1296,10 +1299,6 @@ function createLines () {
     svgPlacemat.appendChild(SVGinDiv);
     console.log(cablesArray);
     console.log(`svgSize: (${svgWidth}, ${svgHeight})`);
-    // let svgSize = document.createElement('p');
-    // svgSize.innerHTML = 
-    // (`SVGsize: (<strong>${svgWidth}</strong>px, <strong>${svgHeight}</strong>px).  Line thickness: <strong>${thickness}</strong>px. `);
-    // svgPlacemat.appendChild(svgSize);
     enableBtn(continueEditingBtn);
     hideBtn(createChartBtn);
     document.getElementById("svgChartDiv").focus();
@@ -1350,7 +1349,6 @@ function changeBackground () {
  function restrictions () {
     console.log('function restrictions executed');
     askPassword();
-    // askEmail();
  }
 
  function askEmail () {
@@ -1398,7 +1396,6 @@ function toggleAccordions () {
     } else {
         panel.style.maxHeight = `${panel.scrollHeight}px`; 
         if (panel.id == 'socials') {
-            // panel.style['background-color'] = 'red';
             panel.style.padding = '16px';
             panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
             document.getElementById('socials').focus();
