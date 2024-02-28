@@ -1070,10 +1070,10 @@ function createChartNumbers () {
                 sectionColor = "#0a9396"; //turquesa
                 break;
             case 5:                
-                sectionColor = "#b5838d"; //dusty pink
+                sectionColor = "#ff0000"; //red 
                 break;
             case 6:
-                sectionColor = "#ff0000"; //red                
+                sectionColor = "#6c757d" //gray          
                 break;
         }
         if (i > 0 && i < cablesArray.length) {
