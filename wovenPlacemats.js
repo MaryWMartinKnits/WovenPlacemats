@@ -864,9 +864,9 @@ function createNewInputSection () {
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
         colorCode = `colorCoding${code}`
         code ++
-        if (code == numberofDEperSection) {
-            code = 0
-        }
+        // if (code == numberofDEperSection) {
+        //     code = 0
+        // }
         sectionSection.classList.add(`${colorCode}`)
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
