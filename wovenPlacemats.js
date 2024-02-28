@@ -604,7 +604,7 @@ function writeSetUpRow1 (middleSections1ArrayWritten) {
     }
     SetUpRow1 = '';
     SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`
-    SetUpRow1  = `<p>Work the Woven Placemat Collection pattern.  Use these Setup Rows to knit your design. </p> ${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`     
+    SetUpRow1  = `${beg1} ${writtenSection1All} ${end1} ${writtenStitchCount1}`     
     if (setUpRow1paragraph == undefined) {
         setUpRow1paragraph = document.createElement('p');
         setUpRow1paragraph.classList.add('setUpRow1paragraph');
@@ -794,7 +794,7 @@ function writeSetUpRow2 () {
     for (let j = 0; j < allSections2ArrayWritten.length; j++) {
         writtenSection2All = writtenSection2All + allSections2ArrayWritten[j];
     }
-    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2} <br> <p> Consider taking a screenshot of Placemat Drawing and the Setup Rows for future reference.  </p>`;    
+    SetUpRow2 = `${beg2} ${writtenSection2All} ${end2} ${writtenStitchCount2} <br> <p> Consider taking a screenshot of Placemat Drawing and the Setup Rows for future reference. <br> Use these Setup Rows as directed in the Design Your Own Placemat pattern.  </p>`;    
     if (setUpRow2paragraph == undefined) {
         setUpRow2paragraph = document.createElement('p');
         setUpRow2paragraph.classList.add('setUpRow2paragraph');
