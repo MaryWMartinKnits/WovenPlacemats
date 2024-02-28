@@ -1070,7 +1070,7 @@ function createChartNumbers () {
                 sectionColor = "#0a9396"; //turquesa
                 break;
             case 5:                
-                sectionColor = "#ff0000"; //red 
+                sectionColor = "#ce0000"; //red 
                 break;
             case 6:
                 sectionColor = "#6c757d" //gray          
@@ -1092,18 +1092,18 @@ function createChartNumbers () {
         if (i == cablesArray.length-2 || (cablesArray[i].section !== cablesArray[i+2].section)) { // creating different color boxes for each section        
             if (i == cablesArray.length - 2) {
                 colorBox = `
-                <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}; stroke-width:3;stroke:${sectionColor}" />
+                <rect x="0" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}50" />
                 `
             } else {
                 extendedBoxWidth = boxWidth + extendedBoxWidth;
                 xForBox = svgWidth - extendedBoxWidth;
                 colorBox = `
-                <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}; stroke-width:3;stroke:${sectionColor}" />
+                <rect x="${xForBox}" y="0" width="${svgWidth/7}" height="${numbersSVGheigth}" style="fill:${sectionColor}55" />
                 `
             }
             colorBoxes = colorBoxes + colorBox;
         } 
-        writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#fff">${pairN}</text>`;
+        writtenNumber = `<text x="${xForNumber}" y="${(svgHeight / numberofDEperSection) / 5}"; fill="#000">${pairN}</text>`;
         writtenNumbers = writtenNumbers + writtenNumber;
 }
     chartNumbersDiv.innerHTML = 
