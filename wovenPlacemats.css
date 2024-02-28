@@ -47,8 +47,8 @@ h1, h2, h3, h4, button {
 h1 {
     font-size: 1.5rem;
     text-align: center;
-    color: black;
-    /* color: var(--color3); */
+    /* color: black; */
+    color: var(--color3);
 }
 
 h2, h3 {
@@ -88,11 +88,6 @@ button:hover {
 
 /* footer a, */ #socials a {
     color: var(--color2);
-}
-
-#logo {
-    max-height: 45px;
-    width: auto;
 }
 
 .pairNumber {
@@ -717,17 +712,17 @@ fieldset {
     outline: none;
     transition: 0.4s;
     margin: 0px;
-  }
+}
 
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .accordion:hover {
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordion:hover {
     box-shadow: 0 0 5px 5px var(--color4);
     font-weight: bold;
-  }
- 
-  /* Style the accordion panel. Note: hidden by default */
+}
 
-  #socials{
+/* Style the accordion panel. Note: hidden by default */
+
+#socials{
     color: var(--color3);
     /* padding: 1rem; */
     margin-bottom: 0.5rem;
@@ -742,15 +737,15 @@ fieldset {
     transition: max-height 0.2s ease-out;
 } 
 
-  .panel {
+.panel {
     padding: 0 18px;
     background-color: var(--color5);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-  }
+}
 
-  /* add a plus sign before and a minus sign after expansion */
+/* add a plus sign before and a minus sign after expansion */
   
 .accordion:after {
     content: '\002B';
@@ -758,11 +753,33 @@ fieldset {
     font-weight: bold;
     float: right;
     margin-left: 5px;
-  }
-  .active:after {
+}
+
+.active:after {
     content: "\2212";
     color: var(--color4);
-  }
+}
 
 
 
+.cls-1 {
+    fill: var(--color3);
+}
+
+.logo {
+    /* background-color: #0a9396; */
+    min-width: 100px;
+    text-align: end;
+}
+
+#logo {
+    width: auto;
+    /* background-color: antiquewhite; */
+    color: var(--color3);
+}
+
+#pageTitle {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}
