@@ -318,10 +318,10 @@ fieldset {
     background-color: #0a9396; /* turquesa */
 }
 .colorCoding5  h3 { 
-    background-color: #b5838d; /* dusty pink */
+    background-color: #ff0000; /* red */
 }
 .colorCoding6  h3 { 
-    background-color: #ff0000; /* red */ 
+    background-color: #6c757d; /* gray */
 }
 
 .colorCoding0 {     
@@ -340,10 +340,10 @@ fieldset {
     background-color: #0a939630; /* turquesa */
 }
 .colorCoding5 { 
-    background-color: #b5838d30; /* dusty pink */
+    background-color: #ff000030; /* red */
 }
 .colorCoding6 { 
-    background-color: #ff000030; /* red */ 
+    background-color: #6c757d30; /* gray */
 }
 
 .setUpRow1paragraph span {
