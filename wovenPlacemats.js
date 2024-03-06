@@ -1218,7 +1218,9 @@ function cableThatChangedDirection (i, newDirection) {
 }
 
 function determinelineThickness () {
-    if (svgWidth > 1500) {
+    if (svgWidth > 1800) {
+        thickness = 5;
+    } else if (svgWidth > 1500) {
         thickness = 4;
     } else if (svgWidth > 976) {
         thickness = 3;
