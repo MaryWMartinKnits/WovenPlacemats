@@ -297,7 +297,6 @@ fieldset {
 }
 
 .colorCoding0  h3 {     
-    /* background-color:#ff000088; */
     background-color:#ff006e /* pink */
 }
 .colorCoding1  h3 { 
@@ -625,7 +624,7 @@ fieldset {
 }
 
 /* Big screen */
-@media screen and (min-width: 1029px) {
+@media screen and (min-width: 1029px) and (max-width: 1800px) {
 
     #userInputDiv {
         display: flex;
@@ -782,4 +781,14 @@ fieldset {
     display: flex;
     margin: 0 auto;
     align-items: center;
+}
+
+.link_noUnderline{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link_noUnderline span{
+    text-decoration: underline;
+    font-weight: lighter;
 }
