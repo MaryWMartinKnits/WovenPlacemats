@@ -1405,3 +1405,9 @@ function toggleAccordions () {
     }
    
 }
+
+// social icons:
+
+// document.
+// querySelectorAll(".social-icons").
+// forEach(el => el.addEventListener("click", ev => ev.preventDefault()));

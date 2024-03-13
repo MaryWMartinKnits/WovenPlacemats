@@ -783,6 +783,25 @@ fieldset {
     align-items: center;
 }
 
+.social-icons-div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.social-icons {
+    border-radius: 100%;
+    fill: var(--color4);
+    display: inline;
+}
+
+.cls-1{fill:url(#linear-gradient);}
+.cls-2{opacity:0.5;}
+.cls-3{fill:#fff;}
+
+
 .link_noUnderline{
     text-decoration: none;
     font-weight: bold;
