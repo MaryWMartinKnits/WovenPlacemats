@@ -732,8 +732,12 @@ fieldset {
     background-color: var(--color6);
     padding: 0 18px;
     max-height: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
+
     transition: max-height 0.2s ease-out;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 } 
 
 .panel {
@@ -742,6 +746,7 @@ fieldset {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+    max-width: 1000px;
 }
 
 /* add a plus sign before and a minus sign after expansion */
@@ -786,13 +791,12 @@ fieldset {
 .social-icons-div {
     display: flex;
     justify-content: center;
-    text-align: center;
-    margin: 0 auto;
     align-items: center;
+
 }
 
 .social-icons {
-    border-radius: 100%;
+    /* border-radius: 100%; */
     fill: var(--color4);
     display: inline;
 }
