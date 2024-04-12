@@ -1367,7 +1367,7 @@ function changeBackground () {
  function askPassword () {
     let password = window.prompt('Enter password found in the pattern.');
     password = password.toLowerCase(); // the password will not be case sensitive
-    if (password == "password") {
+    if (password == "TabbyWeave") {
         console.log('password is correct');
         askEmail();
     } else {
