@@ -280,20 +280,20 @@ fieldset {
     display: block;
 }
 
-.colorCodingN h3 {
+.sectionTitle h3 {
     padding: 0.2rem;
     padding-right: 1.5rem;
     border-radius: 0.5rem;
     color: var(--color6);
     background-color: #f2d49c /* default*/
-
 }
-.colorCodingN h4 {
+
+.colorCoding h4 {
     font-size: 1.2rem;
     font-variant:small-caps;
 }
 
-.colorCodingN {
+.colorCoding {
     border-radius: 0.5rem;
     margin: 0.2rem;
     background-color: #f2d49c30 /* default*/

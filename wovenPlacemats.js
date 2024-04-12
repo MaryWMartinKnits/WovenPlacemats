@@ -64,6 +64,7 @@ let setUpRow2paragraph;
 let setUpRow2Array = [];
 let Row2DE = ''
 const sl2 = ' sl2'
+let password = "";
 let totalStCountRow1;
 let totalStCountRow2;
 let writtenStitchCount2;
@@ -178,6 +179,7 @@ function createInputSection () {
         userInputDiv.appendChild(wholeSection);
         let sectionSection = document.createElement('div');
         sectionSection.classList.add ('sectionTitle');
+        // sectionSection.classList.add ('colorCoding');
         sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
         wholeSection.appendChild(sectionSection);
         betweenMarkersDiv = document.createElement('div');
@@ -1365,9 +1367,9 @@ function changeBackground () {
  }
 
  function askPassword () {
-    let password = window.prompt('Enter password found in the pattern.');
-    password = password.toLowerCase(); // the password will not be case sensitive
-    if (password == "TabbyWeave") {
+    password = window.prompt('Enter password found in the pattern.').toLowerCase();
+    console.log(password);
+    if (password == "tabbyweave") {
         console.log('password is correct');
         askEmail();
     } else {
