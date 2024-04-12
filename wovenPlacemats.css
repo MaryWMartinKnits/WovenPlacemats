@@ -6,8 +6,8 @@
     /* CSS HEX */
     --color1: #000000; /* black */
     --color2: #13203d; /* OxfordBlue */
-    --color3: #3a3354;
-    --color4: #5F5FA5;
+    --color3: #3a3354; /* rgb(58, 51, 84) */
+    --color4: #5F5FA5; /* rgb(95, 95, 165) */
     --color5: #C4C4E1;
     --color6: #E6E6F3;
     --color7: #F7F7FB;
@@ -27,7 +27,7 @@ main {
 
 
 
-p {
+p, label {
     font-family: 'Raleway', Verdana, Geneva, Tahoma, sans-serif;
     font-size: 17px;
 }
@@ -280,63 +280,67 @@ fieldset {
     display: block;
 }
 
-.colorCoding0 h3, .colorCoding1 h3, .colorCoding2 h3, .colorCoding3 h3, .colorCoding4 h3, .colorCoding5 h3, .colorCoding6 h3 {
+.sectionTitle h3 {
     padding: 0.2rem;
     padding-right: 1.5rem;
     border-radius: 0.5rem;
     color: var(--color6);
+    background-color: #f2d49c /* default*/
 }
-.colorCoding0 h4, .colorCoding1 h4, .colorCoding2 h4, .colorCoding3 h4, .colorCoding4 h4, .colorCoding5 h4, .colorCoding6 h4 {
+
+.colorCoding h4 {
     font-size: 1.2rem;
     font-variant:small-caps;
 }
 
-.colorCoding0, .colorCoding1, .colorCoding2, .colorCoding3, .colorCoding4, .colorCoding5, .colorCoding6 {
+.colorCoding {
     border-radius: 0.5rem;
     margin: 0.2rem;
+    background-color: #f2d49c30 /* default*/
+
 }
 
-.colorCoding0  h3 {     
+.colorCoding0  h3, .colorCoding7 h3 {     
     background-color:#ff006e /* pink */
 }
-.colorCoding1  h3 { 
+.colorCoding1  h3, .colorCoding8 h3 { 
     background-color: #0000ff; /* blue */
 }
-.colorCoding2  h3 { 
+.colorCoding2  h3, .colorCoding9 h3 { 
     background-color: #ee9b00 /* orange*/
 }
-.colorCoding3  h3 {
+.colorCoding3  h3, .colorCoding10 h3 {
     background-color: #800080; /* purple */
 }
-.colorCoding4  h3 { 
+.colorCoding4  h3, .colorCoding11 h3 { 
     background-color: #0a9396; /* turquesa */
 }
-.colorCoding5  h3 { 
+.colorCoding5  h3, .colorCoding12 h3 { 
     background-color: #ce0000; /* red */
 }
-.colorCoding6  h3 { 
+.colorCoding6  h3, .colorCoding13 h3 { 
     background-color: #6c757d; /* gray */
 }
 
-.colorCoding0 {     
+.colorCoding0, .colorCoding7 {     
     background-color:#ff006e30 /* pink */
 }
-.colorCoding1 { 
+.colorCoding1, .colorCoding8 { 
     background-color: #0000ff30; /* blue */
 }
-.colorCoding2 { 
+.colorCoding2, .colorCoding9 { 
     background-color: #ee9b0030 /* orange*/
 }
-.colorCoding3 {
+.colorCoding3, .colorCoding10 {
     background-color: #80008030; /* purple */
 }
-.colorCoding4 { 
+.colorCoding4, .colorCoding11 { 
     background-color: #0a939630; /* turquesa */
 }
-.colorCoding5 { 
+.colorCoding5, .colorCoding12 { 
     background-color: #ce000030; /* red */
 }
-.colorCoding6 { 
+.colorCoding6, .colorCoding13 { 
     background-color: #6c757d30; /* gray */
 }
 
@@ -814,4 +818,37 @@ fieldset {
 .link_noUnderline span{
     text-decoration: underline;
     font-weight: lighter;
+}
+
+#inputs {
+    border: 1px dashed var(--color4);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+input[type=number], #numOftotalDE {
+    border: 2px solid var(--color4);
+    border-radius: 4px;
+    background-color: var(--color6);
+    height: 25px;
+    width: 25vw;
+    padding: 5px;
+}
+
+.sizeResults {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+    /* align-content: stretch; */
+    /* align-items: center; */
+    justify-content: center;
+    height: 25px;
+    width: -webkit-fill-available;
+}
+
+.disabledBtn, input[type=number]:disabled {
+ background-color: rgb(193, 189, 194);
+ border: 2px solid grey;
+ cursor: not-allowed;
 }
