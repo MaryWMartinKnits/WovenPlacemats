@@ -1399,6 +1399,9 @@ function toggleAccordions () {
         }
     } else {
         panel.style.maxHeight = `${panel.scrollHeight}px`; 
+        if (panel.class == 'intro') {
+            panel.style.maxHeight = `${panel.scrollHeight + 620}px`; 
+        }
         if (panel.id == 'socials') {
             panel.style.padding = '16px';
             panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
