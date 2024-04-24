@@ -510,6 +510,9 @@ fieldset {
         margin: 0;
         padding: 0;
     }
+    /* .placematPictures {
+        justify-content: center;
+    } */
 }
 
 
@@ -625,6 +628,10 @@ fieldset {
        display: block;
        font-size: 0.8rem;
    }
+
+   /* .panel {
+        display: flex;
+   } */
 }
 
 /* Big screen */
@@ -680,6 +687,12 @@ fieldset {
         font-size: 1.2rem;
         font-weight: bold;
     }
+/* 
+    .panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    } */
 }
 
 #SVGnumbers {
@@ -851,4 +864,52 @@ input[type=number], #numOftotalDE {
  background-color: rgb(193, 189, 194);
  border: 2px solid grey;
  cursor: not-allowed;
+}
+
+.grid-container {
+    height: 100%;
+    display: grid;
+}
+img {
+    max-width: 600px;
+    max-height: auto;
+}
+.placematPictures {
+    margin: auto;
+    width: auto;
+    height: auto;
+    max-width: 600px;
+    max-height: 600px;
+    padding: 1rem;
+}
+
+ @media screen and (min-width: 776px) {
+    .grid-container {
+        grid-template-columns: 60vw auto;
+    }
+} 
+.panelText {
+    min-height: max-content;
+}
+
+.individualPlacemats {
+    width: 40vw;
+    height: auto;
+}
+
+#placematA { grid-area: A; }
+#placematB { grid-area: B; }
+#placematC { grid-area: C; }
+#placematD { grid-area: D; }
+#allPlacematsText { grid-area: E;}
+
+.allPlacemats {
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+    'A A B B'
+    'C C D D'
+    'E E E E';
+    gap: 10px;
+    justify-items: center;
 }
