@@ -869,6 +869,7 @@ input[type=number], #numOftotalDE {
 .grid-container {
     height: 100%;
     display: grid;
+    justify-content: center;
 }
 img {
     max-width: 600px;
@@ -890,6 +891,9 @@ img {
 } 
 .panelText {
     min-height: max-content;
+    display: inline-block;
+    margin: 4vw;
+    padding: 4vw;
 }
 
 .individualPlacemats {
