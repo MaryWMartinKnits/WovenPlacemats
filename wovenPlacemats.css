@@ -22,10 +22,10 @@ body {
 }
 
 main {
-    margin: 0
+    margin: 0px;
+    padding: 0px;
+    max-width: 100vw;
 }
-
-
 
 p, label {
     font-family: 'Raleway', Verdana, Geneva, Tahoma, sans-serif;
@@ -128,11 +128,6 @@ button:hover {
     margin: 0.8rem 0 0 0;
     text-indent: 1.5rem;
 }
-
-
-
-
-
 
 .section {
     display: flex;
@@ -511,6 +506,10 @@ fieldset {
         margin: 0;
         padding: 0;
     }
+    .panelText {
+        margin: 4vw;
+        padding: 4vw;
+    }
     /* .placematPictures {
         justify-content: center;
     } */
@@ -853,9 +852,6 @@ input[type=number], #numOftotalDE {
     display: inline-flex;
     flex-direction: column;
     flex-wrap: wrap;
-    /* border: 1px solid red; */
-    /* align-content: stretch; */
-    /* align-items: center; */
     justify-content: center;
     height: 25px;
     width: -webkit-fill-available;
@@ -872,6 +868,7 @@ input[type=number], #numOftotalDE {
     display: grid;
     justify-content: center;
 }
+
 img {
     max-width: 600px;
     max-height: auto;
@@ -889,8 +886,8 @@ img {
 .panelText {
     min-height: max-content;
     display: inline-block;
-    margin: 4vw;
-    padding: 4vw;
+    /* margin: 4vw;
+    padding: 4vw; */
 }
 
 .individualPlacemats {
@@ -927,7 +924,7 @@ img {
 
 @media screen and (min-width: 776px) {
     .grid-container {
-        /* grid-template-columns: 60vw auto; */
+        grid-template-columns: 50vw 40vw;
     }
     .allPlacemats {
         grid-template-areas:
