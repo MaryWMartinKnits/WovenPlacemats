@@ -1400,7 +1400,7 @@ function toggleAccordions () {
     } else {
         panel.style.maxHeight = `${panel.scrollHeight}px`; 
         if (panel.class == 'intro') {
-            panel.style.maxHeight = `${panel.scrollHeight + 800}px`; 
+            panel.style.maxHeight = `${panel.scrollHeight + 1000}px`; 
         }
         if (panel.id == 'socials') {
             panel.style.padding = '16px';

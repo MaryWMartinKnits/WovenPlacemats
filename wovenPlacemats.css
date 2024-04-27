@@ -477,6 +477,7 @@ fieldset {
 @media screen and (max-width: 500px) {
     #userInputDiv {
         flex-direction: column;
+        margin: 0 1rem;
     }
     .selectionOutputSection {
         display: block;
@@ -884,11 +885,7 @@ img {
     padding: 1rem;
 }
 
- @media screen and (min-width: 776px) {
-    .grid-container {
-        grid-template-columns: 60vw auto;
-    }
-} 
+
 .panelText {
     min-height: max-content;
     display: inline-block;
@@ -911,9 +908,37 @@ img {
     height: 100%;
     display: grid;
     grid-template-areas:
-    'A A B B'
-    'C C D D'
-    'E E E E';
+    'A B'
+    'C D'
+    'E E';
     gap: 10px;
     justify-items: center;
 }
+
+@media screen and (max-width: 776px) {
+    #placematA, #placematC {
+        justify-self: flex-end;
+    }
+    
+    #placematB, #placematD {
+        justify-self: flex-start;
+    }    
+}
+
+@media screen and (min-width: 776px) {
+    .grid-container {
+        /* grid-template-columns: 60vw auto; */
+    }
+    .allPlacemats {
+        grid-template-areas:
+        'A B C D'
+        'E E E E';
+        gap: 10px;
+        justify-items: center;
+        padding: 0 1.5rem;
+    }
+    .individualPlacemats {
+        width: 22vw;
+        height: auto;
+    }
+} 
