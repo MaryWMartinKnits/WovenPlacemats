@@ -536,6 +536,7 @@ fieldset {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     display: flex;
+    border: 2px solid blue;
 }
 
 /* add a plus sign before and a minus sign after expansion */
@@ -648,18 +649,28 @@ input[type=number], #numOftotalDE {
     max-width: 600px;
     max-height: 600px;
     text-align: center;
+    border: 2px solid green;
 }
 .placematPicture {
-        width: inherit;
-        height: auto;
-        border-radius: 10px;
+    width: inherit;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid red;
 }
 
 .panelText {
     min-height: max-content;
     display: inline-block;
-    margin: 0 auto;
-    padding: 0.5rem;
+    margin: 0.25rem auto;
+    padding: 0.25rem;
+    border: 2px solid yellow;
+    height: max-content;
+}
+
+.panelText p:last-of-type {
+   margin-bottom: 2rem; 
+   color: red;
+   background-color: antiquewhite;
 }
 
 .individualPlacemats {
@@ -905,7 +916,7 @@ input[type=number], #numOftotalDE {
         justify-self: flex-start;
     }    
     .placematPicture {
-        width: -webkit-fill-available;
+        /* width: -webkit-fill-available; */
         height: auto;
         max-width: 90%;
     }

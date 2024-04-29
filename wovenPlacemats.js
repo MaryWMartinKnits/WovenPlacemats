@@ -137,8 +137,6 @@ function getDOMelements () {
     hideBtn(continueEditingBtn);
     createChartBtn = document.querySelector('#createChartBtn');
     divToCreateSpace = document.querySelector('.space');
-    // let userInputDiv = document.querySelector('#userInputDiv');
-    // let svgChartDiv = document.querySelector('#svgChartDiv');
     chartNumbersDiv = document.querySelector('#chartNumbersDiv');
     chartNumbersDiv.classList.add('hidden');
     svgPlacemat = document.querySelector('#svgPlacemat');
@@ -150,12 +148,12 @@ function getDOMelements () {
     note1 = document.querySelector('#note1');
     note2 = document.querySelector('#note2');
     accArray = document.getElementsByClassName('accordion');
-    console.log(accArray); //
+    console.log(accArray); 
     createInputSection(); 
     createYCselectionButtons();
     addEventListeners ();
     chooseLineColor();
-    accordions (); //
+    accordions (); 
 }
 
 function hideBtn (button) {
@@ -179,7 +177,6 @@ function createInputSection () {
         userInputDiv.appendChild(wholeSection);
         let sectionSection = document.createElement('div');
         sectionSection.classList.add ('sectionTitle');
-        // sectionSection.classList.add ('colorCoding');
         sectionSection.innerHTML = `<div> <h3> Section ${i+1} </h3> </div>`;
         wholeSection.appendChild(sectionSection);
         betweenMarkersDiv = document.createElement('div');
@@ -187,9 +184,6 @@ function createInputSection () {
         betweenMarkersDiv.classList.add('section', 'betweenMarkers')
         colorCode = `colorCoding${code}`
         code ++
-        // if (code == numberofDEperSection) {
-        //     code = 0
-        // }
         sectionSection.classList.add(`${colorCode}`)
         wholeSection.appendChild(betweenMarkersDiv);
         for (let k = 0; k < numberofDEperSection; k++) {
@@ -236,6 +230,30 @@ function addEventListeners () {
         thisCheckbox = allYCcheckboxes[i];
          allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
      }
+     window.addEventListener('resize', resizeScreen);
+}
+
+function resizeScreen () {
+    for (let i = 0; i < accArray.length; i++) {
+        let panel = accArray[i].nextElementSibling;
+        if (panel.style.maxHeight && panel.style.maxHeight !== '0px') {
+            panel.style.maxHeight = `0px`;
+            if (panel.id == 'socials') {
+                panel.style.padding = '0px'; 
+            }
+        } else {
+            panel.style.maxHeight = `${panel.scrollHeight}px`; 
+            if (panel.class == 'intro') {
+                panel.style.maxHeight = `${panel.scrollHeight + 2000}px`; 
+            }
+            if (panel.id == 'socials') {
+                panel.style.padding = '16px';
+                panel.style.maxHeight = `${panel.scrollHeight + 16}px`; 
+                document.getElementById('socials').focus();
+            }
+        }
+    }
+    
 }
 
 function changeColorSelection (checkedYC) {
@@ -1400,7 +1418,7 @@ function toggleAccordions () {
     } else {
         panel.style.maxHeight = `${panel.scrollHeight}px`; 
         if (panel.class == 'intro') {
-            panel.style.maxHeight = `${panel.scrollHeight + 1000}px`; 
+            panel.style.maxHeight = `${panel.scrollHeight + 2000}px`; 
         }
         if (panel.id == 'socials') {
             panel.style.padding = '16px';
@@ -1408,5 +1426,4 @@ function toggleAccordions () {
             document.getElementById('socials').focus();
         }
     }
-   
 }
