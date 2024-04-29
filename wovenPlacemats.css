@@ -1,3 +1,55 @@
+/* reset rules */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/**/
+
 * {
     box-sizing: border-box;
 }
@@ -75,18 +127,7 @@ button:hover {
     color: var(--color2);
 }
   
-/* footer {
-    color: var(--color3);
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.15rem;
-    text-align: center;
-    border-radius: 0.5rem; 
-    background-color: var(--color6);
-    display: block;
-}  */
-
-/* footer a, */ #socials a {
+#socials a {
     color: var(--color2);
 }
 
@@ -99,7 +140,6 @@ button:hover {
 .pairNumber h3 {
     margin: 0.2rem;
 }
-
 
 #userInputDiv {
     display: flex;
@@ -554,21 +594,17 @@ fieldset {
     color: var(--color4);
 }
 
-
-
 .cls-1 {
     fill: var(--color3);
 }
 
 .logo {
-    /* background-color: #0a9396; */
     min-width: 100px;
     text-align: end;
 }
 
 #logo {
     width: auto;
-    /* background-color: antiquewhite; */
     color: var(--color3);
 }
 
@@ -586,7 +622,6 @@ fieldset {
 }
 
 .social-icons {
-    /* border-radius: 100%; */
     fill: var(--color4);
     display: inline;
 }
@@ -639,7 +674,6 @@ input[type=number], #numOftotalDE {
 .grid-container {
     height: 100%;
     display: grid;
-    /* justify-content: center; */
 }
 
 .placematPictures {
@@ -650,12 +684,14 @@ input[type=number], #numOftotalDE {
     max-height: 600px;
     text-align: center;
     border: 2px solid green;
+    min-height: 100px;
 }
 .placematPicture {
     width: inherit;
     height: auto;
     border-radius: 10px;
     border: 2px solid red;
+    min-height: 100%;
 }
 
 .panelText {
@@ -813,9 +849,6 @@ input[type=number], #numOftotalDE {
    .pairStitchesDiv p {
        display: block;
    }
-   /* .placematPictures {
-        height: 40vh;
-} */
 }
 
 /* Desktop */
@@ -916,9 +949,9 @@ input[type=number], #numOftotalDE {
         justify-self: flex-start;
     }    
     .placematPicture {
-        /* width: -webkit-fill-available; */
         height: auto;
         max-width: 90%;
+        min-height: 100px;
     }
 }
 
@@ -937,6 +970,8 @@ input[type=number], #numOftotalDE {
     }
     .placematPictures {
         max-width: 50%;
+        min-height: 100px;
+
     }
     .placematPicture {
         height: -webkit-fill-available;
