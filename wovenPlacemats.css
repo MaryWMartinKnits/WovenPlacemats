@@ -18,7 +18,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
+	/* margin: 0; */
 	padding: 0;
 	border: 0;
 	font-size: 100%;
@@ -332,7 +332,6 @@ fieldset {
     border-radius: 0.5rem;
     margin: 0.2rem;
     background-color: #f2d49c30 /* default*/
-
 }
 
 .colorCoding0  h3, .colorCoding7 h3 {     
@@ -576,6 +575,7 @@ fieldset {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     display: flex;
+    flex-direction: row-reverse;
     /* border: 2px solid blue; */
 }
 
@@ -676,22 +676,22 @@ input[type=number], #numOftotalDE {
     display: grid;
 }
 
-.placematPictures {
-    margin: auto;
-    padding: 0.25rem;
-    height: auto;
-    max-width: 600px;
-    max-height: 600px;
+.placematPicturesDiv {
     text-align: center;
-    /* border: 2px solid green; */
-    /* min-height: 100vh; */
+    /* border: 2px solid yellow; */
+    width: fit-content;
+    min-width: 40%;
 }
+
 .placematPicture {
-    width: inherit;
-    height: auto;
+    /* width: 95%; */
+    /* height: auto; */
+    max-width: 95%;
+    max-height: 100%;
+    margin: 0.25rem;
+    border: 2px solid red;
     border-radius: 10px;
-    /* border: 2px solid red; */
-    min-height: 100%;
+    border: 2px solid var(--color3);
 }
 
 .panelText {
@@ -699,19 +699,11 @@ input[type=number], #numOftotalDE {
     display: inline-block;
     margin: 0.25rem auto;
     padding: 0.25rem;
-    /* border: 2px solid yellow; */
-    /* height: max-content; */
 }
 
 .panelText p {
     margin: 1rem 0;
 }
-
-/* .panelText p:last-of-type {
-   margin-bottom: 2rem; 
-   color: red;
-   background-color: antiquewhite;
-} */
 
 .individualPlacemats {
     width: 40vw;
@@ -945,23 +937,24 @@ input[type=number], #numOftotalDE {
 }
 /*  */
 
-@media screen and (max-width: 776px) {
+@media screen and (max-width: 650px) {
     #placematA, #placematC {
         justify-self: flex-end;
     }
     #placematB, #placematD {
         justify-self: flex-start;
     }    
-    .placematPicture {
-        max-width: 90%;
-        height: auto;
-        min-height: 150px;
-        min-width: 100px;
-        aspect-ratio: 3 / 4;
+    .panel {
+        flex-direction: column-reverse;
+    }
+    .placematPicturesDiv {
+        width: 100%;
+        max-width: 100vw;
+        text-align: center;
     }
 }
 
-@media screen and (min-width: 776px) {
+@media screen and (min-width: 650px) {
     .allPlacemats {
         grid-template-areas:
         'A B C D'
@@ -974,22 +967,23 @@ input[type=number], #numOftotalDE {
         width: 22vw;
         height: auto;
     }
-    .placematPictures {
-        height: auto;
-        min-height: 200px;
-        max-width: 50vw;
-        /* min-width: 25%; */
-        /* min-height: 100px; */
-        aspect-ratio: 3 / 4 auto;
+    .placematPicturesDiv {
+        max-width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+} 
 
+ @media screen and (min-width: 1000px) {
+    .placematPicturesDiv {
+        min-height: 100%;
+        height: 450px;
+        min-width: 30%;
+        max-height: 50vh;
     }
     .placematPicture {
-        /* height: -webkit-fill-available;
-        width: -webkit-fill-available; 
-        height: fill-available;
-        width: fill-available;*/
-        max-height: 50vh; 
-        max-width: 50vw;
-        aspect-ratio: 3 / 4;
-   }
+        /* max-height: 50vw; */
+    }
 } 
