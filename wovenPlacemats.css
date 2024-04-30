@@ -22,7 +22,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	/* font: inherit; */
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -656,14 +656,14 @@ input[type=number], #numOftotalDE {
     padding: 5px;
 }
 
-.sizeResults {
+/* .sizeResults {
     display: inline-flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     height: 25px;
     width: -webkit-fill-available;
-}
+} */
 
 .disabledBtn, input[type=number]:disabled {
  background-color: rgb(193, 189, 194);
@@ -700,14 +700,18 @@ input[type=number], #numOftotalDE {
     margin: 0.25rem auto;
     padding: 0.25rem;
     /* border: 2px solid yellow; */
-    height: max-content;
+    /* height: max-content; */
 }
 
-.panelText p:last-of-type {
-   margin-bottom: 2rem; 
-   /* color: red; */
-   /* background-color: antiquewhite; */
+.panelText p {
+    margin: 1rem 0;
 }
+
+/* .panelText p:last-of-type {
+   margin-bottom: 2rem; 
+   color: red;
+   background-color: antiquewhite;
+} */
 
 .individualPlacemats {
     width: 40vw;

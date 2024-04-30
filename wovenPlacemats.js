@@ -230,7 +230,7 @@ function addEventListeners () {
         thisCheckbox = allYCcheckboxes[i];
          allYCcheckboxes[i].addEventListener('change', function(event) {changeColorSelection(thisCheckbox)})
      }
-     window.addEventListener('resize', resizeScreen);
+    //  window.addEventListener('resize', resizeScreen);
 }
 
 function resizeScreen () {
