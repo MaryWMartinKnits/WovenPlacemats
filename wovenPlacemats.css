@@ -548,6 +548,22 @@ fieldset {
 
 /* Style the accordion panel. Note: hidden by default */
 
+#specials a:link {
+    color: var(--color2);
+    font-weight: 600;
+    text-decoration: underline var(--color4) solid 0.05rem;
+}
+
+#specials a:visited {
+    color: var(--color4);
+    font-weight: 500;
+    text-decoration: underline var(--color3) solid 0.05rem;
+}
+
+#specials a:hover {
+    text-decoration: underline var(--color6) solid 0.1rem;
+}
+
 #socials{
     color: var(--color3);
     /* padding: 1rem; */

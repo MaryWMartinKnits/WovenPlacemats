@@ -244,7 +244,7 @@ function resizeScreen () {
         } else {
             panel.style.maxHeight = `${panel.scrollHeight}px`; 
             if (panel.class == 'intro') {
-                panel.style.maxHeight = `${panel.scrollHeight + 2000}px`; 
+                panel.style.maxHeight = `${panel.scrollHeight + 300}px`; 
             }
             if (panel.id == 'socials') {
                 panel.style.padding = '16px';
