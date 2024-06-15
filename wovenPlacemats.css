@@ -564,6 +564,10 @@ fieldset {
     text-decoration: underline var(--color6) solid 0.1rem;
 }
 
+.biggerFont {
+    font-size: 1.3rem;
+}
+
 #socials{
     color: var(--color3);
     /* padding: 1rem; */
