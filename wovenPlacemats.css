@@ -126,7 +126,7 @@ button:hover {
     color: var(--color2);
 }
   
-#socials a {
+#socials a, #note1 a {
     color: var(--color2);
 }
 
