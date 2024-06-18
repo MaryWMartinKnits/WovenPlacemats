@@ -560,7 +560,7 @@ fieldset {
 }
 
 #specials a:hover {
-    text-decoration: underline var(--color6) solid 0.1rem;
+    /* text-decoration: underline var(--color6) solid 0.1rem; */
 }
 
 .biggerFont {
