@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="wovenPlacemats.css" type="text/css">
+    <!-- Google fonts: Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Google fonts: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Knit Woven Placemats by MaryWMartinKnits">
+    <meta property="og:url" content="https://marywmartinknits.github.io/">
+    <meta property="og:site_name" content="Knitted woven placemats">
+    <meta property="og:image" content="https://reversibleknits.files.wordpress.com/2022/11/logo.jpg?resize=320%2C320">
+    <meta property="og:image:width" content="2301">
+    <meta property="og:image:height" content="2298">
+    <meta property="og:image:alt" content="MaryWMartin's logo">
+    <meta property="og:locale" content="en_US">
+    <style>
+        .chartDiv {
+            max-height: 90vh;
+            max-width: 50%;
+        }
+    </style>
+    <title>Coasters</title>
+</head>
+<body>
+    <main>
+        <h1>Coasters</h1>
+
+        <section>
+            <div id="userInputDiv"> </div>
+        </section>
+    
+        <div class="text note0">
+            <p>Choose the colours used in drawing the placemat to represent MC or CC and the background that gives you a good definition with your MC and CC choices.</p>
+        </div>
+
+        <div id="colorPickerDiv">
+
+            <div id="colorSwatches">
+                <div class="swatch">
+                    <label for="colorPickerMC">
+                        <input type="color" id="colorPickerMC" title="Pick the main color (MC)" value="#5F5FA5"> 
+                    </label>
+                    <div class="swatchInfo">
+                        <h3>Pick MC</h3>
+                    </div>
+                    
+                </div>
+                <div class="swatch">
+                    <label for="colorPickerCC"> 
+                        <input type="color" id="colorPickerCC" title="Pick the contrasting color (CC)" value="#ffa500">  
+                    </label>
+                    <div class="swatchInfo">
+                        <h3>Pick CC</h3>
+                    </div>
+                </div>
+                <div class="swatch">
+                    <label for="colorPickerbackground">
+                        <input type="color" id="backgroundPickerBtn" title="Pick the background color" value="#ffffff"> 
+                    </label>
+                    <div class="swatchInfo">
+                        <h3>Pick Background</h3>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
+
+        <div class="text note0">
+            <p>Press Draw Placemat to see how your placemat will look with your selections.</p>
+        </div>
+
+        <div class="outsideBtnsDiv">
+            <section class="buttonsDiv">
+                <button id="createChartBtn" title="Draw placemat">Draw Placemat</button>
+                <button id="continueEditingBtn" title="Continue editing">Continue editing</button>
+                <button id="createSetUpRowsBtn" title="Create Setup Rows">Create Pattern</button>
+            </section>
+        </div>
+
+        <div id="note1" class="hidden text note0" >
+            <p>To make changes to your inputs, press Continue Editing.</p>
+            <p>When you are happy with your placemat, press Create Pattern. <strong> Changes cannot be made to the inputs after creating the pattern</strong>.</p>
+            <p>Please enter the <strong> email </strong> that you used when purchasing this pattern.  Enter <strong> password </strong> found in <a href="https://www.ravelry.com/patterns/sources/design-your-own--woven-placemats-a-e" target="_blank">Design Your Own Woven Placemat pattern</a>.</p>
+            <p class="biggerFont"> <strong> Please  screenshot inputs, drawing & pattern.  This information will not be saved. </strong></p>
+        </div>
+
+
+        <div id="svgChartDiv" tabindex="0">
+            <div id="updateSVG" class="hidden text">
+                <p>Press Draw Placemat to update</p>
+            </div>
+            <div id="svgPlacemat"></div>
+            <div id="chartNumbersDiv"></div>
+        </div>
+
+        <div id="setUpRows" tabindex="0">
+
+        </div>
+
+        <div id="note2" class="hidden text">
+            <p>Note: The drawings do not show the over/under crossing of the cables; so the colour dominance of the combined colour blocks is not accurate. Please use it as a guide to where different colour blocks form.</p>
+            <p>Consider taking screenshots of any information you would like to access in the future. </p>
+            <p>I would love to see your designs. Please share the pictures but do NOT share the associated pattern</p>
+        </div>
+    </main>
+
+    <script src="coasters.js"></script>
+    
+</body>
+</html>
