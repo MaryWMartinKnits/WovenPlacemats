@@ -1385,7 +1385,7 @@ function changeBackground () {
  }
 
  function askPassword () {
-    password = window.prompt('Enter password found in the Design Your Own placemat pattern').toLowerCase();
+    password = window.prompt('Enter password found in the Design Your Own Placemat pattern').toLowerCase();
     console.log(password);
     if (password == "tabbyweave") {
         console.log('password is correct');
