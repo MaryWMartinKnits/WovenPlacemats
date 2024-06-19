@@ -640,10 +640,10 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
     RightMoving = cablesArray[i].rightMoving;
     // if cablesArray[i] is right moving => RightMoving = true; else RightMoving = false
     if (RightMoving) { // true -> RIGHT moving cable
-        if ((StartingX) > StartingY && StartingY == svgHeight) { // the cable has hit the right edge.
+        if (StartingY == svgHeight) { // the cable has hit the right edge.
             cablesArray[i]['group1'] = 'rightCable hits rightEdge';
             NextX = svgWidth;
-            NextY = StartingX - StartingY; //? should be < svgHeight
+            NextY = StartingY - StartingX; //? should be < svgHeight
             newDirection = 'left';
         } else { // the right cable has hit the top edge.
             cablesArray[i]['group1'] = 'rightCable hits top';
@@ -651,6 +651,10 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
             NextY = 0;
             newDirection = 'none';
         }
+        cablesArray[i]['x2'] = NextX;
+        // cablesArray[i]['y2'] = NextY;
+        cablesArray[i]['y2'] = NextX - (svgWidth - StartingX);
+        cablesArray[i]['newDirection'] = newDirection;
     } else if (!RightMoving) { // false -> LEFT moving cable
         if (StartingX < StartingY && StartingY == svgHeight) { // the cable has hit the left edge.
             NextX = 0;
@@ -663,10 +667,10 @@ function ifRightOrLeftMoving (i, StartingX, StartingY) {
             NextY = 0;
             newDirection = 'none';            
         }
+        cablesArray[i]['x2'] = NextX;
+        cablesArray[i]['y2'] = NextY;
+        cablesArray[i]['newDirection'] = newDirection;
     }
-    cablesArray[i]['x2'] = NextX;
-    cablesArray[i]['y2'] = NextY;
-    cablesArray[i]['newDirection'] = newDirection;
     return newDirection;
 }
 
